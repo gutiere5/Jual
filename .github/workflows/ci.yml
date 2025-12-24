@@ -1,0 +1,59 @@
+name: Jual CI/CD Pipeline
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  test-and-lint:
+    name: TDD Enforcer (Test & Lint)
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: admin
+          POSTGRES_PASSWORD: password123
+          POSTGRES_DB: jual_test_db
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Generate Prisma Client
+        run: npx prisma generate
+        working-directory: ./apps/backend
+
+      - name: Push DB Schema
+        run: npx prisma db push
+        working-directory: ./apps/backend
+        env:
+          DATABASE_URL: postgres://admin:password123@localhost:5432/jual_test_db
+
+      - name: Lint Code
+        run: npm run lint --workspaces
+
+      - name: Run Backend Tests
+        working-directory: ./apps/backend
+        run: npm run test:e2e
+        env:
+          DATABASE_URL: postgres://admin:password123@localhost:5432/jual_test_db
