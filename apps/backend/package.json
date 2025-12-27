@@ -1,10 +1,9 @@
 {
-  "name": "@repo/database",
+  "name": "backend",
   "version": "1.0.0",
-  "exports": {
-    ".": "./src/client.ts"
-  },
+  "exports": {},
   "scripts": {
+    "start": "npx nodemon",
     "db:migrate:deploy": "prisma migrate deploy",
     "db:migrate:dev": "prisma migrate dev",
     "db:push": "prisma db push",
@@ -18,16 +17,24 @@
     "studio": "prisma studio"
   },
   "dependencies": {
-    "@prisma/client": "latest"
+    "@prisma/client": "latest",
+    "bcrypt": "^6.0.0",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.3",
+    "nodemon": "^3.1.11",
+    "ts-node": "^10.9.2"
   },
   "devDependencies": {
     "@repo/eslint-config": "*",
     "@repo/typescript-config": "*",
+    "@types/bcrypt": "^6.0.0",
+    "@types/express": "^5.0.6",
+    "@types/node": "^25.0.3",
     "eslint": "^8.57.0",
     "prisma": "latest",
     "rimraf": "^5.0.5",
-    "tsup": "^8.0.2",
-    "tsx": "4.19.1",
+    "tsup": "^8.5.1",
+    "tsx": "^4.19.1",
     "typescript": "5.5.4"
   }
 }
