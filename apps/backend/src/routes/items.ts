@@ -10,6 +10,6 @@ import {
 const itemRoutes: Router = Router();
 
 itemRoutes.route("/").get(getItems).post(createItem);
-itemRoutes.route("/:sku").get(getItemsByID).put(updateItem).delete(deleteItem);
+itemRoutes.route("/:id").get(getItemsByID).put(updateItem).delete(deleteItem);
 
 export default itemRoutes;

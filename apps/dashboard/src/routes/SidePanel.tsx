@@ -1,9 +1,9 @@
 import { Home, UserCircle, Lock } from 'lucide-react';
 import { NavLink } from 'react-router';
+import './SidePanel.css';
 
 function SidePanel() {
   const menuItems = [
-    // Add a 'path' to each item that matches your router config
     {
       id: 'Inventory',
       label: 'Inventory',
@@ -12,39 +12,41 @@ function SidePanel() {
       path: '/',
     },
     {
-      id: 'Personal',
+      id: 'Personnel',
       label: 'Personal',
       icon: UserCircle,
       color: '#81c995',
-      path: '/personal',
+      path: '/personnel',
     },
     {
-      id: 'Security',
-      label: 'Security',
+      id: 'Settings',
+      label: 'Settings',
       icon: Lock,
       color: '#78d9ec',
-      path: '/security',
+      path: '/settings',
     },
   ];
 
   return (
-    <aside>
-      {menuItems.map((item) => {
-        const IconComponent = item.icon;
-        return (
-          <NavLink
-            key={item.id}
-            to={item.path}
-            className={({ isActive }) => `sidepanel-menu-item ${isActive ? 'active' : ''}`}
-          >
-            <div className="sidepanel-menu-icon-wrapper" style={{ backgroundColor: item.color }}>
-              <IconComponent className="sidepanel-menu-icon" />
-            </div>
-            <span className="sidepanel-menu-label">{item.label}</span>
-          </NavLink>
-        );
-      })}
-    </aside>
+    <div className="side-panel">
+      <div className="side-panel-content">
+        {menuItems.map((item) => {
+          const IconComponent = item.icon;
+          return (
+            <NavLink
+              key={item.id}
+              to={item.path}
+              className={({ isActive }) => `side-panel-menu-item ${isActive ? 'active' : ''}`}
+            >
+              <div className="side-panel-menu-icon-wrapper" style={{ backgroundColor: item.color }}>
+                <IconComponent className="side-panel-menu-icon" />
+              </div>
+              <span className="side-panel-menu-label">{item.label}</span>
+            </NavLink>
+          );
+        })}
+      </div>
+    </div>
   );
 }
 

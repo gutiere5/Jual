@@ -1,4 +1,10 @@
-import { PrismaClient, TransactionType, WasteReason, UnitOfMeasure } from "../generated/prisma/client";
+import {
+  PrismaClient,
+  TransactionType,
+  WasteReason,
+  UnitOfMeasure,
+  Category, // Added Category here
+} from "../generated/prisma/client";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { DATABASE_URL } from "../src/secrets";
 
@@ -9,32 +15,7 @@ const prisma = new PrismaClient({ adapter });
 async function main() {
   console.log("🌱 Starting seed...");
 
-  // 1. Create Categories
-  const produce = await prisma.category.upsert({
-    where: { clover_id: "CAT_PRODUCE" },
-    update: {},
-    create: { clover_id: "CAT_PRODUCE", name: "Produce" },
-  });
-
-  const dairy = await prisma.category.upsert({
-    where: { clover_id: "CAT_DAIRY" },
-    update: {},
-    create: { clover_id: "CAT_DAIRY", name: "Dairy" },
-  });
-
-  const bakery = await prisma.category.upsert({
-    where: { clover_id: "CAT_BAKERY" },
-    update: {},
-    create: { clover_id: "CAT_BAKERY", name: "Bakery" },
-  });
-
-  const beverages = await prisma.category.upsert({
-    where: { clover_id: "CAT_BEVERAGES" },
-    update: {},
-    create: { clover_id: "CAT_BEVERAGES", name: "Beverages" },
-  });
-
-  // 2. Create Vendors
+  // 1. Create Vendors
   const farmA = await prisma.vendor.upsert({
     where: { clover_id: "VEN_001" },
     update: {},
@@ -53,7 +34,7 @@ async function main() {
     create: { clover_id: "VEN_003", name: "Drink Distributors" },
   });
 
-  // 3. Create Items (Using Enums!)
+  // 2. Create Items (Using Category Enum directly now!)
   const apple = await prisma.item.upsert({
     where: { sku: "APPLE-001" },
     update: {},
@@ -61,7 +42,7 @@ async function main() {
       sku: "APPLE-001",
       name: "Gala Apple",
       uom: UnitOfMeasure.EA,
-      category_id: produce.id,
+      category: Category.PRODUCE, // Direct Enum use
       vendor_id: farmA.id,
       low_stock_threshold: 50,
     },
@@ -74,7 +55,7 @@ async function main() {
       sku: "MILK-001",
       name: "Organic Whole Milk",
       uom: UnitOfMeasure.L,
-      category_id: dairy.id,
+      category: Category.DAIRY,
       vendor_id: farmA.id,
       low_stock_threshold: 10,
     },
@@ -87,7 +68,7 @@ async function main() {
       sku: "BREAD-001",
       name: "Sourdough Bread",
       uom: UnitOfMeasure.EA,
-      category_id: bakery.id,
+      category: Category.BAKERY,
       vendor_id: bakeryCorp.id,
       low_stock_threshold: 15,
     },
@@ -100,7 +81,7 @@ async function main() {
       sku: "JUICE-001",
       name: "Orange Juice",
       uom: UnitOfMeasure.L,
-      category_id: beverages.id,
+      category: Category.BEVERAGES,
       vendor_id: bevDist.id,
       low_stock_threshold: 20,
     },
@@ -113,19 +94,29 @@ async function main() {
       sku: "WATER-001",
       name: "Spring Water",
       uom: UnitOfMeasure.ML,
-      category_id: beverages.id,
+      category: Category.BEVERAGES,
       vendor_id: bevDist.id,
       low_stock_threshold: 100,
     },
   });
 
-  // 4. Create Batches (Inventory Layer)
+  // 3. Create Batches (Inventory Layer)
   const appleBatch = await prisma.stock_batch.create({
     data: {
       item_id: apple.id,
       quantity_received: 100,
       quantity_remaining: 95,
-      cost_at_purchase: 0.50,
+      cost_at_purchase: 0.5,
+      expiration_date: new Date("2026-03-01"),
+    },
+  });
+
+  const waterBatch = await prisma.stock_batch.create({
+    data: {
+      item_id: water.id,
+      quantity_received: 100,
+      quantity_remaining: 95,
+      cost_at_purchase: 0.5,
       expiration_date: new Date("2026-03-01"),
     },
   });
@@ -135,8 +126,8 @@ async function main() {
       item_id: bread.id,
       quantity_received: 50,
       quantity_remaining: 20,
-      cost_at_purchase: 2.00,
-      expiration_date: new Date("2026-01-10"), // Soon to expire
+      cost_at_purchase: 2.0,
+      expiration_date: new Date("2026-01-10"),
     },
   });
 
@@ -145,17 +136,23 @@ async function main() {
       item_id: juice.id,
       quantity_received: 200,
       quantity_remaining: 190,
-      cost_at_purchase: 1.50,
+      cost_at_purchase: 1.5,
       expiration_date: new Date("2026-06-01"),
     },
   });
 
-  // 5. Create Transactions (Audit Layer)
+  // 4. Create Transactions (Audit Layer)
   await prisma.transaction.createMany({
     data: [
       {
         item_id: apple.id,
         batch_id: appleBatch.id,
+        type: TransactionType.PURCHASE,
+        quantity: 100,
+      },
+      {
+        item_id: water.id,
+        batch_id: waterBatch.id,
         type: TransactionType.PURCHASE,
         quantity: 100,
       },
@@ -177,13 +174,13 @@ async function main() {
         type: TransactionType.SALE,
         quantity: 30,
       },
-       {
+      {
         item_id: juice.id,
         batch_id: juiceBatch.id,
         type: TransactionType.PURCHASE,
         quantity: 200,
       },
-       {
+      {
         item_id: juice.id,
         batch_id: juiceBatch.id,
         type: TransactionType.SALE,
@@ -192,21 +189,17 @@ async function main() {
     ],
   });
 
-  // 6. Create Waste Record
+  // 5. Create Waste Record
   await prisma.waste.createMany({
     data: [
-      {
-        item_id: milk.id,
-        quantity: 1,
-        reason: WasteReason.DAMAGED,
-      },
+      { item_id: milk.id, quantity: 1, reason: WasteReason.DAMAGED },
       {
         item_id: bread.id,
-        batch_id: breadBatch.id, // Linked to the batch
+        batch_id: breadBatch.id,
         quantity: 2,
         reason: WasteReason.EXPIRED,
-      }
-    ]
+      },
+    ],
   });
 
   console.log("✅ Seeding completed.");

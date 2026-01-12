@@ -5,43 +5,60 @@ import { prismaClient } from "..";
 export const getItems = asyncHandler(async (req: Request, res: Response) => {
   const items = await prismaClient.item.findMany({
     include: {
-      category: {
-        select: {name: true},
-      },
       stock_batch: {
         select: {
+          quantity_received: true,
           quantity_remaining: true,
+          expiration_date: true,
+          received_at: true,
+          cost_at_purchase: true,
         },
-        where: { quantity_remaining: {gt:0}},
-      }
-    }
+      },
+      transaction: {
+        select: { type: true, quantity: true, transaction_date: true },
+      },
+      waste: {
+        select: { quantity: true, reason: true, created_at: true },
+      },
+    },
   });
 
-  const formattedItems = items.map((item) => {
-    const totalQuantity = item.stock_batch.reduce(
-      (sum, batch) => sum + Number(batch.quantity_remaining),
-      0
-    );
-      return  {
-    id: item.id,
-    name: item.name,
-    type: item.category?.name || null,
-    quatity_remaining: totalQuantity,
-    low_stock_threshold: item.low_stock_threshold,
-    uom: item.uom
-  };
-  });
-  res.status(200).json({ items: formattedItems });
+  res.status(200).json({ items: items });
 });
 
 export const getItemsByID = asyncHandler(
   async (req: Request, res: Response) => {
-    res.status(200).json({ message: "Retrieved Item by ID" });
+    const { id } = req.params;
+    let itemId = Number(id);
+
+    const requestedItem = await prismaClient.item.findUnique({
+      where: {
+        id: itemId,
+      },
+      include: {
+        stock_batch: {
+          select: {
+            quantity_received: true,
+            quantity_remaining: true,
+            expiration_date: true,
+            received_at: true,
+            cost_at_purchase: true,
+          },
+        },
+        transaction: {
+          select: { type: true, quantity: true, transaction_date: true },
+        },
+        waste: {
+          select: { quantity: true, reason: true, created_at: true },
+        },
+      },
+    });
+    res.status(200).json({ item: requestedItem });
   },
 );
 
 export const createItem = asyncHandler(async (req: Request, res: Response) => {
-  const { sku, name, uom, low_stock_threshold } = req.body;
+  const { sku, name, category, uom, low_stock_threshold } = req.body;
 
   const existingItem = await prismaClient.item.findUnique({ where: { sku } });
   if (existingItem) {
@@ -49,36 +66,26 @@ export const createItem = asyncHandler(async (req: Request, res: Response) => {
   }
 
   const item = await prismaClient.item.create({
-    data: {
-      sku,
-      name,
-      uom,
-      low_stock_threshold,
-    },
+    data: { sku, name, uom, category, low_stock_threshold },
   });
 
   res.status(201).json({ item });
 });
 
 export const updateItem = asyncHandler(async (req: Request, res: Response) => {
-  const { sku, name, uom, low_stock_threshold } = req.body;
+  const { id } = req.params;
+  const itemId = Number(id);
 
-  const item = await prismaClient.item.upsert({
-    where: {
-      sku,
-    },
-    update: {
-      sku,
-      name,
-      uom,
-      low_stock_threshold,
-    },
-    create: {
-      sku,
-      name,
-      uom,
-      low_stock_threshold,
-    },
+  if (isNaN(itemId)) {
+    res.status(400);
+    throw new Error("Invalid Item ID");
+  }
+
+  const { name, uom, low_stock_threshold, category } = req.body;
+
+  const item = await prismaClient.item.update({
+    where: { id: itemId },
+    data: { name, uom, low_stock_threshold, category },
   });
 
   res.status(201).json({ item });
@@ -86,7 +93,6 @@ export const updateItem = asyncHandler(async (req: Request, res: Response) => {
 
 export const deleteItem = asyncHandler(async (req: Request, res: Response) => {
   const { sku } = req.params;
-
   const item = await prismaClient.item.delete({ where: { sku } });
 
   res.status(200).json({ item });

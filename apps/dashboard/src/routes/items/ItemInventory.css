@@ -1,0 +1,435 @@
+/* Inventory Container */
+.inventory-container {
+  min-height: 100%;
+  background-color: var(--background);
+}
+
+.inventory-wrapper {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+@media (min-width: 640px) {
+  .inventory-wrapper {
+    padding: 2rem 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .inventory-wrapper {
+    padding: 2rem 2rem;
+  }
+}
+/* Header Section */
+.inventory-header {
+  margin-bottom: 2rem;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background-color: var(--background);
+  padding-bottom: 1rem;
+  padding-top: 1rem;
+  margin-top: -1rem;
+}
+
+.inventory-header-title {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.inventory-header h1 {
+  margin: 0;
+}
+
+.inventory-description {
+  color: var(--muted-foreground);
+  margin-bottom: 1.5rem;
+}
+
+.inventory-search-bar {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+@media (min-width: 640px) {
+  .inventory-search-bar {
+    flex-direction: row;
+    align-items: center;
+  }
+}
+
+.inventory-search-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+@media (min-width: 640px) {
+  .inventory-search-wrapper {
+    max-width: 28rem;
+  }
+}
+
+.inventory-search-icon {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 1.125rem;
+  height: 1.125rem;
+  color: var(--muted-foreground);
+  pointer-events: none;
+  transition: color 0.2s ease;
+}
+
+.inventory-search-input {
+  width: 100%;
+  height: 2.75rem;
+  padding: 0.75rem 1rem 0.75rem 2.75rem;
+  border: 2px solid var(--border);
+  border-radius: 12px;
+  background-color: var(--card);
+  font-size: 0.9375rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  outline: none;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.inventory-search-input:hover {
+  border-color: rgba(0, 0, 0, 0.2);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+}
+
+.inventory-search-input:focus {
+  border-color: var(--primary);
+  box-shadow:
+    0 0 0 4px rgba(3, 2, 19, 0.08),
+    0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.inventory-search-input:focus + .inventory-search-icon {
+  color: var(--primary);
+}
+
+.inventory-search-wrapper:has(input:focus) .inventory-search-icon {
+  color: var(--primary);
+}
+
+.inventory-view-toggles {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  background-color: var(--muted);
+  padding: 0.25rem;
+  border-radius: 10px;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.view-toggle-btn {
+  padding: 0.5rem 0.75rem;
+  border-radius: 8px;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  border: none;
+  cursor: pointer;
+  position: relative;
+}
+
+.view-toggle-btn svg {
+  width: 1.125rem;
+  height: 1.125rem;
+  transition: transform 0.2s ease;
+}
+
+.view-toggle-btn.active {
+  background-color: var(--card);
+  color: var(--primary);
+  box-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.12),
+    0 1px 2px rgba(0, 0, 0, 0.08);
+}
+
+.view-toggle-btn:not(.active) {
+  background-color: transparent;
+  color: var(--muted-foreground);
+}
+
+.view-toggle-btn:not(.active):hover {
+  background-color: rgba(255, 255, 255, 0.5);
+  color: var(--foreground);
+}
+
+.view-toggle-btn:active svg {
+  transform: scale(0.95);
+}
+
+/* Grid View */
+.inventory-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+@media (min-width: 768px) {
+  .inventory-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .inventory-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* List View */
+.inventory-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+/* Item Card */
+.inventory-item-card {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  background-color: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  position: relative;
+}
+
+.inventory-item-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 14px;
+  padding: 1px;
+  background: linear-gradient(135deg, transparent 0%, rgba(3, 2, 19, 0.1) 100%);
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.inventory-item-card:hover {
+  box-shadow:
+    0 12px 24px rgba(0, 0, 0, 0.12),
+    0 4px 8px rgba(0, 0, 0, 0.08);
+  transform: translateY(-4px) scale(1.01);
+  border-color: rgba(3, 2, 19, 0.2);
+}
+
+.inventory-item-card:hover::after {
+  opacity: 1;
+}
+
+.inventory-item-card:active {
+  transform: translateY(-2px) scale(1.005);
+}
+
+.inventory-item-card.list-view:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 6px 12px rgba(0, 0, 0, 0.08),
+    0 2px 4px rgba(0, 0, 0, 0.06);
+}
+
+.inventory-item-card.list-view:active {
+  transform: translateY(-1px);
+}
+
+.inventory-item-content {
+  padding: 1.25rem;
+}
+
+.inventory-item-grid-layout {
+  display: flex;
+  gap: 1rem;
+}
+
+.inventory-item-list-layout {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.inventory-item-image-wrapper {
+  flex-shrink: 0;
+}
+
+.inventory-item-image {
+  width: 5rem;
+  height: 5rem;
+  border-radius: 12px;
+  background: linear-gradient(135deg, var(--muted) 0%, rgba(236, 236, 240, 0.4) 100%);
+  overflow: hidden;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease;
+}
+
+.inventory-item-card:hover .inventory-item-image {
+  transform: scale(1.05);
+}
+
+.inventory-item-image.small {
+  width: 4rem;
+  height: 4rem;
+}
+
+.inventory-item-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.inventory-item-details {
+  flex: 1;
+  min-width: 0;
+}
+
+.inventory-item-details h3 {
+  margin-bottom: 0.5rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.inventory-item-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.inventory-item-quantity {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.inventory-item-quantity span:first-child {
+  font-size: 0.875rem;
+  color: var(--muted-foreground);
+}
+
+.inventory-item-quantity span:last-child {
+  font-weight: 500;
+}
+
+/* List View Specific Layout */
+.inventory-item-list-grid {
+  flex: 1;
+  min-width: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  align-items: center;
+}
+
+@media (min-width: 640px) {
+  .inventory-item-list-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.inventory-item-name-col {
+  grid-column: span 1;
+}
+
+@media (min-width: 640px) {
+  .inventory-item-name-col {
+    grid-column: span 2;
+  }
+}
+
+.inventory-item-name-col h3 {
+  margin-bottom: 0.25rem;
+}
+
+.inventory-item-status-col {
+  display: flex;
+  justify-content: flex-start;
+}
+
+@media (min-width: 640px) {
+  .inventory-item-status-col {
+    justify-content: flex-end;
+  }
+}
+
+/* Empty State */
+.inventory-empty-state {
+  text-align: center;
+  padding: 3rem 0;
+}
+
+.inventory-empty-icon {
+  display: inline-flex;
+  padding: 1rem;
+  border-radius: 9999px;
+  background-color: var(--muted);
+  margin-bottom: 1rem;
+}
+
+.inventory-empty-icon svg {
+  width: 2rem;
+  height: 2rem;
+  color: var(--muted-foreground);
+}
+
+.inventory-empty-state h3 {
+  margin-bottom: 0.5rem;
+}
+
+.inventory-empty-state p {
+  color: var(--muted-foreground);
+}
+
+/* Badge Styles */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  border: 1px solid;
+  padding: 0.25rem 0.625rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  white-space: nowrap;
+  width: fit-content;
+  letter-spacing: 0.01em;
+  transition: all 0.2s ease;
+}
+
+.badge.outline {
+  border-color: var(--border);
+  color: var(--foreground);
+  background-color: var(--background);
+}
+
+.badge.secondary {
+  border-color: transparent;
+  background-color: var(--secondary);
+  color: var(--secondary-foreground);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.badge.destructive {
+  border-color: transparent;
+  background-color: var(--destructive);
+  color: white;
+  box-shadow: 0 2px 4px rgba(212, 24, 61, 0.2);
+}

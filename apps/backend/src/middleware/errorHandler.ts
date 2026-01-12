@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { constants } from "./constants";
+import { Prisma } from "../../generated/prisma";
 
 export const errorHandler = (
   err: Error,
@@ -7,44 +8,48 @@ export const errorHandler = (
   res: Response,
   _next: NextFunction,
 ) => {
-  const statusCode = res.statusCode ? res.statusCode : 500;
+  let statusCode = res.statusCode !== 200 ? res.statusCode : 500;
+  let title = "Error";
+
+  if (err instanceof Prisma.PrismaClientKnownRequestError) {
+    if (err.code === "P2025") {
+      statusCode = constants.NOT_FOUND;
+      title = "Not Found";
+    }
+    if (err.code === "P2002") {
+      statusCode = constants.CONFLICT;
+      title = "Duplicate Entry";
+    }
+  }
+
   switch (statusCode) {
     case constants.VALIDATION_ERROR:
-      res.json({
-        title: "Validation Failed",
-        message: err.message,
-        stackTrace: err.stack,
-      });
-      break;
-    case constants.NOT_FOUND:
-      res.json({
-        title: "Not Found",
-        message: err.message,
-        stackTrace: err.stack,
-      });
+      title = "Validation Failed";
       break;
     case constants.UNAUTHORIZED:
-      res.json({
-        title: "Unauthorized",
-        message: err.message,
-        stackTrace: err.stack,
-      });
+      title = "Unauthorized";
       break;
     case constants.FORBIDDEN:
-      res.json({
-        title: "Forbidden",
-        message: err.message,
-        stackTrace: err.stack,
-      });
+      title = "Forbidden";
       break;
-    case constants.SERVER_ERROR:
-      res.json({
-        title: "Server Error",
-        message: err.message,
-        stackTrace: err.stack,
-      });
+    case constants.NOT_FOUND:
+      title = "Not Found";
+      break;
+    case constants.CONFLICT:
+      title = "Conflict / Duplicate Record";
+      break;
+    case constants.TOO_MANY_REQUESTS:
+      title = "Rate Limit Exceeded";
       break;
     default:
+      title = "Server Error";
+      statusCode = 500;
       break;
   }
+
+  res.status(statusCode).json({
+    title,
+    message: err.message,
+    stackTrace: process.env.NODE_ENV === "production" ? null : err.stack,
+  });
 };
