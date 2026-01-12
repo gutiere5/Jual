@@ -11,6 +11,7 @@
 ## Features
 
 ### Current Features
+
 - **Batch Management**: Monitor specific stock batches to track costs and manage expiration dates to prevent spoilage.
 - **Waste Tracking**: Dedicated logging for wasted items with specific reasons (Expired, Damaged, Theft, Mistake) to audit losses.
 - **Transaction Logging**: Record detailed history of Purchases, Sales, Returns, and Adjustments.
@@ -19,11 +20,12 @@
 - **Modern Dashboard**: A responsive management interface built with React andVite.
 
 ### Future Features
+
 - **Integrated Point of Sale (POS)**: A built-in checkout interface to process sales directly within the platform.
 - **Mobile Companion App**: A native mobile application for scanning barcodes and performing stock counts on the floor.
 - **E-commerce/Website Management**: Tools to sync inventory levels directly with public-facing online stores.
 
-##  Tech Stack
+## Tech Stack
 
 This project is a monorepo managed by **Turborepo**.
 
@@ -40,6 +42,7 @@ This project is a monorepo managed by **Turborepo**.
   - Docker (Database containerization)
 
 ## 📂 Project Structure
+
 ```text
 .
 ├── apps
@@ -50,7 +53,3 @@ This project is a monorepo managed by **Turborepo**.
 │   └── config-typescript  # Shared tsconfig configurations
 └── turbo.json     # Turborepo pipeline configuration
 ```
-
-
-
-

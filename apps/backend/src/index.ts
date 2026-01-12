@@ -1,4 +1,5 @@
 import express, { Express } from "express";
+import cors from "cors";
 import { DATABASE_URL, PORT } from "./secrets";
 import { errorHandler } from "./middleware/errorHandler";
 import rootRouter from "./routes";
@@ -7,6 +8,7 @@ import { PrismaClient } from "../generated/prisma/client";
 
 const app: Express = express();
 
+app.use(cors({ origin: "http://localhost:5173" }));
 app.use(errorHandler);
 app.use(express.json());
 app.use("/", rootRouter);

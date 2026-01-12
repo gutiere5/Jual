@@ -5,10 +5,16 @@ import { Outlet } from 'react-router-dom';
 function App() {
   return (
     <div className="app-layout">
-      <Header />
-      <SidePanel />
-      <Outlet />
-      <footer>footer</footer>
+      <header>
+        <Header />
+      </header>
+      <aside>
+        <SidePanel />
+      </aside>
+      <main>
+        <Outlet />
+      </main>
+      <footer>future footer</footer>
     </div>
   );
 }

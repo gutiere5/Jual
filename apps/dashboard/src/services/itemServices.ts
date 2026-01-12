@@ -1,45 +1,56 @@
-import type { Item } from '../types';
 import apiClient from '../api/client';
+import { Item } from '../schemas/item.schema';
+import { z } from 'zod';
 
 export const itemService = {
   createById: async () => {
-    const response = await apiClient.post<Item>('items');
-    console.log(response.config);
-    console.log(response.status);
-    console.log(response.statusText);
-    console.log(response.headers);
-    console.log(response.request);
+    const response = await apiClient.post<Item>('item');
 
     return response.data;
   },
 
   getAll: async () => {
-    const response = await apiClient.get<Item[]>('items');
+    try {
+      const response = await apiClient.get<{ items: unknown[] }>('item');
+      const parsed = z.array(Item).safeParse(response.data.items);
 
-    console.log(response.config);
-    console.log(response.status);
-    console.log(response.statusText);
-    console.log(response.headers);
-    console.log(response.request);
+      if (!parsed.success) {
+        throw new Error(
+          `Data from server does not match Item schema:\n${z.prettifyError(parsed.error)}`,
+        );
+      }
 
-    return response.data;
+      return parsed.data;
+    } catch (error: unknown) {
+      const errorMessage = error instanceof Error ? error.message : 'Failed to get all items';
+      throw new Error(`${errorMessage} (during getting all items from database)`);
+    }
   },
 
   getById: async (id: number) => {
-    const response = await apiClient.get<Item>(`items/${id}`);
+    try {
+      const response = await apiClient.get<{ item: unknown }>(`item/${id}`);
+      const parsed = Item.safeParse(response.data.item);
+      if (!parsed.success) {
+        throw new Error(
+          `Item ${id} data is corrupted or invalid: \n${z.prettifyError(parsed.error)}`,
+        );
+      }
 
-    return response.data;
+      return parsed.data;
+    } catch (error: unknown) {
+      const errorMessage = error instanceof Error ? error.message : 'Failed to get item by ID';
+      throw new Error(`${errorMessage} (during getting all Item from database)`);
+    }
   },
 
-  updateItem: async (updatedItem: Item): Promise<Item> => {
-    const response = await apiClient.put<Item>(`items/${updatedItem.id}`, updatedItem);
-
-    return response.data;
+  updateItem: async (updatedItem: Partial<Item> & { id: number }): Promise<Item> => {
+    await apiClient.put<unknown>(`item/${updatedItem.id}`, updatedItem);
+    return itemService.getById(updatedItem.id);
   },
 
   deleteItem: async (id: number) => {
     const response = await apiClient.delete<Item>(`items./${id}`);
-
     return response.data;
   },
 };

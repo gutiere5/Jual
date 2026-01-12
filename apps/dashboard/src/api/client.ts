@@ -23,7 +23,13 @@ apiClient.interceptors.response.use(
       // Logic for redirecting to login or refreshing tokens
     }
 
-    return Promise.reject(error);
+    const customError = {
+      message: error.response?.data?.message || error.message || 'An unexpected error occurred',
+      errorCode: error.response?.status || 500,
+      statusText: error.response?.statusText,
+    };
+
+    return Promise.reject(customError);
   },
 );
 

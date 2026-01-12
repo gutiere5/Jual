@@ -1,32 +1,35 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import { createBrowserRouter } from 'react-router';
+import { createBrowserRouter } from 'react-router-dom';
 import { RouterProvider } from 'react-router/dom';
-import ContentContainer, { contentItemsLoader } from './routes/ContentContainer.tsx';
+import ItemInventoryContainer, {
+  inventoryItemsAction,
+  inventoryItemsLoader,
+} from './routes/items/ItemInventory.tsx';
 import ErrorPage from './routes/ErrorPage.tsx';
 import App from './App.tsx';
-import ItemDetails, { itemLoader } from './routes/items/ItemDetails.tsx';
-import EditItem, { editItemAction } from './routes/items/EditItem.tsx';
+import ItemDetails, { itemLoader, itemEditAction } from './routes/items/ItemDetails.tsx';
+import Personnel from './routes/personnel/Personnel.tsx';
+import Settings from './routes/settingsPage/Settings.tsx';
 
 const router = createBrowserRouter([
   {
     Component: App,
     errorElement: <ErrorPage />,
     children: [
-      { index: true, Component: ContentContainer, loader: contentItemsLoader },
-
-      // { path: 'personal', Component: PersonalComponent }, // Add these
-      // { path: 'security', Component: SecurityComponent },
+      {
+        index: true,
+        Component: ItemInventoryContainer,
+        loader: inventoryItemsLoader,
+        action: inventoryItemsAction,
+      },
+      { path: 'personnel', Component: Personnel },
+      { path: 'settings', Component: Settings },
       {
         path: 'items/:itemId',
         Component: ItemDetails,
         loader: itemLoader,
-      },
-      {
-        path: 'items/:itemId/edit',
-        Component: EditItem,
-        loader: itemLoader,
-        action: editItemAction,
+        action: itemEditAction,
       },
     ],
   },
