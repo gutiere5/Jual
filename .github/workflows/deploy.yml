@@ -25,7 +25,7 @@ jobs:
           - app: backend
             context: .
             file: apps/backend/Dockerfile
-            image_name: jual_inventory-backend
+            image_name: jual-inventory-backend
           - app: dashboard
             context: .
             file: apps/dashboard/Dockerfile
@@ -48,7 +48,10 @@ jobs:
         id: meta
         uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
         with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          images: ${{ env.REGISTRY }}/${{ github.repository_owner }}/${{ matrix.image_name }}
+          tags: |
+            type=sha,format=long
+            type=raw,value=latest
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
