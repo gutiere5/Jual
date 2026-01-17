@@ -3,11 +3,16 @@ import { itemService } from '../../services/itemServices';
 import { Grid3x3, List, Search } from 'lucide-react';
 import { useMemo, useState } from 'react';
 import './ItemInventory.css';
-import type { Item } from '../../schemas/item.schema';
+import type { Item } from '@repo/types/item.schema';
 
 export const inventoryItemsLoader = async () => {
-  const items = await itemService.getAll();
-  return items;
+  try {
+    const items = await itemService.getAll();
+    return items;
+  } catch (error) {
+    console.error('Error loading items: ', error);
+    return [];
+  }
 };
 
 export const inventoryItemsAction = async ({ request }: LoaderFunctionArgs) => {

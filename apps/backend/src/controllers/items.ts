@@ -1,8 +1,10 @@
 import { Request, Response } from "express";
 import asyncHandler from "express-async-handler";
 import { prismaClient } from "..";
+import { logger } from "../middleware/logger";
 
 export const getItems = asyncHandler(async (req: Request, res: Response) => {
+  logger.info("Fetching all items");
   const items = await prismaClient.item.findMany({
     include: {
       stock_batch: {
@@ -23,6 +25,7 @@ export const getItems = asyncHandler(async (req: Request, res: Response) => {
     },
   });
 
+  logger.info(`Successfully fetched ${items.length} items`);
   res.status(200).json({ items: items });
 });
 
