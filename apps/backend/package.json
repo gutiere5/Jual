@@ -5,12 +5,13 @@
     "start": "npx nodemon",
     "build": "tsup src/index.ts",
     "dev": "tsup src/index.ts --watch --onSuccess \"npx nodemon\"",
-    "format": "prisma format ",
+    "db:format": "prisma format ",
     "generate": "prisma generate",
     "lint": "eslint . --max-warnings 0",
     "prebuild": "npm run generate",
     "predev": "npm run generate",
-    "studio": "prisma studio"
+    "studio": "prisma studio",
+    "format": "prettier --write ."
   },
   "dependencies": {
     "@prisma/adapter-pg": "^7.2.0",
@@ -23,7 +24,8 @@
     "jsonwebtoken": "^9.0.3",
     "nodemon": "^3.1.11",
     "pg": "^8.16.3",
-    "ts-node": "^10.9.2"
+    "ts-node": "^10.9.2",
+    "winston": "^3.19.0"
   },
   "devDependencies": {
     "@repo/eslint-config": "*",
