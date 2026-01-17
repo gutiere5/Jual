@@ -21,8 +21,11 @@ COPY --from=builder /app/out/full/ .
 COPY turbo.json turbo.json
 RUN npx turbo run build --filter=dashboard...
 
-# 4. Serve with Nginx
-FROM nginx:alpine AS runner
-COPY --from=installer /app/apps/dashboard/dist /usr/share/nginx/html
-EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]
+# 4. Serve with a lightweight Node static server on port 3001
+FROM node:24-alpine AS runner
+WORKDIR /app
+COPY --from=installer /app/apps/dashboard/dist ./dist
+# Install a small static server and run on port 3001
+RUN npm install -g serve@14.2.0
+EXPOSE 3001
+CMD ["serve", "-s", "dist", "-l", "3001"]
