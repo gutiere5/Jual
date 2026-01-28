@@ -88,6 +88,7 @@ const mockItems = [
     price: 24.99,
     vendor_id: 12,
     low_stock_threshold: 15,
+    image_url: "https://picsum.photos/500",
     category: "MEAT",
     meat_choices: ["CHORIZO", "TRIPA", "PASTOR"],
     stock_batch: [
@@ -123,6 +124,7 @@ const mockItems = [
     category: "MEAT",
     uom: "L",
     price: 5.99,
+    image_url: "https://picsum.photos/500",
     stock_batch: [
       {
         quantity_received: 50,
@@ -138,6 +140,7 @@ const mockItems = [
     category: "MEAT",
     uom: "EA",
     price: 1.5,
+    image_url: "https://picsum.photos/500",
     stock_batch: [
       {
         quantity_received: 150,

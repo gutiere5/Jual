@@ -1,1 +1,1 @@
-export * from "./components/MenuCard";
+export { MenuCard } from "./MenuCard/MenuCard";
