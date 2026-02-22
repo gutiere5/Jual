@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { constants } from "./constants";
 import { Prisma } from "../../generated/prisma";
+import { logger } from "./logger";
 
 export const errorHandler = (
   err: Error,
@@ -45,6 +46,11 @@ export const errorHandler = (
       title = "Server Error";
       statusCode = 500;
       break;
+  }
+
+  logger.error(`${title}: [${statusCode}] ${err.message}`);
+  if (process.env.NODE_ENV !== "production") {
+    logger.error(`Stack: ${err.stack}`);
   }
 
   res.status(statusCode).json({

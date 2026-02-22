@@ -1,0 +1,60 @@
+.app-container {
+  display: grid;
+  height: 100vh;
+  width: 100%;
+  font-family: sans-serif;
+
+  grid-template-rows: 100px auto;
+  grid-template-columns: auto auto auto;
+  grid-template-areas:
+    "header header header"
+    "sidebar workspace properties";
+}
+
+.header {
+  grid-area: header;
+}
+
+.sidebar {
+  grid-area: sidebar;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  overflow: hidden;
+}
+
+.workspace {
+  grid-area: workspace;
+  padding: 40px;
+  display: flex;
+  overflow: auto;
+}
+
+.workspace-top {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  gap: 10px;
+  z-index: 10;
+}
+
+.properties-panel {
+  grid-area: properties;
+}
+
+.grid-button {
+  padding: 8px 16px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.workspace-content {
+  width: var(--canvas-width, 1280px);
+  height: var(--canvas-height, 720px);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+}

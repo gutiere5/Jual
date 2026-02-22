@@ -1,0 +1,11 @@
+/* Import other component styles here */
+@import "./MenuCard/MenuCard.css";
+
+/* Global UI library styles */
+:root {
+  --ui-primary-color: #0070f3;
+  --ui-secondary-color: #f0f0f0;
+  --ui-border-radius: 4px;
+  --ui-spacing-sm: 0.5rem;
+  --ui-spacing-md: 1rem;
+}
