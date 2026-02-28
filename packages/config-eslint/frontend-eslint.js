@@ -1,4 +1,4 @@
-import { baseEslintConfig } from "./base-eslint.js";
+ import { baseEslintConfig } from "./base-eslint.js";
 import reactEslintConfig from "eslint-plugin-react";
 import reactHooks from "eslint-plugin-react-hooks";
 import reactRefresh from "eslint-plugin-react-refresh";

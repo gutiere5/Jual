@@ -22,7 +22,10 @@ export const baseEslintConfig = [
         "error",
         { argsIgnorePattern: "^_" },
       ],
+<<<<<<< HEAD
       "no-console": "error",
+=======
+>>>>>>> 1db1489 (Implemented Zoom, Multi-selection options, and Copy and Paste features in the Editor page.)
     },
   },
   {

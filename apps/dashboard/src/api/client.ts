@@ -1,7 +1,11 @@
 import axios, { type AxiosInstance, type AxiosError } from 'axios';
 
 const apiClient: AxiosInstance = axios.create({
+<<<<<<< HEAD
   baseURL: (import.meta.env.VITE_BACKEND_API_URL as string) || '/api',
+=======
+  baseURL: (import.meta.env.VITE_BACKEND_API_URL as string) || 'http://localhost:3000',
+>>>>>>> 1db1489 (Implemented Zoom, Multi-selection options, and Copy and Paste features in the Editor page.)
   timeout: (import.meta.env.VITE_BACKEND_API_TIMEOUT as number) || 5000,
   headers: { 'Content-Type': 'application/json' },
 });

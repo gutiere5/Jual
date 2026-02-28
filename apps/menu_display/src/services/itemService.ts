@@ -5,7 +5,11 @@ import { z } from 'zod';
 export const itemService = {
   getAll: async () => {
     try {
+<<<<<<< HEAD
       const response = await apiClient.get<{ items: Item[] }>('item');
+=======
+      const response = await apiClient.get<{ items: unknown[] }>("item");
+>>>>>>> 1db1489 (Implemented Zoom, Multi-selection options, and Copy and Paste features in the Editor page.)
       const parsed = z.array(Item).safeParse(response.data.items);
 
       if (!parsed.success) {
