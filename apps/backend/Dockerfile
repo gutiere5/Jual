@@ -21,7 +21,12 @@ RUN npm ci
 # 3. Build the app
 COPY --from=builder /app/out/full/ .
 COPY turbo.json turbo.json
+
+ENV DATABASE_URL="postgresql://dummy:dummy@localhost:5432/dummy"
+ENV JWT_SECRET="your_jwt_secret"
+
 RUN npx turbo run build --filter=backend...
+
 
 # 4. Final production image
 FROM base AS runner

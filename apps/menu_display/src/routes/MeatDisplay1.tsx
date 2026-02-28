@@ -4,7 +4,7 @@ import { MenuCard } from "@repo/ui";
 import "./MeatDisplay1.css";
 
 function MeatDisplay1() {
-  const items = useLoaderData() as Item[];
+  const items: Item[] = useLoaderData();
 
   return (
     <>

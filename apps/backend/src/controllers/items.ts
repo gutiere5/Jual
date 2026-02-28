@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import asyncHandler from "express-async-handler";
 import { prismaClient } from "..";
 import { logger } from "../middleware/logger";
-
+import { Item } from "@repo/types/item.schema";
 export const getItems = asyncHandler(async (req: Request, res: Response) => {
   logger.info("Fetching all items");
   const items = await prismaClient.item.findMany({
@@ -32,7 +32,7 @@ export const getItems = asyncHandler(async (req: Request, res: Response) => {
 export const getItemsByID = asyncHandler(
   async (req: Request, res: Response) => {
     const { id } = req.params;
-    let itemId = Number(id);
+    const itemId = Number(id);
 
     const requestedItem = await prismaClient.item.findUnique({
       where: {
@@ -61,7 +61,7 @@ export const getItemsByID = asyncHandler(
 );
 
 export const createItem = asyncHandler(async (req: Request, res: Response) => {
-  const { sku, name, category, uom, low_stock_threshold } = req.body;
+  const { sku, name, category, uom, low_stock_threshold } = req.body as Item;
 
   const existingItem = await prismaClient.item.findUnique({ where: { sku } });
   if (existingItem) {
@@ -84,7 +84,7 @@ export const updateItem = asyncHandler(async (req: Request, res: Response) => {
     throw new Error("Invalid Item ID");
   }
 
-  const { name, uom, low_stock_threshold, category } = req.body;
+  const { name, uom, low_stock_threshold, category } = req.body as Item;
 
   const item = await prismaClient.item.update({
     where: { id: itemId },
@@ -95,7 +95,7 @@ export const updateItem = asyncHandler(async (req: Request, res: Response) => {
 });
 
 export const deleteItem = asyncHandler(async (req: Request, res: Response) => {
-  const { sku } = req.params;
+  const { sku } = req.params as { sku: string };
   const item = await prismaClient.item.delete({ where: { sku } });
 
   res.status(200).json({ item });

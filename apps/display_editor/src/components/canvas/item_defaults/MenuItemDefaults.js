@@ -1,0 +1,36 @@
+import { ASSETS } from '../../../constants/assets';
+
+export const MENU_ITEM_DEFAULTS = {
+  type: 'menu',
+  width: 300,
+  height: 100,
+  fill: '#ffffff',
+  stroke: '#000000',
+  strokeWidth: 1,
+  cornerRadius: 0,
+  opacity: 1,
+  shadowBlur: 0,
+  showTitle: true,
+  showImage: true,
+  showDescription: true,
+  showPrice: true,
+  foodItem: ASSETS.food[0],
+  titleStyle: {
+    fontSize: 18,
+    fill: '#000000',
+    fontFamily: 'Calibri',
+    fontStyle: 'bold',
+  },
+  descriptionStyle: {
+    fontSize: 14,
+    fill: '#000000',
+    fontFamily: 'Calibri',
+    fontStyle: 'normal',
+  },
+  priceStyle: {
+    fontSize: 16,
+    fill: '#000000',
+    fontFamily: 'Calibri',
+    fontStyle: 'bold',
+  },
+};

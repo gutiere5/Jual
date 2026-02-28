@@ -5,7 +5,8 @@
     "PORT",
     "JWT_SECRET",
     "CORS_ORIGIN",
-    "JWT_EXPIRES_IN"
+    "JWT_EXPIRES_IN",
+    "NODE_ENV"
   ],
   "globalDependencies": [".env*"],
   "tasks": {
