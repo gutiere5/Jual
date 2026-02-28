@@ -1,0 +1,33 @@
+.workspace {
+  padding: 0px;
+  display: flex;
+  flex: 1;
+  overflow: auto;
+  justify-content: center;
+  align-items: center;
+}
+
+.workspace-top {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  gap: 10px;
+  z-index: 10;
+}
+
+.grid-button {
+  padding: 8px 16px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.workspace-content {
+  width: var(--canvas-width, 1280px);
+  height: var(--canvas-height, 720px);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+}

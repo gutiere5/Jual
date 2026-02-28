@@ -1,18 +1,29 @@
 {
   "name": "@repo/eslint-config",
-  "version": "0.0.0",
+  "version": "0.0.1",
+  "description": "A Shared Eslint configuration for the turborepo",
   "private": true,
+  "author": "Elber Gutierrez <elgu404@gmail.com>",
+  "type": "module",
+  "exports": {
+    "./base": "./base-eslint.js",
+    "./backend": "./backend-eslint.js",
+    "./frontend": "./frontend-eslint.js"
+  },
   "files": [
-    "library.js",
-    "next.js"
+    "base-eslint.js",
+    "backend-eslint.js",
+    "frontend-eslint.js"
   ],
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^7.1.0",
-    "@typescript-eslint/parser": "^7.1.0",
-    "@vercel/style-guide": "^5.2.0",
-    "eslint-config-prettier": "^9.1.0",
+    "@eslint/js": "^9.39.1",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "7.0.1",
+    "eslint-plugin-react-refresh": "^0.5.2",
+    "eslint-config-prettier": "^9.1.2",
     "eslint-config-turbo": "^2.0.0",
     "eslint-plugin-only-warn": "^1.1.0",
-    "typescript": "5.5.4"
+    "typescript-eslint": "^8.56.1",
+    "globals": "^17.4.0"
   }
 }

@@ -1,13 +1,8 @@
-import { Layer, Rect, Image as KonvaImage } from "react-konva";
-import useImage from "use-image";
+import { Layer, Rect, Image as KonvaImage } from 'react-konva';
+import useImage from 'use-image';
 
-export default function BackgroundLayer({
-  width,
-  height,
-  backgroundColor,
-  backgroundImage,
-}) {
-  const [image] = useImage(backgroundImage, "anonymous", "origin");
+export default function BackgroundLayer({ width, height, backgroundColor, backgroundImage }) {
+  const [image] = useImage(backgroundImage, 'anonymous', 'origin');
 
   return (
     <Layer listening={false}>

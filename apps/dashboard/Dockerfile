@@ -19,6 +19,12 @@ RUN npm ci
 # 3. Build
 COPY --from=builder /app/out/full/ .
 COPY turbo.json turbo.json
+
+ARG VITE_BACKEND_API_URL=/api
+ARG VITE_BACKEND_API_TIMEOUT=5000
+ENV VITE_BACKEND_API_URL=$VITE_BACKEND_API_URL
+ENV VITE_BACKEND_API_TIMEOUT=$VITE_BACKEND_API_TIMEOUT
+
 RUN npx turbo run build --filter=dashboard...
 
 # 4. Serve with a lightweight Node static server on port 3001

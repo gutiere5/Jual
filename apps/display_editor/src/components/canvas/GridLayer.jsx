@@ -1,5 +1,5 @@
-import { Layer, Line } from "react-konva";
-import { GRID_SIZE } from "../../constants/config";
+import { Layer, Line } from 'react-konva';
+import { GRID_SIZE } from '../../constants/config';
 
 export default function GridLayer({ width, height, visible = true }) {
   if (!visible) return null;
