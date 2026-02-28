@@ -1,25 +1,13 @@
 import { useItemHandlers } from "../../../hooks/useItemHandlers";
 import { Rect } from "react-konva";
 
-const RectItem = ({ item, onChange, onSelect, isEditing }) => {
-  const { getCommonProps } = useItemHandlers({
+const RectItem = ({ item, onChange }) => {
+  const { getItemHandlers } = useItemHandlers({
     item,
     onChange,
-    onSelect,
-    isEditing,
   });
 
-  return (
-    <Rect
-      {...getCommonProps()}
-      width={item.width}
-      height={item.height}
-      fill={item.fill || "transparent"}
-      stroke={item.stroke || "black"}
-      strokeWidth={item.strokeWidth || 1}
-      cornerRadius={item.cornerRadius || 0}
-    />
-  );
+  return <Rect id={item.instanceId} {...getItemHandlers()} {...item} />;
 };
 
 export default RectItem;

@@ -1,109 +1,49 @@
-import { useState } from "react";
-import "./App.css";
-import { Layer, Stage } from "react-konva";
-import Header from "./components/header/Header";
-import Sidebar from "./components/sidebar/Sidebar";
-import BackgroundLayer from "./components/canvas/BackgroundLayer";
-import GridLayer from "./components/canvas/GridLayer";
-import PropertiesPanel from "./components/propertiesPanel/PropertiesPanel";
-import useDragAndDrop from "./hooks/useDragAndDrop";
-import CanvasItem from "./components/canvas/CanvasItem";
+import './App.css';
+import Header from './components/header/Header';
+import Sidebar from './components/sidebar/Sidebar';
+import CanvasWorkspace from './components/canvas/CanvasWorkspace';
+import PropertiesPanel from './components/propertiesPanel/PropertiesPanel';
+import { useKeyboardShortcut } from './hooks/useKeyboardShortcut';
+import { useCanvasEditor } from './context/CanvasEditorContext';
 
 function App() {
-  const [items, setItems] = useState([]);
-  const [showGrid, setShowGrid] = useState(true);
-  const [selectedId, setSelectedId] = useState(null);
-  const { stageRef, handleDragOver, handleDrop } = useDragAndDrop(setItems);
+  const {
+    canvasItems,
+    selectedItem,
+    updateItem,
+    deleteItem,
+    loadProject,
+    pasteItem,
+    copySelectedItem,
+  } = useCanvasEditor();
 
-  // Canvas Dimensions
-  const [canvasWidth] = useState(1280);
-  const [canvasHeight] = useState(720);
-
-  const handleItemChange = (updatedItem) => {
-    setItems(
-      items.map((item) =>
-        item.instanceId === updatedItem.instanceId ? updatedItem : item,
-      ),
-    );
+  const handleProjectLoad = (loadedData) => {
+    loadProject(loadedData);
   };
 
-  const handleItemDelete = (id) => {
-    setItems(items.filter((item) => item.instanceId !== id));
-    setSelectedId(null);
-  };
-
-  const handleItemSelect = (id) => {
-    setSelectedId(id);
-  };
-
-  const handleStageClick = (e) => {
-    if (e.target === e.target.getStage()) {
-      setSelectedId(null);
-    }
-  };
+  useKeyboardShortcut([
+    [['Delete', 'Backspace'], () => deleteItem()],
+    [['c'], () => copySelectedItem()],
+    [['v'], (e) => pasteItem(e)],
+  ]);
 
   return (
     <div className="app-container">
       {/* Header */}
       <div className="header">
-        <Header />
+        <Header itemState={{ items: canvasItems }} onLoadProject={handleProjectLoad} />
       </div>
-      {/* Sidebar */}
-      <div className="sidebar">
+      <div className="app-main">
+        {/* Sidebar */}
         <Sidebar />
-      </div>
-      {/* Workspace */}
-      <div className="workspace">
-        <div className="workspace-top">
-          <button
-            className="grid-button"
-            onClick={() => setShowGrid(!showGrid)}
-          >
-            Grid {showGrid ? "Off" : "On"}
-          </button>
-        </div>
-        <div
-          className="workspace-content"
-          onDragOver={handleDragOver}
-          onDrop={handleDrop}
-        >
-          <Stage
-            width={canvasWidth}
-            height={canvasHeight}
-            ref={stageRef}
-            onMouseDown={handleStageClick}
-          >
-            <BackgroundLayer width={canvasWidth} height={canvasHeight} />
-            <GridLayer
-              width={canvasWidth}
-              height={canvasHeight}
-              visible={showGrid}
-            />
-            <Layer>
-              {items.map((item) => (
-                <CanvasItem
-                  key={item.instanceId}
-                  item={item}
-                  isEditing={false}
-                  isSelected={item.instanceId === selectedId}
-                  onSelect={handleItemSelect}
-                  onChange={handleItemChange}
-                />
-              ))}
-            </Layer>
-          </Stage>
-        </div>
-      </div>
-      {/* Properties Panel */}
-      <div className="properties-panel">
-        <PropertiesPanel
-          selectedItem={items.find((item) => item.instanceId === selectedId)}
-          onUpdate={handleItemChange}
-          onDelete={handleItemDelete}
-        />
+        {/* Workspace */}
+        <CanvasWorkspace />
+        {/* Properties Panel */}
+        <PropertiesPanel selectedItem={selectedItem} onUpdate={updateItem} onDelete={deleteItem} />
       </div>
     </div>
   );
 }
 
 export default App;
+// 78 Lines

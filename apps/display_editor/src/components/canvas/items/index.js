@@ -1,9 +1,13 @@
 import MenuItem from "./MenuItem";
-import TextItem from "./TextItem";
+import TypographyItem from "./TypographyItem";
 import RectItem from "./RectItem";
+import LineItem from "./LineItem";
+import CircleItem from "./CircleItem";
 
 export const ITEM_COMPONENTS = {
   menu: MenuItem,
-  text: TextItem,
+  text: TypographyItem,
   rect: RectItem,
+  line: LineItem,
+  circle: CircleItem,
 };
