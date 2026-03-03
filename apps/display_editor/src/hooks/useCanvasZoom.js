@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState } from 'react';
 
 const MIN_ZOOM = 0.25;
 const MAX_ZOOM = 4;
@@ -25,7 +25,7 @@ export const useCanvasZoom = (stageRef) => {
   };
 
   const handleWheel = (e) => {
-    if (!(e.evt.ctrlKey || e.evt.metaKey) )return;
+    if (!(e.evt.ctrlKey || e.evt.metaKey)) return;
 
     e.evt.preventDefault();
     const stage = stageRef.current;
@@ -39,9 +39,7 @@ export const useCanvasZoom = (stageRef) => {
 
     let direction = e.evt.deltaY < 0 ? 1 : -1;
 
-    const newScale = clamp(
-      direction > 0 ? oldScale * ZOOM_FACTOR : oldScale / ZOOM_FACTOR,
-    );
+    const newScale = clamp(direction > 0 ? oldScale * ZOOM_FACTOR : oldScale / ZOOM_FACTOR);
 
     setZoom(newScale);
     applyZoom(newScale);

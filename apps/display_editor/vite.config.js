@@ -1,16 +1,12 @@
-import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react";
-import { fileURLToPath } from "url";
-import path from "path";
-
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
 
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [
     react({
       babel: {
-        plugins: [["babel-plugin-react-compiler"]],
+        plugins: [['babel-plugin-react-compiler']],
       },
     }),
   ],

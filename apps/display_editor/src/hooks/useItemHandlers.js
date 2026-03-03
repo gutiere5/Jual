@@ -1,5 +1,4 @@
-import { useRef } from "react";
-import { GRID_SIZE } from "../constants/config";
+import { GRID_SIZE } from '../constants/config';
 
 export const useItemHandlers = ({ item, onChange }) => {
   const updateItem = (updates) => {

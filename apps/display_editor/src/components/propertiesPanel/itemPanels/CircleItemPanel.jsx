@@ -1,4 +1,4 @@
-import { PropertySection } from "../shared/PropertySection";
+import { PropertySection } from '../shared/PropertySection';
 
 const CircleItemPanel = ({ selectedItem, onUpdate }) => {
   return (
@@ -9,9 +9,7 @@ const CircleItemPanel = ({ selectedItem, onUpdate }) => {
           <input
             type="color"
             value={selectedItem?.fill}
-            onChange={(e) =>
-              onUpdate({ ...selectedItem, fill: e.target.value })
-            }
+            onChange={(e) => onUpdate({ ...selectedItem, fill: e.target.value })}
           />
         </div>
       </PropertySection>

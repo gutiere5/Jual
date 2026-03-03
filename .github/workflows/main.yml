@@ -1,58 +1,135 @@
-name: CI
+name: CI + Deploy
 
 on:
   push:
     branches: ["main"]
   pull_request:
+    branches: ["main"]
     types: [opened, synchronize, reopened]
+  workflow_dispatch:
+
+concurrency:
+  group: ci-deploy-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  REGISTRY: ghcr.io
+  DATABASE_URL: "postgresql://dummy:dummy@localhost:5432/dummy"
+  PORT: 3000
+  JWT_SECRET: "your_jwt_secret"
+  CORS_ORIGIN: "http://localhost:3000"
+  JWT_EXPIRES_IN: "1h"
+  NODE_ENV: "development"
 
 jobs:
-  build:
-    name: 🏗️ Build and Lint
+  ci:
+    name: Build and Lint
     timeout-minutes: 15
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
 
     steps:
-      - name: 📥 Check out code
+      - name: Check out code
         uses: actions/checkout@v5
         with:
           fetch-depth: 0
 
-      - name: 🟢 Setup Node.js environment
+      - name: Setup Node.js environment
         uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: "npm"
 
-      - name: 📦 Install Dependencies
+      - name: Install Dependencies
         run: |
-          echo "🚚 Installing dependencies with npm..."
+          echo "Installing dependencies with npm..."
           npm ci
           mkdir -p node_modules/.cache/turbo
-          echo "✅ Dependencies installed!"
+          echo "Dependencies installed!"
 
-      - name: ⚡ Cache turbo build setup
+      - name: Cache turbo build setup
         uses: actions/cache@v4
         with:
           path: .turbo
-          key: ${{ runner.os }}-turbo-${{ github.sha }}
+          key: ${{ runner.os }}-turbo-${{ hashFiles('package-lock.json', 'turbo.json') }}
           restore-keys: |
             ${{ runner.os }}-turbo-
 
-      - name: 🛠️ Generate Prisma Client
+      - name: Generate Prisma Client
         run: |
-          echo "🧬 Generating Prisma Client..."
+          echo "Generating Prisma Client..."
           npm run generate
-          echo "✨ Prisma Client ready!"
+          echo "Prisma Client ready!"
 
-      - name: 🚀 Run CI tasks
+      - name: Run CI tasks
         run: |
-          echo "🏃 Starting Turbo tasks (Build, Lint, Test)..."
+          echo "Starting Turbo tasks (Build, Lint, Test)..."
           npm run ci
-          echo "🎉 All CI tasks completed successfully!"
+          echo "All CI tasks completed successfully!"
 
-      - name: ✅ Summary
+      - name: Summary
         if: success()
         run: |
-          echo "### 🚀 CI Pipeline passed successfully!" >> $GITHUB_STEP_SUMMARY
+          echo "### CI Pipeline passed successfully!" >> $GITHUB_STEP_SUMMARY
           echo "The build, lint, and smoke tests were all verified. ✨" >> $GITHUB_STEP_SUMMARY
+
+  deploy:
+    name: Build and Push Images
+    needs: ci
+    if: ${{ needs.ci.result == 'success' && github.event_name != 'pull_request' && github.ref == 'refs/heads/main' }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+      attestations: write
+      id-token: write
+
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - app: backend
+            context: .
+            file: apps/backend/Dockerfile
+            image_name: jual-backend
+          - app: dashboard
+            context: .
+            file: apps/dashboard/Dockerfile
+            image_name: jual-dashboard
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to the Container registry
+        uses: docker/login-action@65b78e6e13532edd9afa3aa52ac7964289d1a9c1
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
+        with:
+          images: ${{ env.REGISTRY }}/${{ github.repository_owner }}/${{ matrix.image_name }}
+          tags: |
+            type=sha,format=long
+            type=raw,value=latest
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: ${{ matrix.context }}
+          file: ${{ matrix.file }}
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          build-args: |
+            DATABASE_URL=${{ env.DATABASE_URL }}
+            JWT_SECRET=${{ env.JWT_SECRET }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max

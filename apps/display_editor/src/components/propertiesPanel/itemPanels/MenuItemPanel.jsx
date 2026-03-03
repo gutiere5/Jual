@@ -1,13 +1,13 @@
-import { useState } from "react";
-import { PropertySection } from "../shared/PropertySection";
-import TypographyPanel from "./TypographyPanel";
-import "../PropertiesPanel.css";
+import { useState } from 'react';
+import { PropertySection } from '../shared/PropertySection';
+import TypographyPanel from './TypographyPanel';
+import '../PropertiesPanel.css';
 // import { ASSETS } from "../../../constants/assets";
-import { useMenuItems } from "../../../context/MenuItemContext";
+import { useMenuItems } from '../../../context/MenuItemContext';
 
 const MenuItemPanel = ({ selectedItem, onUpdate }) => {
-  const { menuItems, refreshMenuItems } = useMenuItems();
-  const [searchValue, setSearchValue] = useState("");
+  const { menuItems } = useMenuItems();
+  const [searchValue, setSearchValue] = useState('');
   const [filteredItems, setFilteredItems] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
 
@@ -31,7 +31,7 @@ const MenuItemPanel = ({ selectedItem, onUpdate }) => {
           <label>Select Item</label>
           <input
             type="text"
-            placeholder={selectedItem?.foodItem?.name || ""}
+            placeholder={selectedItem?.foodItem?.name || ''}
             className="search-input"
             value={searchValue}
             onChange={(e) => {
@@ -65,9 +65,7 @@ const MenuItemPanel = ({ selectedItem, onUpdate }) => {
             <input
               type="checkbox"
               checked={selectedItem?.showImage || false}
-              onChange={(e) =>
-                onUpdate({ ...selectedItem, showImage: e.target.checked })
-              }
+              onChange={(e) => onUpdate({ ...selectedItem, showImage: e.target.checked })}
             />
             <span className="checkbox-label">Show Image</span>
           </label>
@@ -75,9 +73,7 @@ const MenuItemPanel = ({ selectedItem, onUpdate }) => {
             <input
               type="checkbox"
               checked={selectedItem?.showTitle || false}
-              onChange={(e) =>
-                onUpdate({ ...selectedItem, showTitle: e.target.checked })
-              }
+              onChange={(e) => onUpdate({ ...selectedItem, showTitle: e.target.checked })}
             />
             <span className="checkbox-label">Show Title</span>
           </label>
@@ -98,9 +94,7 @@ const MenuItemPanel = ({ selectedItem, onUpdate }) => {
             <input
               type="checkbox"
               checked={selectedItem?.showPrice || false}
-              onChange={(e) =>
-                onUpdate({ ...selectedItem, showPrice: e.target.checked })
-              }
+              onChange={(e) => onUpdate({ ...selectedItem, showPrice: e.target.checked })}
             />
             <span className="checkbox-label">Show Price</span>
           </label>
@@ -111,9 +105,7 @@ const MenuItemPanel = ({ selectedItem, onUpdate }) => {
         <TypographyPanel
           title="Title Styles"
           selectedItem={selectedItem?.titleStyle}
-          onUpdate={(newStyle) =>
-            onUpdate({ ...selectedItem, titleStyle: newStyle })
-          }
+          onUpdate={(newStyle) => onUpdate({ ...selectedItem, titleStyle: newStyle })}
         />
       )}
 
@@ -121,9 +113,7 @@ const MenuItemPanel = ({ selectedItem, onUpdate }) => {
         <TypographyPanel
           title="Description Styles"
           selectedItem={selectedItem?.descriptionStyle}
-          onUpdate={(newStyle) =>
-            onUpdate({ ...selectedItem, descriptionStyle: newStyle })
-          }
+          onUpdate={(newStyle) => onUpdate({ ...selectedItem, descriptionStyle: newStyle })}
         />
       )}
 
@@ -131,9 +121,7 @@ const MenuItemPanel = ({ selectedItem, onUpdate }) => {
         <TypographyPanel
           title="Price Styles"
           selectedItem={selectedItem?.priceStyle}
-          onUpdate={(newStyle) =>
-            onUpdate({ ...selectedItem, priceStyle: newStyle })
-          }
+          onUpdate={(newStyle) => onUpdate({ ...selectedItem, priceStyle: newStyle })}
         />
       )}
 
@@ -143,7 +131,7 @@ const MenuItemPanel = ({ selectedItem, onUpdate }) => {
             <label>Background Color</label>
             <input
               type="color"
-              value={selectedItem?.fill || "#ffffff"}
+              value={selectedItem?.fill || '#ffffff'}
               onChange={(e) =>
                 onUpdate({
                   ...selectedItem,

@@ -1,4 +1,4 @@
-# Jual Inventory Manager
+# Jual
 
 ![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
 ![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
@@ -6,7 +6,7 @@
 ![Prisma](https://img.shields.io/badge/Prisma-3982CE?style=for-the-badge&logo=Prisma&logoColor=white)
 ![PostgreSQL](https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white)
 
-**Jual Inventory Manager** is a full-stack inventory tracking system designed for retail and food service businesses. It provides granular control over stock levels, spoilage, and vendor relationships, bridging the gap between simple counting and complex operational data.
+**Jual ** is a full-stack inventory tracking system designed for retail and food service businesses.
 
 ## Features
 
@@ -17,7 +17,7 @@
 - **Transaction Logging**: Record detailed history of Purchases, Sales, Returns, and Adjustments.
 - **Vendor Management**: Maintain supplier databases and link them directly to inventory items.
 - **User Management**: Track users and their roles.
-- **Modern Dashboard**: A responsive management interface built with React andVite.
+- **Dashboard**: A responsive management interface.
 
 ### Future Features
 
@@ -36,7 +36,7 @@ This project is a monorepo managed by **Turborepo**.
   - Node.js & Express
   - Prisma ORM
   - PostgreSQL
-  - JWT Authentication
+  - JWT Authentication (future)
 - **DevOps:**
   - TypeScript
   - Docker (Database containerization)
@@ -48,8 +48,10 @@ This project is a monorepo managed by **Turborepo**.
 ├── apps
 │   ├── backend    # Express server with Prisma ORM
 │   └── dashboard  # React frontend application
+|   └── ...
 ├── packages
 │   ├── config-eslint      # Shared ESLint configurations
 │   └── config-typescript  # Shared tsconfig configurations
+|   └── ...
 └── turbo.json     # Turborepo pipeline configuration
 ```

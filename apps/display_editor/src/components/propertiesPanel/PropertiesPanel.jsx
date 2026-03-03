@@ -1,7 +1,7 @@
-import "./PropertiesPanel.css";
-import { useState } from "react";
-import { PanelLeftOpen, X } from "lucide-react";
-import { ITEM_PANELS } from "./itemPanels/index";
+import './PropertiesPanel.css';
+import { useState } from 'react';
+import { PanelLeftOpen, X } from 'lucide-react';
+import { ITEM_PANELS } from './itemPanels/index';
 
 export default function PropertiesPanel({ selectedItem, onUpdate, onDelete }) {
   const [isOpen, setIsOpen] = useState(true);
@@ -10,11 +10,9 @@ export default function PropertiesPanel({ selectedItem, onUpdate, onDelete }) {
     let SpecificItemPanel = ITEM_PANELS[selectedItem?.type];
 
     if (!SpecificItemPanel) {
-      SpecificItemPanel = ITEM_PANELS["canvas"];
+      SpecificItemPanel = ITEM_PANELS['canvas'];
     }
-    return (
-      <SpecificItemPanel selectedItem={selectedItem} onUpdate={onUpdate} />
-    );
+    return <SpecificItemPanel selectedItem={selectedItem} onUpdate={onUpdate} />;
   };
 
   const togglePropertiesPanel = () => {
@@ -23,7 +21,7 @@ export default function PropertiesPanel({ selectedItem, onUpdate, onDelete }) {
 
   return (
     <>
-      <div className={`properties-container ${isOpen ? "open" : "closed"}`}>
+      <div className={`properties-container ${isOpen ? 'open' : 'closed'}`}>
         <button className="close-button" onClick={togglePropertiesPanel}>
           <X size={16} />
         </button>

@@ -1,4 +1,4 @@
-import { ITEM_TYPE_DEFAULTS } from "../components/canvas/item_defaults";
+import { ITEM_TYPE_DEFAULTS } from '../components/canvas/item_defaults';
 
 export const createCanvasItem = (itemData, position) => {
   const typeDefaults = ITEM_TYPE_DEFAULTS[itemData.type] || {};

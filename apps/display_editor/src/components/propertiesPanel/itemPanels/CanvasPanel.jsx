@@ -1,5 +1,5 @@
-import { PropertySection } from "../shared/PropertySection";
-import { useCanvasEditor } from "../../../context/CanvasEditorContext";
+import { PropertySection } from '../shared/PropertySection';
+import { useCanvasEditor } from '../../../context/CanvasEditorContext';
 
 const CanvasPanel = () => {
   const { canvasSettings, updateCanvasSettings } = useCanvasEditor();
@@ -12,9 +12,7 @@ const CanvasPanel = () => {
           <input
             type="number"
             value={canvasSettings.width}
-            onChange={(e) =>
-              updateCanvasSettings({ width: Number(e.target.value) })
-            }
+            onChange={(e) => updateCanvasSettings({ width: Number(e.target.value) })}
           />
         </div>
 
@@ -23,9 +21,7 @@ const CanvasPanel = () => {
           <input
             type="number"
             value={canvasSettings.height}
-            onChange={(e) =>
-              updateCanvasSettings({ height: Number(e.target.value) })
-            }
+            onChange={(e) => updateCanvasSettings({ height: Number(e.target.value) })}
           />
         </div>
 
@@ -34,9 +30,7 @@ const CanvasPanel = () => {
           <input
             type="color"
             value={canvasSettings.backgroundColor}
-            onChange={(e) =>
-              updateCanvasSettings({ backgroundColor: e.target.value })
-            }
+            onChange={(e) => updateCanvasSettings({ backgroundColor: e.target.value })}
           />
         </div>
       </PropertySection>

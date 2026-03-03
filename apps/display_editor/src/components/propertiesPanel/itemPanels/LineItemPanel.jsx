@@ -1,4 +1,4 @@
-import { PropertySection } from "../shared/PropertySection";
+import { PropertySection } from '../shared/PropertySection';
 
 const LineItemPanel = ({ selectedItem, onUpdate }) => {
   return (
@@ -9,9 +9,7 @@ const LineItemPanel = ({ selectedItem, onUpdate }) => {
           <input
             type="color"
             value={selectedItem?.stroke}
-            onChange={(e) =>
-              onUpdate({ ...selectedItem, stroke: e.target.value })
-            }
+            onChange={(e) => onUpdate({ ...selectedItem, stroke: e.target.value })}
           />
         </div>
       </PropertySection>

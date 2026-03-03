@@ -1,12 +1,10 @@
-import apiClient from "../api/client";
+import apiClient from '../api/client';
 
-const ITEMS_CACHE_KEY = "display_editor_items_cache_v1";
-const ITEMS_CACHE_TIME_KEY = "display_editor_items_cache_time_v1";
+const ITEMS_CACHE_KEY = 'display_editor_items_cache_v1';
+const ITEMS_CACHE_TIME_KEY = 'display_editor_items_cache_time_v1';
 
 // Optional TTL (default 24h). Set to 0 to never expire.
-const ITEMS_CACHE_TTL_MS = Number(
-  import.meta.env.VITE_ITEMS_CACHE_TTL_MS ?? 24 * 60 * 60 * 1000,
-);
+const ITEMS_CACHE_TTL_MS = Number(import.meta.env.VITE_ITEMS_CACHE_TTL_MS ?? 24 * 60 * 60 * 1000);
 
 const readCache = () => {
   try {
@@ -14,8 +12,7 @@ const readCache = () => {
     const time = Number(localStorage.getItem(ITEMS_CACHE_TIME_KEY) || 0);
     if (!raw) return null;
 
-    const isExpired =
-      ITEMS_CACHE_TTL_MS > 0 && Date.now() - time > ITEMS_CACHE_TTL_MS;
+    const isExpired = ITEMS_CACHE_TTL_MS > 0 && Date.now() - time > ITEMS_CACHE_TTL_MS;
 
     if (isExpired) {
       localStorage.removeItem(ITEMS_CACHE_KEY);
@@ -43,10 +40,8 @@ export const menuItemService = {
       if (cached) return cached;
     }
 
-    const response = await apiClient.get("/item");
-    const parsedItems = Array.isArray(response.data)
-      ? response.data
-      : (response.data?.items ?? []);
+    const response = await apiClient.get('/item');
+    const parsedItems = Array.isArray(response.data) ? response.data : (response.data?.items ?? []);
 
     writeCache(parsedItems);
     return parsedItems;
