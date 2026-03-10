@@ -9,7 +9,7 @@ export default function ErrorPage() {
   let errorStatus: number | string | undefined;
 
   if (isRouteErrorResponse(error)) {
-    errorMessage = error.data || error.statusText;
+    errorMessage =  error.statusText;
     errorStatus = error.status;
   } else if (error instanceof Error) {
     errorMessage = error.message;

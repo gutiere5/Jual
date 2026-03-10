@@ -17,7 +17,7 @@ export const inventoryItemsLoader = async () => {
 
 export const inventoryItemsAction = async ({ request }: LoaderFunctionArgs) => {
   const formData = await request.formData();
-  const itemId = formData.get('itemId');
+  const itemId = formData.get('itemId') as string;
 
   return redirect(`/items/${itemId}`);
 };
@@ -25,7 +25,7 @@ export const inventoryItemsAction = async ({ request }: LoaderFunctionArgs) => {
 const ItemInventoryContainer = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
-  const items = useLoaderData() as Item[];
+  const items: Item[] = useLoaderData();
 
   const filteredItems = useMemo(() => {
     if (!items) return [];

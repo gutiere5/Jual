@@ -1,4 +1,4 @@
-import { PropertySection } from "../shared/PropertySection";
+import { PropertySection } from '../shared/PropertySection';
 
 const RectItemPanel = ({ selectedItem, onUpdate }) => {
   return (
@@ -10,9 +10,7 @@ const RectItemPanel = ({ selectedItem, onUpdate }) => {
           <input
             type="color"
             value={selectedItem?.fill}
-            onChange={(e) =>
-              onUpdate({ ...selectedItem, fill: e.target.value })
-            }
+            onChange={(e) => onUpdate({ ...selectedItem, fill: e.target.value })}
           />
         </div>
 
@@ -22,9 +20,7 @@ const RectItemPanel = ({ selectedItem, onUpdate }) => {
           <input
             type="color"
             value={selectedItem?.stroke}
-            onChange={(e) =>
-              onUpdate({ ...selectedItem, stroke: e.target.value })
-            }
+            onChange={(e) => onUpdate({ ...selectedItem, stroke: e.target.value })}
           />
         </div>
 
@@ -49,9 +45,7 @@ const RectItemPanel = ({ selectedItem, onUpdate }) => {
           <input
             type="number"
             value={selectedItem?.width}
-            onChange={(e) =>
-              onUpdate({ ...selectedItem, width: parseFloat(e.target.value) })
-            }
+            onChange={(e) => onUpdate({ ...selectedItem, width: parseFloat(e.target.value) })}
           />
         </div>
 
@@ -61,9 +55,7 @@ const RectItemPanel = ({ selectedItem, onUpdate }) => {
           <input
             type="number"
             value={selectedItem?.height}
-            onChange={(e) =>
-              onUpdate({ ...selectedItem, height: parseFloat(e.target.value) })
-            }
+            onChange={(e) => onUpdate({ ...selectedItem, height: parseFloat(e.target.value) })}
           />
         </div>
 
@@ -109,9 +101,7 @@ const RectItemPanel = ({ selectedItem, onUpdate }) => {
           <input
             type="checkbox"
             checked={selectedItem?.dashEnabled}
-            onChange={(e) =>
-              onUpdate({ ...selectedItem, dashEnabled: e.target.checked })
-            }
+            onChange={(e) => onUpdate({ ...selectedItem, dashEnabled: e.target.checked })}
           />
         </div>
       </PropertySection>

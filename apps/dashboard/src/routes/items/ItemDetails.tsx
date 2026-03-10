@@ -55,10 +55,10 @@ export const itemEditAction = async ({ request, params }: LoaderFunctionArgs) =>
 };
 
 function ItemDetails() {
-  const item = useLoaderData() as Item;
+  const item: Item = useLoaderData();
   const [isEditing, setIsEditing] = useState(false);
   const navigate = useNavigate();
-  const fetcher = useFetcher();
+  const fetcher = useFetcher<typeof itemEditAction>();
   const isSubmitting = fetcher.state === 'submitting';
   const actionData = fetcher.data;
   const lastProcessedData = useRef<unknown>(null);
@@ -111,7 +111,7 @@ function ItemDetails() {
         {/* Header */}
         <div className="item-details-header-new">
           <div className="header-left">
-            <button className="back-button-new" onClick={() => navigate('/')}>
+            <button className="back-button-new" onClick={() => void navigate('/')}>
               <ArrowLeft />
             </button>
             <div className="header-title-section">

@@ -1,8 +1,8 @@
-import { DraggableItem } from "./DraggableItem";
-import { ASSETS } from "../../constants/assets";
-import { useState } from "react";
-import { X, PanelLeftOpen } from "lucide-react";
-import "./Sidebar.css";
+import { DraggableItem } from './DraggableItem';
+import { ASSETS } from '../../constants/assets';
+import { useState } from 'react';
+import { X, PanelLeftOpen } from 'lucide-react';
+import './Sidebar.css';
 
 export default function Sidebar() {
   const [isOpen, setIsOpen] = useState(true);
@@ -12,15 +12,11 @@ export default function Sidebar() {
   };
   return (
     <>
-      <div className={`sidebar ${isOpen ? "open" : "closed"}`}>
+      <div className={`sidebar ${isOpen ? 'open' : 'closed'}`}>
         {/* Header */}
         <div className="sidebar-header">
           <h3>Drag assets to the canvas</h3>
-          <button
-            className="toggle-close"
-            onClick={toggleSidebar}
-            aria-label="Close Sidebar"
-          >
+          <button className="toggle-close" onClick={toggleSidebar} aria-label="Close Sidebar">
             <X />
           </button>
         </div>
@@ -30,12 +26,7 @@ export default function Sidebar() {
           <div className="sidebar-section">
             <h3 className="section-title">Uploads</h3>
             <div className="upload-area">
-              <input
-                type="file"
-                id="file-upload"
-                accept="image/*"
-                className="file-input"
-              />
+              <input type="file" id="file-upload" accept="image/*" className="file-input" />
               <label htmlFor="file-upload" className="upload-button ">
                 <span> Upload Image</span>
               </label>
@@ -56,12 +47,8 @@ export default function Sidebar() {
                       alt={ASSETS.food[0].name}
                     />
                     <div className="menu-item-details">
-                      <div className="menu-item-name">
-                        {ASSETS.food[0].name}
-                      </div>
-                      <div className="menu-item-price">
-                        {ASSETS.food[0].price}
-                      </div>
+                      <div className="menu-item-name">{ASSETS.food[0].name}</div>
+                      <div className="menu-item-price">{ASSETS.food[0].price}</div>
                     </div>
                   </div>
                 )}
@@ -99,11 +86,7 @@ export default function Sidebar() {
 
       {!isOpen && (
         <div className="closed-sidebar-container">
-          <button
-            className="toggle-open"
-            onClick={toggleSidebar}
-            aria-label="Open Sidebar"
-          >
+          <button className="toggle-open" onClick={toggleSidebar} aria-label="Open Sidebar">
             <PanelLeftOpen />
           </button>
         </div>

@@ -1,17 +1,15 @@
-import { PropertySection } from "../shared/PropertySection";
+import { PropertySection } from '../shared/PropertySection';
 
 const TypographyPanel = ({ title, selectedItem, onUpdate }) => {
   return (
-    <PropertySection title={title || "Typography Settings"}>
+    <PropertySection title={title || 'Typography Settings'}>
       {selectedItem?.text !== undefined && (
         <div>
           <label>Text Content</label>
           <input
             type="text"
             value={selectedItem?.text}
-            onChange={(e) =>
-              onUpdate({ ...selectedItem, text: e.target.value })
-            }
+            onChange={(e) => onUpdate({ ...selectedItem, text: e.target.value })}
           />
         </div>
       )}
@@ -20,9 +18,7 @@ const TypographyPanel = ({ title, selectedItem, onUpdate }) => {
         <input
           type="number"
           value={selectedItem.fontSize}
-          onChange={(e) =>
-            onUpdate({ ...selectedItem, fontSize: parseInt(e.target.value) })
-          }
+          onChange={(e) => onUpdate({ ...selectedItem, fontSize: parseInt(e.target.value) })}
         />
       </div>
 
@@ -35,11 +31,7 @@ const TypographyPanel = ({ title, selectedItem, onUpdate }) => {
         />
         <div>
           <label>Font Family</label>
-          <select
-            onChange={(e) =>
-              onUpdate({ ...selectedItem, fontFamily: e.target.value })
-            }
-          >
+          <select onChange={(e) => onUpdate({ ...selectedItem, fontFamily: e.target.value })}>
             <option value="Calibri">Calibri</option>
             <option value="Arial">Arial</option>
             <option value="Helvetica">Helvetica</option>
@@ -51,9 +43,7 @@ const TypographyPanel = ({ title, selectedItem, onUpdate }) => {
           <label>Font Weight</label>
           <select
             value={selectedItem.fontStyle}
-            onChange={(e) =>
-              onUpdate({ ...selectedItem, fontStyle: e.target.value })
-            }
+            onChange={(e) => onUpdate({ ...selectedItem, fontStyle: e.target.value })}
           >
             <option value="normal">Normal</option>
             <option value="bold">Bold</option>

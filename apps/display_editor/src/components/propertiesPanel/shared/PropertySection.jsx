@@ -1,4 +1,4 @@
-import "../PropertiesPanel.css";
+import '../PropertiesPanel.css';
 
 export const PropertySection = ({ title, children }) => {
   return (

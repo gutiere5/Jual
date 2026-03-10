@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useRef, useState } from 'react';
+import { createContext, useContext, useState } from 'react';
 import { GRID_SIZE } from '../constants/config';
 
 const CanvasEditorContext = createContext();

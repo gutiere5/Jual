@@ -1,5 +1,5 @@
-import { useItemHandlers } from "../../../hooks/useItemHandlers";
-import { Text } from "react-konva";
+import { useItemHandlers } from '../../../hooks/useItemHandlers';
+import { Text } from 'react-konva';
 
 const TypographyItem = ({ item, onChange }) => {
   const { getItemHandlers } = useItemHandlers({

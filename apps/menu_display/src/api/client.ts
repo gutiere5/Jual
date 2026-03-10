@@ -1,14 +1,14 @@
-import axios from "axios";
+import axios, { type AxiosInstance, type AxiosError } from "axios";
 
-const apiClient = axios.create({
-  baseURL: import.meta.env.VITE_BACKEND_API_URL,
-  timeout: import.meta.env.VITE_BACKEND_API_TIMEOUT,
+const apiClient: AxiosInstance = axios.create({
+  baseURL: import.meta.env.VITE_BACKEND_API_URL as string || "http://localhost:3000",
+  timeout: import.meta.env.VITE_BACKEND_API_TIMEOUT as number || 5000,
   headers: { "Content-Type": "application/json" },
 });
 
 apiClient.interceptors.request.use(
   (config) => config,
-  (error) => {
+  (error: AxiosError) => {
     console.error("Request Error:", error);
     return Promise.reject(error);
   },
@@ -16,23 +16,14 @@ apiClient.interceptors.request.use(
 
 apiClient.interceptors.response.use(
   (response) => response,
-  (error) => {
+  (error: AxiosError) => {
     console.error("Response Error:", error.response || error.message);
 
     if (error.response?.status === 401) {
       // Logic for redirecting to login or refreshing tokens
     }
 
-    const customError = {
-      message:
-        error.response?.data?.message ||
-        error.message ||
-        "An unexpected error occurred",
-      errorCode: error.response?.status || 500,
-      statusText: error.response?.statusText,
-    };
-
-    return Promise.reject(customError);
+    return Promise.reject(error);
   },
 );
 

@@ -1,12 +1,12 @@
-import { createContext, useContext, useEffect, useState } from "react";
-import { menuItemService } from "../services/menuItemService";
+import { createContext, useContext, useEffect, useState } from 'react';
+import { menuItemService } from '../services/menuItemService';
 
 const MenuItemContext = createContext();
 
 export const useMenuItems = () => {
   const context = useContext(MenuItemContext);
   if (!context) {
-    throw new Error("useMenuItems must be used within MenuItemProvider");
+    throw new Error('useMenuItems must be used within MenuItemProvider');
   }
   return context;
 };
@@ -19,11 +19,16 @@ export const MenuItemProvider = ({ children }) => {
       const fetchedMenuItems = await menuItemService.getAll({ forceRefresh });
       setMenuItems(fetchedMenuItems);
     } catch (error) {
-      console.error("Error fetching menu items:", error);
+      console.error('Error fetching menu items:', error);
     }
   };
+
   useEffect(() => {
-    fetchMenuItems();
+    const loadMenuItems = async () =>{
+      await fetchMenuItems();
+
+    }
+    loadMenuItems();
   }, []);
 
   const refreshMenuItems = () => fetchMenuItems(true);
