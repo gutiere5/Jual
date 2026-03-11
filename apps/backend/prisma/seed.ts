@@ -7,14 +7,13 @@ import {
 } from "../generated/prisma/client";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { DATABASE_URL } from "../src/secrets";
+import { logger } from "../src/middleware/logger";
 
 const connectionString = `${DATABASE_URL}`;
 const adapter = new PrismaPg({ connectionString });
 const prisma = new PrismaClient({ adapter });
 
 async function main() {
-  console.log("🌱 Starting seed...");
-
   // Create a Default User
   await prisma.user.upsert({
     where: { email: "admin@example.com" },
@@ -264,13 +263,11 @@ async function main() {
       },
     ],
   });
-
-  console.log("✅ Seeding completed.");
 }
 
 main()
-  .catch((e) => {
-    console.error(e);
+  .catch((e: Error) => {
+    logger.error("Error seeding database", { error: e });
     process.exit(1);
   })
   .finally(async () => {

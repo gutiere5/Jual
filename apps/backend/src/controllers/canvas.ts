@@ -1,0 +1,102 @@
+import { Request, Response } from "express";
+import asyncHandler from "express-async-handler";
+import { logger } from "../middleware/logger";
+import { prismaClient } from "..";
+import { CanvasFileData } from "@repo/types/canvasItem.schema";
+
+type CanvasBody = Pick<CanvasFileData, "name" | "content">;
+
+export const getCanvas = asyncHandler(async (req: Request, res: Response) => {
+  logger.info("Fetching canvas data");
+  const canvasData = await prismaClient.canvas.findMany();
+  logger.info(`Successfully fetched canvas data: ${canvasData.length} entries`);
+  res.status(200).json({ canvasData: canvasData });
+});
+
+export const getCanvasByID = asyncHandler(
+  async (req: Request, res: Response) => {
+    logger.info("Fetching Canvas data by ID");
+    const { id } = req.params;
+    const canvasId = Number(id);
+
+    const requestedCanvas = await prismaClient.canvas.findUnique({
+      where: {
+        id: canvasId,
+      },
+    });
+    logger.info(`Successfully fetched canvas data for ID: ${canvasId}`);
+    res.status(200).json({ canvas: requestedCanvas });
+  },
+);
+
+export const createCanvas = asyncHandler(
+  async (req: Request, res: Response) => {
+    logger.info("Creating new canvas");
+    const { name, content } = req.body as CanvasFileData;
+
+    const existingCanvas = await prismaClient.canvas.findUnique({
+      where: { name: name },
+    });
+
+    if (existingCanvas) {
+      logger.warn(`Attempt to create canvas with existing name: ${name}`);
+      throw new Error("Canvas with this name already exists");
+    }
+
+    const newCanvas = await prismaClient.canvas.create({
+      data: {
+        name: name,
+        content: content,
+      },
+    });
+
+    logger.info(`Successfully created canvas with ID: ${newCanvas.id}`);
+    res.status(201).json({ newCanvas });
+  },
+);
+
+export const updateCanvas = asyncHandler(
+  async (req: Request<{ id: string }, unknown, CanvasBody>, res: Response) => {
+    logger.info("Updating canvas");
+
+    const { id } = req.params;
+    const canvasId = Number(id);
+
+    if (isNaN(canvasId)) {
+      logger.warn(`Invalid canvas ID provided: ${id}`);
+      res.status(400).json({ error: "Invalid canvas ID" });
+      throw new Error("Invalid canvas ID");
+    }
+
+    const { name, content } = req.body;
+
+    const updatedCanvas = await prismaClient.canvas.update({
+      where: { id: canvasId },
+      data: { name, content },
+    });
+
+    logger.info(`Successfully updated canvas with ID: ${updatedCanvas.id}`);
+    res.status(201).json({ updatedCanvas });
+  },
+);
+
+export const deleteCanvas = asyncHandler(
+  async (req: Request, res: Response) => {
+    logger.info("Deleting canvas");
+    const { id } = req.params as { id: string };
+    const canvasId = Number(id);
+
+    if (isNaN(canvasId)) {
+      logger.warn(`Invalid canvas ID provided: ${id}`);
+      res.status(400).json({ error: "Invalid canvas ID" });
+      throw new Error("Invalid canvas ID");
+    }
+
+    const canvas = await prismaClient.canvas.delete({
+      where: { id: canvasId },
+    });
+
+    logger.info(`Successfully deleted canvas with ID: ${id}`);
+    res.status(200).json({ canvas });
+  },
+);
