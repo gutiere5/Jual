@@ -1,7 +1,7 @@
 import axios, { type AxiosInstance, type AxiosError } from 'axios';
 
 const apiClient: AxiosInstance = axios.create({
-  baseURL: (import.meta.env.VITE_BACKEND_API_URL as string) || 'http://localhost:3000',
+  baseURL: (import.meta.env.VITE_BACKEND_API_URL as string) || 'http://192.168.12.11:3000',
   timeout: (import.meta.env.VITE_BACKEND_API_TIMEOUT as number) || 5000,
   headers: { 'Content-Type': 'application/json' },
 });
