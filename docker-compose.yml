@@ -1,12 +1,12 @@
 services:
-  db:
+  postgres_db:
     image: postgres:17-alpine
     container_name: jual_postgres_db
     restart: always
     deploy:
       resources:
         limits:
-          cpus: "1.0"
+          cpus: '1.0'
           memory: 1G
     environment:
       POSTGRES_USER: ${DB_USER:-admin}
@@ -18,14 +18,16 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U admin -d jual_db"]
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-admin} -d ${DB_NAME:-jual_db}"]
       interval: 10s
       timeout: 5s
       retries: 5
+    networks:
+      - default
 
   backend:
-    image: ghcr.io/gutiere5/jual-inventory-backend:latest
-    container_name: jual_inventory_backend
+    image: ghcr.io/gutiere5/jual-backend:latest
+    container_name: jual-backend
     restart: always
     environment:
       DATABASE_URL: "postgresql://${DB_USER}:${DB_PASSWORD}@postgres_db:5432/${DB_NAME}?schema=public"
@@ -37,20 +39,30 @@ services:
     ports:
       - "3000:3000"
     depends_on:
-      db:
+     postgres_db:
         condition: service_healthy
+    networks:
+      - default
+      - proxy_shared 
 
   dashboard:
-    image: ghcr.io/gutiere5/jual-inventory-dashboard:latest
-    container_name: jual_inventory_dashboard
+    image: ghcr.io/gutiere5/jual-dashboard:latest
+    container_name: jual-dashboard
     restart: always
     environment:
-      VITE_BACKEND_API_URL: ${BACKEND_API_URL:-http://localhost:3000}
+      VITE_BACKEND_API_URL: ${BACKEND_API_URL:-/api}
       VITE_BACKEND_API_TIMEOUT: 5000
     ports:
       - "3001:3001"
     depends_on:
       - backend
+    networks:
+      - default
+      - proxy_shared
 
 volumes:
   postgres_data:
+
+networks:
+  proxy_shared:
+    external: true
