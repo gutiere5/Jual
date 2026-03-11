@@ -22,6 +22,7 @@ export const baseEslintConfig = [
         "error",
         { argsIgnorePattern: "^_" },
       ],
+      "no-console": "error",
     },
   },
   {

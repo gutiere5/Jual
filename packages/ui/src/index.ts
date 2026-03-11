@@ -1,1 +1,1 @@
-export { MenuCard } from "./MenuCard/MenuCard";
+export { MenuCard } from "./MenuCard/MenuCard.js";

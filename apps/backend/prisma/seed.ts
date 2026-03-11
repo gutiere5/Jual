@@ -13,8 +13,6 @@ const adapter = new PrismaPg({ connectionString });
 const prisma = new PrismaClient({ adapter });
 
 async function main() {
-  console.log("🌱 Starting seed...");
-
   // Create a Default User
   await prisma.user.upsert({
     where: { email: "admin@example.com" },
@@ -264,13 +262,10 @@ async function main() {
       },
     ],
   });
-
-  console.log("✅ Seeding completed.");
 }
 
 main()
   .catch((e) => {
-    console.error(e);
     process.exit(1);
   })
   .finally(async () => {
