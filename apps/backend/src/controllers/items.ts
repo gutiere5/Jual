@@ -64,6 +64,7 @@ export const getItemsByID = asyncHandler(
 );
 
 export const createItem = asyncHandler(async (req: Request, res: Response) => {
+  logger.info("Creating new item");
   const { sku, name, category, uom, low_stock_threshold } = req.body as Item;
 
   const existingItem = await prismaClient.item.findUnique({ where: { sku } });
@@ -102,6 +103,7 @@ export const updateItem = asyncHandler(async (req: Request, res: Response) => {
 });
 
 export const deleteItem = asyncHandler(async (req: Request, res: Response) => {
+  logger.info("Deleting item");
   const { sku } = req.params as { sku: string };
   const item = await prismaClient.item.delete({ where: { sku } });
 
