@@ -3,11 +3,9 @@ import './Header.css';
 function Header() {
   return (
     <header>
-      <h2 className="logo">Store Logo</h2>
-      <div className="header-container">
-        <div className="user-avatar">
-          <p>EG</p>
-        </div>
+      <img src="./src/assets/mi-favorita.png" alt="Store Logo" className="logo" />
+      <div className="user-avatar">
+        <p>EG</p>
       </div>
     </header>
   );

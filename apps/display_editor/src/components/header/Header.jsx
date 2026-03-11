@@ -1,27 +1,28 @@
 import { useRef } from 'react';
 import { useCanvasEditor } from '../../context/CanvasEditorContext';
 import './Header.css';
+import { canvasDataService } from '../../services/canvasDataService';
 
 export default function Header({ itemState, onLoadProject }) {
   const fileInputRef = useRef(null);
-
   const { canvasSettings } = useCanvasEditor();
-
-  const downloadURI = (uri, name) => {
-    const link = document.createElement('a');
-    link.download = name;
-    link.href = uri;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  };
 
   const handleSaveProject = () => {
     const data = { items: itemState.items, canvasSettings };
-    const json = JSON.stringify(data, null, 2);
-    const blob = new Blob([json], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    downloadURI(url, 'menu-project.json');
+
+    const name = prompt('Enter project name:', 'menu-project');
+    if (!name) return;
+
+    const response = canvasDataService.createCanvasData({
+      name: name,
+      content: data,
+    });
+
+    if (response.success) {
+      alert('Project saved successfully!');
+    } else {
+      alert('Error saving project: ' + response.message);
+    }
   };
 
   const handleLoadProject = (e) => {
@@ -39,8 +40,7 @@ export default function Header({ itemState, onLoadProject }) {
           alert('Invalid project file format.');
         }
       } catch (error) {
-        console.error('Failed to parse JSON file:', error);
-        alert('Error Reading File');
+        alert('Error Reading File', error.message);
       }
     };
     reader.readAsText(file);

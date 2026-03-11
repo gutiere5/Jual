@@ -11,13 +11,10 @@ export const itemService = {
 
   getAll: async () => {
     try {
-      console.log('Fetching all items from the database... apiClient:', apiClient);
       const response = await apiClient.get<{ items: unknown[] }>('item');
       const parsed = z.array(Item).safeParse(response.data.items);
 
-      if (!parsed.success) 
-        {
-        console.error('Failed to parse items data:', response.data.items, 'Error details:', parsed.error);
+      if (!parsed.success) {
         throw new Error(
           `Data from server does not match Item schema:\n${z.prettifyError(parsed.error)}`,
         );
@@ -25,7 +22,6 @@ export const itemService = {
 
       return parsed.data;
     } catch (error: unknown) {
-      console.error('Error fetching items:', error);
       const errorMessage = error instanceof Error ? error.message : 'Failed to get all items';
       throw new Error(`${errorMessage} (during getting all items from database)`);
     }
@@ -44,7 +40,7 @@ export const itemService = {
       return parsed.data;
     } catch (error: unknown) {
       const errorMessage = error instanceof Error ? error.message : 'Failed to get item by ID';
-      throw new Error(`${errorMessage} (during getting all Item from database)`);
+      throw new Error(`${errorMessage} (during getting item by ID from database)`);
     }
   },
 

@@ -3,6 +3,7 @@ import asyncHandler from "express-async-handler";
 import { prismaClient } from "..";
 import { logger } from "../middleware/logger";
 import { Item } from "@repo/types/item.schema";
+
 export const getItems = asyncHandler(async (req: Request, res: Response) => {
   logger.info("Fetching all items");
   const items = await prismaClient.item.findMany({
@@ -31,6 +32,7 @@ export const getItems = asyncHandler(async (req: Request, res: Response) => {
 
 export const getItemsByID = asyncHandler(
   async (req: Request, res: Response) => {
+    logger.info("Fetching item by ID");
     const { id } = req.params;
     const itemId = Number(id);
 
@@ -56,15 +58,18 @@ export const getItemsByID = asyncHandler(
         },
       },
     });
+    logger.info(`Successfully fetched item data for ID: ${itemId}`);
     res.status(200).json({ item: requestedItem });
   },
 );
 
 export const createItem = asyncHandler(async (req: Request, res: Response) => {
+  logger.info("Creating new item");
   const { sku, name, category, uom, low_stock_threshold } = req.body as Item;
 
   const existingItem = await prismaClient.item.findUnique({ where: { sku } });
   if (existingItem) {
+    logger.warn(`Attempt to create item with existing SKU: ${sku}`);
     throw new Error("Item with this SKU already exists");
   }
 
@@ -72,10 +77,12 @@ export const createItem = asyncHandler(async (req: Request, res: Response) => {
     data: { sku, name, uom, category, low_stock_threshold },
   });
 
+  logger.info(`Successfully created Item ${item.name}`);
   res.status(201).json({ item });
 });
 
 export const updateItem = asyncHandler(async (req: Request, res: Response) => {
+  logger.info("Updating item");
   const { id } = req.params;
   const itemId = Number(id);
 
@@ -91,12 +98,15 @@ export const updateItem = asyncHandler(async (req: Request, res: Response) => {
     data: { name, uom, low_stock_threshold, category },
   });
 
+  logger.info(`Successfully updated Item ${item.name}`);
   res.status(201).json({ item });
 });
 
 export const deleteItem = asyncHandler(async (req: Request, res: Response) => {
+  logger.info("Deleting item");
   const { sku } = req.params as { sku: string };
   const item = await prismaClient.item.delete({ where: { sku } });
 
+  logger.info(`Successfully deleted Item with SKU: ${sku}`);
   res.status(200).json({ item });
 });

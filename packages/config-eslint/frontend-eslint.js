@@ -2,6 +2,7 @@ import { baseEslintConfig } from "./base-eslint.js";
 import reactEslintConfig from "eslint-plugin-react";
 import reactHooks from "eslint-plugin-react-hooks";
 import reactRefresh from "eslint-plugin-react-refresh";
+import tseslint from "typescript-eslint";
 import globals from "globals";
 
 export const frontendEslintConfig = [
@@ -26,5 +27,9 @@ export const frontendEslintConfig = [
         { allowConstantExport: true },
       ],
     },
+  },
+  {
+    files: ["vite.config.ts", "vite.config.js"],
+    ...tseslint.configs.disableTypeChecked,
   },
 ];
