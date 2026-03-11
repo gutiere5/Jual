@@ -15,9 +15,13 @@ export const itemService = {
       const response = await apiClient.get<{ items: unknown[] }>('item');
       const parsed = z.array(Item).safeParse(response.data.items);
 
-      if (!parsed.success) 
-        {
-        console.error('Failed to parse items data:', response.data.items, 'Error details:', parsed.error);
+      if (!parsed.success) {
+        console.error(
+          'Failed to parse items data:',
+          response.data.items,
+          'Error details:',
+          parsed.error,
+        );
         throw new Error(
           `Data from server does not match Item schema:\n${z.prettifyError(parsed.error)}`,
         );

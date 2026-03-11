@@ -5,12 +5,12 @@ import { RouterProvider } from 'react-router/dom';
 import ItemInventoryContainer, {
   inventoryItemsAction,
   inventoryItemsLoader,
-} from './routes/items/ItemInventory.tsx';
-import ErrorPage from './routes/ErrorPage.tsx';
-import App from './App.tsx';
-import ItemDetails, { itemLoader, itemEditAction } from './routes/items/ItemDetails.tsx';
-import Personnel from './routes/personnel/Personnel.tsx';
-import Settings from './routes/settingsPage/Settings.tsx';
+} from './routes/items/ItemInventory';
+import ErrorPage from './routes/ErrorPage';
+import App from './App';
+import ItemDetails, { itemLoader, itemEditAction } from './routes/items/ItemDetails';
+import Personnel from './routes/personnel/Personnel';
+import Settings from './routes/settingsPage/Settings';
 
 const router = createBrowserRouter([
   {

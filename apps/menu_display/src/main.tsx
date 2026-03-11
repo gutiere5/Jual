@@ -1,15 +1,15 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
-import App from "./App.tsx";
+import App from "./App";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import ErrorPage from "./routes/ErrorPage.tsx";
-import Display from "./routes/Display.tsx";
-import MeatDisplay1 from "./routes/MeatDisplay1.tsx";
-import MeatDisplay2 from "./routes/MeatDisplay2.tsx";
-import RestaurantDisplay from "./routes/RestaurantDisplay.tsx";
-import ProduceDisplay from "./routes/ProduceDisplay.tsx";
-import { meatItemLoader } from "./loaders/meatItemLoader.ts";
+import ErrorPage from "./routes/ErrorPage";
+import Display from "./routes/Display";
+import MeatDisplay1 from "./routes/MeatDisplay1";
+import MeatDisplay2 from "./routes/MeatDisplay2";
+import RestaurantDisplay from "./routes/RestaurantDisplay";
+import ProduceDisplay from "./routes/ProduceDisplay";
+import { meatItemLoader } from "./loaders/meatItemLoader";
 
 const router = createBrowserRouter([
   {

@@ -1,21 +1,19 @@
 {
   "$schema": "https://json.schemastore.org/tsconfig",
   "compilerOptions": {
-    "composite": false,
-    "declaration": true,
-    "declarationMap": true,
+    "target": "es2022",
+    "strict": true,
     "esModuleInterop": true,
+    "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "inlineSources": false,
     "isolatedModules": true,
-    "module": "ESNext",
-    "moduleResolution": "Bundler",
+    "moduleDetection": "force",
+    "noUncheckedIndexedAccess": true,
+    "composite": false,
+    "inlineSources": false,
     "noUnusedLocals": false,
     "noUnusedParameters": false,
-    "preserveWatchOutput": true,
-    "skipLibCheck": true,
-    "strict": true,
-    "jsx": "react-jsx"
+    "preserveWatchOutput": true
   },
   "include": ["src"],
   "exclude": ["node_modules"]
