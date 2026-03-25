@@ -5,17 +5,7 @@ import { canvasDataService } from '../../services/canvasDataService';
 
 export default function Header({ itemState, onLoadProject }) {
   const fileInputRef = useRef(null);
-
   const { canvasSettings } = useCanvasEditor();
-
-  const downloadURI = (uri, name) => {
-    const link = document.createElement('a');
-    link.download = name;
-    link.href = uri;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  };
 
   const handleSaveProject = () => {
     const data = { items: itemState.items, canvasSettings };
@@ -28,10 +18,11 @@ export default function Header({ itemState, onLoadProject }) {
       content: data,
     });
 
-    console.log('Project saved:', response);
-    // const blob = new Blob([json], { type: 'application/json' });
-    // const url = URL.createObjectURL(blob);
-    // downloadURI(url, 'menu-project.json');
+    if (response.success) {
+      alert('Project saved successfully!');
+    } else {
+      alert('Error saving project: ' + response.message);
+    }
   };
 
   const handleLoadProject = (e) => {
@@ -49,7 +40,7 @@ export default function Header({ itemState, onLoadProject }) {
           alert('Invalid project file format.');
         }
       } catch (error) {
-        alert('Error Reading File');
+        alert('Error Reading File', error.message);
       }
     };
     reader.readAsText(file);

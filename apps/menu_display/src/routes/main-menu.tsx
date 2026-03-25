@@ -2,11 +2,6 @@ import { Link, useLoaderData } from 'react-router-dom';
 import './main-menu.css';
 import { CanvasFileData } from '@repo/types/canvasItem.schema';
 
-const handleCanvasClick = (canvasId: number) => {
-  console.log(`Canvas with ID ${canvasId} clicked`);
-  // Implement navigation or other actions here
-};
-
 function MainMenu() {
   const canvasData: CanvasFileData[] = useLoaderData();
   // const canvasData: any[] = [
@@ -15,7 +10,6 @@ function MainMenu() {
   //   { name: 'Canvas 3', id: 3, content: 'Content for Canvas 3', createdAt: '2026-03-24' },
   // ];
 
-  console.log('Canvas data from loader:', canvasData);
   return (
     <div className="main-menu">
       <div className="title">
@@ -27,7 +21,7 @@ function MainMenu() {
         {canvasData &&
           canvasData?.map((canvas) => (
             <Link to="/canvas" state={canvas.content} key={canvas.id}>
-              <button className="canvas-button" onClick={() => handleCanvasClick(canvas.id)}>
+              <button className="canvas-button">
                 <h2>{canvas.name}</h2>
                 <p>{canvas.createdAt}</p>
               </button>

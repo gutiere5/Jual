@@ -12,7 +12,6 @@ export const itemService = {
   getAll: async () => {
     try {
       const response = await apiClient.get<{ items: unknown[] }>('item');
-      console.log('Raw items data from server:', response.data.items);
       const parsed = z.array(Item).safeParse(response.data.items);
 
       if (!parsed.success) {
@@ -41,7 +40,7 @@ export const itemService = {
       return parsed.data;
     } catch (error: unknown) {
       const errorMessage = error instanceof Error ? error.message : 'Failed to get item by ID';
-      throw new Error(`${errorMessage} (during getting all Item from database)`);
+      throw new Error(`${errorMessage} (during getting item by ID from database)`);
     }
   },
 

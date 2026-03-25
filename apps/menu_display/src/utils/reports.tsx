@@ -1,19 +1,19 @@
-import { Form, redirect, ActionFunctionArgs, useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+// import { useState } from 'react';
 
-type ReportData = {
-  description: string;
-  timestamp: string;
-  app: string;
-  errorMessage?: string;
-};
+// type ReportData = {
+//   description: string;
+//   timestamp: string;
+//   app: string;
+//   errorMessage?: string;
+// };
 
-const Reports = ({ report }: { report: ReportData }) => {
+const Reports = () => {
   const navigate = useNavigate();
-  const [reportData, setReportData] = useState<ReportData | null>(null);
+  // const [reportData, setReportData] = useState<ReportData | null>(null);
 
   function handleSubmit() {
-    navigate('/');
+    void navigate('/');
   }
 
   return (

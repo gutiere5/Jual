@@ -3,6 +3,9 @@ import asyncHandler from "express-async-handler";
 import { logger } from "../middleware/logger";
 import { prismaClient } from "..";
 import { CanvasFileData } from "@repo/types/canvasItem.schema";
+
+type CanvasBody = Pick<CanvasFileData, "name" | "content">;
+
 export const getCanvas = asyncHandler(async (req: Request, res: Response) => {
   logger.info("Fetching canvas data");
   const canvasData = await prismaClient.canvas.findMany();
@@ -53,8 +56,9 @@ export const createCanvas = asyncHandler(
 );
 
 export const updateCanvas = asyncHandler(
-  async (req: Request, res: Response) => {
+  async (req: Request<{ id: string }, unknown, CanvasBody>, res: Response) => {
     logger.info("Updating canvas");
+
     const { id } = req.params;
     const canvasId = Number(id);
 
@@ -79,7 +83,7 @@ export const updateCanvas = asyncHandler(
 export const deleteCanvas = asyncHandler(
   async (req: Request, res: Response) => {
     logger.info("Deleting canvas");
-    const { id } = req.params;
+    const { id } = req.params as { id: string };
     const canvasId = Number(id);
 
     if (isNaN(canvasId)) {

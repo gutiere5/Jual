@@ -7,8 +7,6 @@ export const canvasDataService = {
     try {
       const response = await apiClient.get<{ canvasData: CanvasFileData[] }>('canvas');
       const parsed = z.array(CanvasFileData).safeParse(response.data.canvasData);
-      console.log('Raw canvas data from API:', response.data.canvasData);
-      console.log('Parsed canvas data:', parsed);
       if (!parsed.success) {
         const errorDetails = z.prettifyError(parsed.error);
         throw new Error(`Schema validation failed:\n${errorDetails}`);

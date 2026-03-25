@@ -9,8 +9,9 @@ export const inventoryItemsLoader = async () => {
   try {
     const items = await itemService.getAll();
     return items;
-  } catch (error) {
-    console.error('Error loading inventory items:', error);
+  } catch (error: unknown) {
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+    throw new Error('Failed to load items ' + errorMessage);
   }
 };
 
