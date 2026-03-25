@@ -1,11 +1,11 @@
-import { Item } from "@repo/types/item.schema";
-import apiClient from "../api/client";
-import { z } from "zod";
+import { Item } from '@repo/types/item.schema';
+import apiClient from '../api/client';
+import { z } from 'zod';
 
 export const itemService = {
   getAll: async () => {
     try {
-      const response = await apiClient.get<{ items: unknown[] }>("item");
+      const response = await apiClient.get<{ items: Item[] }>('item');
       const parsed = z.array(Item).safeParse(response.data.items);
 
       if (!parsed.success) {
@@ -15,7 +15,7 @@ export const itemService = {
 
       return parsed.data;
     } catch (error: unknown) {
-      throw new Error("Failed to fetch items from the service", {
+      throw new Error('Failed to fetch items from the service', {
         cause: error,
       });
     }
@@ -33,11 +33,8 @@ export const itemService = {
 
       return parsed.data;
     } catch (error: unknown) {
-      const errorMessage =
-        error instanceof Error ? error.message : "Failed to get item by ID";
-      throw new Error(
-        `${errorMessage} (during getting all Item from database)`,
-      );
+      const errorMessage = error instanceof Error ? error.message : 'Failed to get item by ID';
+      throw new Error(`${errorMessage} (during getting all Item from database)`);
     }
   },
 };

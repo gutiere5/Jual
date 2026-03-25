@@ -1,4 +1,4 @@
-import { frontendEslintConfig } from "@repo/eslint-config/frontend";
+import { frontendEslintConfig } from '@repo/eslint-config/frontend';
 
 /** @type {import("eslint").Linter.Config[]} */
 export default [

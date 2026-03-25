@@ -1,5 +1,9 @@
 {
   "name": "@repo/types",
+  "version": "0.0.1",
+  "description": "Shared types for the turborepo",
+  "author": "Elber Gutierrez",
+  "private": true,
   "type": "module",
   "scripts": {
     "dev": "tsc --watch",
@@ -9,6 +13,10 @@
     "./item.schema": {
       "types": "./src/item.schema.ts",
       "default": "./dist/item.schema.js"
+    },
+    "./canvasItem.schema": {
+      "types": "./src/canvasItem.schema.ts",
+      "default": "./dist/canvasItem.schema.js"
     }
   },
   "devDependencies": {

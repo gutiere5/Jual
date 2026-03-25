@@ -13,7 +13,7 @@ function SidePanel() {
     },
     {
       id: 'Personnel',
-      label: 'Personal',
+      label: 'Personnel',
       icon: UserCircle,
       color: '#81c995',
       path: '/personnel',

@@ -1,7 +1,10 @@
 {
   "name": "@repo/typescript-config",
-  "version": "0.0.0",
+  "version": "0.0.1",
+  "description": "A Shared Typescript configuration for the turborepo",
+  "author": "Elber Gutierrez <elgu404@gmail.com>",
   "private": true,
+  "type": "module",
   "publishConfig": {
     "access": "public"
   }
