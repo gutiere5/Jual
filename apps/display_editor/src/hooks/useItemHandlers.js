@@ -1,6 +1,9 @@
-import { GRID_SIZE } from '../constants/config';
+import { useCanvasEditor } from '../context/CanvasEditorContext';
 
 export const useItemHandlers = ({ item, onChange }) => {
+  const { canvasSettings } = useCanvasEditor();
+  const {snapToGrid, gridSize} = canvasSettings;
+
   const updateItem = (updates) => {
     onChange({
       ...item,
@@ -8,19 +11,32 @@ export const useItemHandlers = ({ item, onChange }) => {
     });
   };
 
+  const maybeSnap = (value) => {
+    if (!snapToGrid) return value;
+    return Math.round(value / gridSize) * gridSize;
+  }
+
   const getItemHandlers = () => ({
     draggable: true,
 
-    onDragBound: (pos) => ({
-      x: Math.round(pos.x / GRID_SIZE) * GRID_SIZE,
-      y: Math.round(pos.y / GRID_SIZE) * GRID_SIZE,
+    dragBoundFunc: (pos) => ({
+      x: maybeSnap(pos.x),
+      y: maybeSnap(pos.y),
     }),
     onDragEnd: (e) => {
-      updateItem({
-        x: e.target.x(),
-        y: e.target.y(),
-      });
+      const x = maybeSnap(e.target.x());
+      const y = maybeSnap(e.target.y());
+
+      e.target.position({ x, y });
+      updateItem({ x,y});
     },
   });
   return { getItemHandlers };
 };
+
+
+// rectangle.position({
+//       x: Math.round(rectangle.x() / blockSnapSize) * blockSnapSize,
+//       y: Math.round(rectangle.y() / blockSnapSize) * blockSnapSize
+//     });
+//     stage.ba
