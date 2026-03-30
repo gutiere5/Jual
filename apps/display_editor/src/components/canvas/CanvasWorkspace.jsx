@@ -77,10 +77,10 @@ const CanvasWorkspace = () => {
         <button onClick={() => applyZoom(zoom + 0.1)}>+</button>
 
         <button className="grid-button" onClick={() => toggleGrid()}>
-          Grid {canvasSettings.showGrid ? 'Off' : 'On'}
+          Grid {canvasSettings.showGrid ? 'On' : 'Off'}
         </button>
         <button className='snap-button' onClick={() => toggleSnapToGrid()}>
-          Snap {canvasSettings.snapToGrid ? 'Off' : 'On'}
+          Snap {canvasSettings.snapToGrid ? 'On' : 'Off'}
         </button>
 
       </div>

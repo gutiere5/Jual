@@ -13,7 +13,6 @@ const useDragAndDrop = (onItemAdd, stageRef) => {
   const handleDragOver = (e) => e.preventDefault();
 
   const handleDrop = (e) => {
-    console.log('Drop event:', e);
     e.preventDefault();
 
     const itemDataString = e.dataTransfer.getData('application/json');
