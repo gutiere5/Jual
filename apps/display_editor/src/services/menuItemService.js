@@ -1,4 +1,4 @@
-import apiClient from '../api/client';
+import axiosClient from '../api/axios-client';
 
 const ITEMS_CACHE_KEY = 'display_editor_items_cache_v1';
 const ITEMS_CACHE_TIME_KEY = 'display_editor_items_cache_time_v1';
@@ -40,7 +40,7 @@ export const menuItemService = {
       if (cached) return cached;
     }
 
-    const response = await apiClient.get('/item');
+    const response = await axiosClient.get('/item');
     const parsedItems = Array.isArray(response.data) ? response.data : (response.data?.items ?? []);
 
     writeCache(parsedItems);
