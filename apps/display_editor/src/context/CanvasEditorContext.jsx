@@ -19,6 +19,7 @@ export const CanvasEditorProvider = ({ children }) => {
     width: 1280,
     height: 720,
     backgroundColor: '#ffffff',
+    backgroundImage: null,
     showGrid: true,
     gridSize: GRID_SIZE,
   });
