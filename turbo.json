@@ -6,7 +6,11 @@
     "JWT_SECRET",
     "CORS_ORIGIN",
     "JWT_EXPIRES_IN",
-    "NODE_ENV"
+    "NODE_ENV",
+    "R2_ENDPOINT",
+    "BUCKET_NAME",
+    "R2_ACCESS_KEY_ID",
+    "R2_SECRET_ACCESS_KEY"
   ],
   "globalDependencies": [".env*"],
   "tasks": {
