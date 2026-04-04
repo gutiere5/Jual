@@ -23,7 +23,6 @@ export default function Sidebar() {
           </button>
         </div>
 
-        {/* Content Selection */}
         <div>
           <button onClick={() => setActiveSection('assets')}>Assets</button>
           <button onClick={() => setActiveSection('uploads')}>Uploads</button>
@@ -45,4 +44,3 @@ export default function Sidebar() {
     </>
   );
 }
-// 124 Lines

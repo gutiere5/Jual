@@ -1,5 +1,3 @@
-import { useEffect, useState } from 'react';
-import { r2Service } from '../../services/r2-service';
 import './uploads-section.css';
 import { DraggableItem } from './DraggableItem';
 import { useMutation, useSuspenseQuery } from '@tanstack/react-query';

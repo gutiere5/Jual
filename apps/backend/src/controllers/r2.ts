@@ -65,7 +65,7 @@ export const deleteObjectUrl = asyncHandler(
 
     const signedUrl = await getSignedUrl(r2, command, { expiresIn: 3600 });
 
-    logger.info("succesfully generated signed Url for R2 delete objects");
+    logger.info("successfully generated signed Url for R2 delete objects");
     res.status(200).json({ url: signedUrl });
   },
 );

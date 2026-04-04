@@ -41,12 +41,12 @@ export const r2Service = {
       const { data } = await axiosClient.delete('r2', { data: { key } });
       const { url } = data;
 
-      const reponse = await fetch(url, {
+      const response = await fetch(url, {
         method: 'DELETE',
       });
 
-      if (!reponse.ok) {
-        throw new Error(`Delete failed with status ${reponse.status}`);
+      if (!response.ok) {
+        throw new Error(`Delete failed with status ${response.status}`);
       }
     } catch (error) {
       throw new Error('Error deleting object:', error);
