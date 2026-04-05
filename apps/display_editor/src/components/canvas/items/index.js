@@ -3,6 +3,7 @@ import TypographyItem from './TypographyItem';
 import RectItem from './RectItem';
 import LineItem from './LineItem';
 import CircleItem from './CircleItem';
+import ImageItem from './image-item';
 
 export const ITEM_COMPONENTS = {
   menu: MenuItem,
@@ -10,4 +11,5 @@ export const ITEM_COMPONENTS = {
   rect: RectItem,
   line: LineItem,
   circle: CircleItem,
+  image: ImageItem,
 };

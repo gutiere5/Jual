@@ -97,6 +97,7 @@ const CanvasWorkspace = () => {
             width={canvasSettings.width}
             height={canvasSettings.height}
             backgroundColor={canvasSettings.backgroundColor}
+            backgroundImage={canvasSettings.backgroundImage}
           />
           <GridLayer
             width={canvasSettings.width}

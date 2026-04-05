@@ -21,6 +21,7 @@ export const CanvasEditorProvider = ({ children }) => {
     backgroundColor: '#ffffff',
     showGrid: true,
     snapToGrid: true,
+    backgroundImage: null,
     gridSize: GRID_SIZE,
   });
 
