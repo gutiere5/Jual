@@ -19,8 +19,9 @@ export const CanvasEditorProvider = ({ children }) => {
     width: 1280,
     height: 720,
     backgroundColor: '#ffffff',
-    backgroundImage: null,
     showGrid: true,
+    snapToGrid: true,
+    backgroundImage: null,
     gridSize: GRID_SIZE,
   });
 
@@ -63,6 +64,10 @@ export const CanvasEditorProvider = ({ children }) => {
     setCanvasSettings((prev) => ({ ...prev, showGrid: !prev.showGrid }));
   };
 
+  const toggleSnapToGrid = () => {
+    setCanvasSettings((prev) => ({...prev, snapToGrid: !prev.snapToGrid }));
+  }
+
   const copySelectedItem = () => {
     if (!selectedItem || !selectedItem.instanceId) return;
 
@@ -93,6 +98,7 @@ export const CanvasEditorProvider = ({ children }) => {
         canvasSettings,
         updateCanvasSettings,
         toggleGrid,
+        toggleSnapToGrid,
         canvasItems,
         addItem,
         updateItem,

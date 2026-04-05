@@ -11,7 +11,6 @@ import { useCanvasZoom } from '../../hooks/useCanvasZoom';
 const CanvasWorkspace = () => {
   const transformRef = useRef();
   const stageRef = useRef(null);
-
   const {
     canvasItems,
     addItem,
@@ -21,6 +20,7 @@ const CanvasWorkspace = () => {
     selectedItemIds,
     canvasSettings,
     toggleGrid,
+    toggleSnapToGrid,
   } = useCanvasEditor();
   const { handleDragOver, handleDrop } = useDragAndDrop(addItem, stageRef);
   const { zoom, resetZoom, handleWheel, applyZoom } = useCanvasZoom(stageRef);
@@ -77,8 +77,12 @@ const CanvasWorkspace = () => {
         <button onClick={() => applyZoom(zoom + 0.1)}>+</button>
 
         <button className="grid-button" onClick={() => toggleGrid()}>
-          Grid {canvasSettings.showGrid ? 'Off' : 'On'}
+          Grid {canvasSettings.showGrid ? 'On' : 'Off'}
         </button>
+        <button className='snap-button' onClick={() => toggleSnapToGrid()}>
+          Snap {canvasSettings.snapToGrid ? 'On' : 'Off'}
+        </button>
+
       </div>
       <div className="workspace-content" onDragOver={handleDragOver} onDrop={handleDrop}>
         <Stage
