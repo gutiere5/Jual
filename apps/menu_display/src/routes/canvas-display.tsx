@@ -1,9 +1,10 @@
 import { useLocation } from 'react-router-dom';
 import screenfull from 'screenfull';
-import { Layer, Stage } from 'react-konva';
-import { CanvasData, CanvasItemSchema } from '../../types/CanvasItemTypes';
+import { Group, Layer, Rect, Stage } from 'react-konva';
+import { CanvasData } from '../../types/CanvasItemTypes';
 import CanvasItem from '../components/CanvasItems';
 import './canvas-display.css';
+import { useEffect, useMemo, useRef, useState } from 'react';
 
 const CanvasDisplay = () => {
   const location = useLocation();
@@ -63,22 +64,9 @@ const CanvasDisplay = () => {
               <CanvasItem key={item.instanceId} item={item} />
             ))}
           </Group>
-
-  return (
-    <div className="canvas-display">
-      <Stage
-        width={canvasData?.canvasSettings.width || 500}
-        height={canvasData?.canvasSettings.height || 500}
-        fill={canvasData?.canvasSettings.backgroundColor}
-      >
-        <Layer>
-          {canvasData?.items.map((item: CanvasItemSchema) => (
-            <CanvasItem key={item.instanceId} item={item} />
-          ))}
-        </Layer>
+          </Layer>
       </Stage>
     </div>
   );
 };
-
 export default CanvasDisplay;
