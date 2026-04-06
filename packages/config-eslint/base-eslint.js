@@ -2,6 +2,7 @@ import eslintJS from "@eslint/js";
 import eslintConfigPrettier from "eslint-config-prettier";
 import turboPlugin from "eslint-plugin-turbo";
 import tseslint from "typescript-eslint";
+import pluginQuery from "eslint-plugin-query";
 
 export const baseEslintConfig = [
   eslintConfigPrettier,
@@ -9,7 +10,7 @@ export const baseEslintConfig = [
   turboPlugin.configs["flat/recommended"],
   ...tseslint.configs.recommended,
   ...tseslint.configs.recommendedTypeChecked,
-  ...pluginQuery.configs['flag/recommended-strict'],
+  ...pluginQuery.configs["flat/recommended-strict"],
   {
     languageOptions: {
       ecmaVersion: "latest",

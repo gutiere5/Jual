@@ -79,10 +79,9 @@ const CanvasWorkspace = () => {
         <button className="grid-button" onClick={() => toggleGrid()}>
           Grid {canvasSettings.showGrid ? 'On' : 'Off'}
         </button>
-        <button className='snap-button' onClick={() => toggleSnapToGrid()}>
+        <button className="snap-button" onClick={() => toggleSnapToGrid()}>
           Snap {canvasSettings.snapToGrid ? 'On' : 'Off'}
         </button>
-
       </div>
       <div className="workspace-content" onDragOver={handleDragOver} onDrop={handleDrop}>
         <Stage

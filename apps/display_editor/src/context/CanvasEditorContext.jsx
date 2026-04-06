@@ -65,8 +65,8 @@ export const CanvasEditorProvider = ({ children }) => {
   };
 
   const toggleSnapToGrid = () => {
-    setCanvasSettings((prev) => ({...prev, snapToGrid: !prev.snapToGrid }));
-  }
+    setCanvasSettings((prev) => ({ ...prev, snapToGrid: !prev.snapToGrid }));
+  };
 
   const copySelectedItem = () => {
     if (!selectedItem || !selectedItem.instanceId) return;
