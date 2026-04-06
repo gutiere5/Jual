@@ -33,9 +33,3 @@ export const useItemHandlers = ({ item, onChange }) => {
   });
   return { getItemHandlers };
 };
-
-// rectangle.position({
-//       x: Math.round(rectangle.x() / blockSnapSize) * blockSnapSize,
-//       y: Math.round(rectangle.y() / blockSnapSize) * blockSnapSize
-//     });
-//     stage.ba
