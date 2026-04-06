@@ -57,10 +57,9 @@ export const createCanvas = asyncHandler(
 
 export const updateCanvas = asyncHandler(
   async (req: Request<{ id: string }, unknown, CanvasBody>, res: Response) => {
-    logger.info("Updating canvas");
-
     const { id } = req.params;
     const canvasId = Number(id);
+    logger.info("Updating canvas", canvasId);
 
     if (isNaN(canvasId)) {
       logger.warn(`Invalid canvas ID provided: ${id}`);

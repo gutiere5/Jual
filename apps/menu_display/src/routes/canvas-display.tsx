@@ -69,5 +69,4 @@ const CanvasDisplay = () => {
     </div>
   );
 };
-
 export default CanvasDisplay;

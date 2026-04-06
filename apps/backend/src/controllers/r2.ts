@@ -55,7 +55,7 @@ export const getListUrl = asyncHandler(async (req: Request, res: Response) => {
 
 export const deleteObjectUrl = asyncHandler(
   async (req: Request, res: Response) => {
-    logger.info("Generating signed Url for R2delete objects");
+    logger.info("Generating signed Url for R2 delete objects");
     const { key } = req.body;
 
     const command = new DeleteObjectCommand({

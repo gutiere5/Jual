@@ -32,9 +32,9 @@ export const getItems = asyncHandler(async (req: Request, res: Response) => {
 
 export const getItemsByID = asyncHandler(
   async (req: Request, res: Response) => {
-    logger.info("Fetching item by ID");
     const { id } = req.params;
     const itemId = Number(id);
+    logger.info("Fetching item by ID");
 
     const requestedItem = await prismaClient.item.findUnique({
       where: {
@@ -64,10 +64,10 @@ export const getItemsByID = asyncHandler(
 );
 
 export const createItem = asyncHandler(async (req: Request, res: Response) => {
-  logger.info("Creating new item");
   const { sku, name, category, uom, low_stock_threshold } = req.body as Item;
-
   const existingItem = await prismaClient.item.findUnique({ where: { sku } });
+  logger.info("Creating new item");
+
   if (existingItem) {
     logger.warn(`Attempt to create item with existing SKU: ${sku}`);
     throw new Error("Item with this SKU already exists");
@@ -82,9 +82,9 @@ export const createItem = asyncHandler(async (req: Request, res: Response) => {
 });
 
 export const updateItem = asyncHandler(async (req: Request, res: Response) => {
-  logger.info("Updating item");
   const { id } = req.params;
   const itemId = Number(id);
+  logger.info("Updating item");
 
   if (isNaN(itemId)) {
     res.status(400);
@@ -103,9 +103,9 @@ export const updateItem = asyncHandler(async (req: Request, res: Response) => {
 });
 
 export const deleteItem = asyncHandler(async (req: Request, res: Response) => {
-  logger.info("Deleting item");
   const { sku } = req.params as { sku: string };
   const item = await prismaClient.item.delete({ where: { sku } });
+  logger.info("Deleting item");
 
   logger.info(`Successfully deleted Item with SKU: ${sku}`);
   res.status(200).json({ item });
