@@ -57,7 +57,6 @@ export const createCanvas = asyncHandler(
 
 export const updateCanvas = asyncHandler(
   async (req: Request<{ id: string }, unknown, CanvasBody>, res: Response) => {
-    
     const { id } = req.params;
     const canvasId = Number(id);
     logger.info("Updating canvas", canvasId);

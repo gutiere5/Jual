@@ -7,12 +7,12 @@ import { JWT_SECRET, JWT_EXPIRES_IN } from "../secrets";
 import { logger, requestLogger } from "../middleware/logger";
 
 export const signup = asyncHandler(async (req: Request, res: Response) => {
-    const { email, username, password } = req.body;
-    logger.info("Signup request received", email);
-    
+  const { email, username, password } = req.body;
+  logger.info("Signup request received", email);
+
   let user = await prismaClient.user.findFirst({ where: { email } });
   if (user) {
-      logger.warn("Signup attempt with existing email", email);
+    logger.warn("Signup attempt with existing email", email);
     throw new Error("User already exists");
   }
 
@@ -33,8 +33,8 @@ export const signup = asyncHandler(async (req: Request, res: Response) => {
 });
 
 export const login = asyncHandler(async (req: Request, res: Response) => {
-    const { email, password } = req.body;
-    logger.info("Login request recieved", email);
+  const { email, password } = req.body;
+  logger.info("Login request recieved", email);
 
   const user = await prismaClient.user.findFirst({ where: { email } });
   if (!user) {

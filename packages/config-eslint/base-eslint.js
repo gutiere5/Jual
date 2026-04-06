@@ -9,7 +9,7 @@ export const baseEslintConfig = [
   turboPlugin.configs["flat/recommended"],
   ...tseslint.configs.recommended,
   ...tseslint.configs.recommendedTypeChecked,
-  ...pluginQuery.configs['flag/recommended-strict'],
+  ...pluginQuery.configs["flag/recommended-strict"],
   {
     languageOptions: {
       ecmaVersion: "latest",

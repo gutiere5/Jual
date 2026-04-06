@@ -11,7 +11,7 @@ const MenuItem = ({ item, onChange }) => {
   const [image] = useImage(item.image_src);
 
   return (
-    <Group id={item.instanceId} x={item.x} y={item.y} {...item} {...getItemHandlers()} >
+    <Group id={item.instanceId} x={item.x} y={item.y} {...item} {...getItemHandlers()}>
       {/* Background Card */}
       {/* <Rect
         width={item.width || 400}

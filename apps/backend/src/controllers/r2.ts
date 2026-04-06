@@ -27,7 +27,7 @@ const r2 = new S3Client({
 export const uploadUrl = asyncHandler(async (req: Request, res: Response) => {
   logger.info("Generating signed URL for R2 upload");
   const { fileName, type } = req.body;
-  
+
   const command = new PutObjectCommand({
     Bucket: BUCKET_NAME,
     Key: fileName,

@@ -2,7 +2,7 @@ import { useCanvasEditor } from '../context/CanvasEditorContext';
 
 export const useItemHandlers = ({ item, onChange }) => {
   const { canvasSettings } = useCanvasEditor();
-  const {snapToGrid, gridSize} = canvasSettings;
+  const { snapToGrid, gridSize } = canvasSettings;
 
   const updateItem = (updates) => {
     onChange({
@@ -14,7 +14,7 @@ export const useItemHandlers = ({ item, onChange }) => {
   const maybeSnap = (value) => {
     if (!snapToGrid) return value;
     return Math.round(value / gridSize) * gridSize;
-  }
+  };
 
   const getItemHandlers = () => ({
     draggable: true,
@@ -28,12 +28,11 @@ export const useItemHandlers = ({ item, onChange }) => {
       const y = maybeSnap(e.target.y());
 
       e.target.position({ x, y });
-      updateItem({ x,y});
+      updateItem({ x, y });
     },
   });
   return { getItemHandlers };
 };
-
 
 // rectangle.position({
 //       x: Math.round(rectangle.x() / blockSnapSize) * blockSnapSize,
