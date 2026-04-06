@@ -5,7 +5,6 @@ import { CanvasData } from '../../types/CanvasItemTypes';
 import CanvasItem from '../components/CanvasItems';
 import './canvas-display.css';
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { CanvasItemSchema } from '@repo/types/canvasItem.schema';
 
 const CanvasDisplay = () => {
   const location = useLocation();
