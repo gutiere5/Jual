@@ -4,6 +4,7 @@ import RectItemPanel from './RectItemPanel';
 import LineItemPanel from './LineItemPanel';
 import CircleItemPanel from './CircleItemPanel';
 import CanvasPanel from './CanvasPanel';
+import ImageItemPanel from './image-item-panel';
 
 export const ITEM_PANELS = {
   menu: MenuItemPanel,
@@ -11,5 +12,6 @@ export const ITEM_PANELS = {
   rect: RectItemPanel,
   line: LineItemPanel,
   circle: CircleItemPanel,
+  image: ImageItemPanel,
   canvas: CanvasPanel,
 };

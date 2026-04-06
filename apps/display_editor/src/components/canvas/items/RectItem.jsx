@@ -7,7 +7,7 @@ const RectItem = ({ item, onChange }) => {
     onChange,
   });
 
-  return <Rect id={item.instanceId} {...item}  {...getItemHandlers()}/>;
+  return <Rect id={item.instanceId} {...item} {...getItemHandlers()} />;
 };
 
 export default RectItem;
