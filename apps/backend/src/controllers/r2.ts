@@ -15,6 +15,17 @@ import {
   R2_SECRET_ACCESS_KEY,
 } from "../secrets";
 
+type UploadBody = {
+fileName: string;
+type: string;
+};
+
+type DeleteBody = {
+key: string;
+};
+
+
+
 const r2 = new S3Client({
   region: "auto",
   endpoint: R2_ENDPOINT,
@@ -26,7 +37,7 @@ const r2 = new S3Client({
 
 export const uploadUrl = asyncHandler(async (req: Request, res: Response) => {
   logger.info("Generating signed URL for R2 upload");
-  const { fileName, type } = req.body;
+  const { fileName, type } = req.body as UploadBody;
 
   const command = new PutObjectCommand({
     Bucket: BUCKET_NAME,
@@ -56,7 +67,7 @@ export const getListUrl = asyncHandler(async (req: Request, res: Response) => {
 export const deleteObjectUrl = asyncHandler(
   async (req: Request, res: Response) => {
     logger.info("Generating signed Url for R2 delete objects");
-    const { key } = req.body;
+    const { key } = req.body as DeleteBody;
 
     const command = new DeleteObjectCommand({
       Bucket: BUCKET_NAME,

@@ -21,7 +21,9 @@ export function uploadFileQueryOptions() {
     mutationKey: ['uploadFile'],
     mutationFn: ({ fileName, fileContent }) => r2Service.uploadObject({ fileName, fileContent }),
     onSuccess: async () => {
-      await queryClient.invalidateQueries({ queryKey: ['listImages'] });
+     await queryClient.invalidateQueries({
+        queryKey: listImageQueryOptions().queryKey,
+      });
     },
   });
 }
@@ -31,7 +33,9 @@ export function deleteFileMutationOptions() {
     mutationKey: ['deleteImage'],
     mutationFn: ({ imageUrl }) => r2Service.deleteObject({ imageUrl }),
     onSuccess: async () => {
-      await queryClient.invalidateQueries({ queryKey: ['listImages'] });
+     await queryClient.invalidateQueries({
+        queryKey: listImageQueryOptions().queryKey,
+      });
     },
   });
 }

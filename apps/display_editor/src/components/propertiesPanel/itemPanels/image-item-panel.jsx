@@ -1,7 +1,6 @@
 import { PropertySection } from '../shared/PropertySection';
 
 const ImageItemPanel = ({ selectedItem, onUpdate }) => {
-  console.log('Selected Item in Image Panel: ', selectedItem);
   return (
     <PropertySection title="Image Properties">
       <div>

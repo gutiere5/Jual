@@ -2,8 +2,8 @@ import eslintJS from "@eslint/js";
 import eslintConfigPrettier from "eslint-config-prettier";
 import turboPlugin from "eslint-plugin-turbo";
 import tseslint from "typescript-eslint";
-import pluginQuery from "eslint-plugin-query";
-
+import pluginQuery from "@tanstack/eslint-plugin-query";
+ 
 export const baseEslintConfig = [
   eslintConfigPrettier,
   eslintJS.configs.recommended,
@@ -24,10 +24,7 @@ export const baseEslintConfig = [
         "error",
         { argsIgnorePattern: "^_" },
       ],
-<<<<<<< HEAD
       "no-console": "error",
-=======
->>>>>>> 1db1489 (Implemented Zoom, Multi-selection options, and Copy and Paste features in the Editor page.)
     },
   },
   {
