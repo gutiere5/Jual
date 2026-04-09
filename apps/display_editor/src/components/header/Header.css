@@ -1,3 +1,8 @@
 .header-container {
   border-bottom: 1px solid;
+  height: 75px;
+display: flex;}
+
+.logo {
+  height: 100%;
 }
