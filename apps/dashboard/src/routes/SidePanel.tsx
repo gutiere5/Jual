@@ -19,6 +19,20 @@ function SidePanel() {
       path: '/personnel',
     },
     {
+      id: 'Canvas Editor',
+      label: 'Canvas Editor',
+      icon: Home,
+      color: '#f9c784',
+      path: '/canvas',
+    },
+    {
+      id: 'Canvas Display',
+      label: 'Canvas Display',
+      icon: Home,
+      color: '#f9c784',
+      path: '/display',
+    },
+    {
       id: 'Settings',
       label: 'Settings',
       icon: Lock,

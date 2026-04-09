@@ -49,7 +49,7 @@ export default function Header({ itemState, onLoadProject }) {
 
   return (
     <div className="header-container">
-      <h3>Display Header</h3>
+      <img src="./src/assets/mi-favorita.png" alt="Store Logo" className="logo" />
       <button className="header-button" onClick={handleSaveProject}>
         Save Project
       </button>

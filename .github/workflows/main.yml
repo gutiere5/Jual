@@ -97,6 +97,10 @@ jobs:
             context: .
             file: apps/dashboard/Dockerfile
             image_name: jual-dashboard
+          - app: display_editor
+            context: .
+            file: apps/display_editor/Dockerfile
+            image_name: jual-display-editor
 
     steps:
       - name: Checkout repository

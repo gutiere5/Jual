@@ -19,7 +19,7 @@ export const MenuItemProvider = ({ children }) => {
       const fetchedMenuItems = await menuItemService.getAll({ forceRefresh });
       setMenuItems(fetchedMenuItems);
     } catch (error) {
-      throw new Error(
+      console.log(
         `Failed to fetch menu items: ${error instanceof Error ? error.message : 'Unknown error'}`,
       );
     }
