@@ -47,12 +47,36 @@ services:
       - default
       - proxy_shared
 
-  dashboard:
+  jual-dashboard:
     image: ghcr.io/gutiere5/jual-dashboard:latest
     container_name: jual-dashboard
     restart: always
     ports:
       - "3001:3001"
+    depends_on:
+      - backend
+    networks:
+      - default
+      - proxy_shared
+
+  jual-editor:
+    image: ghcr.io/gutiere5/jual-editor:latest
+    container_name: jual-editor
+    restart: always
+    ports:
+      - "3002:3002"
+    depends_on:
+      - backend
+    networks:
+      - default
+      - proxy_shared
+
+  jual-display:
+    image: ghcr.io/gutiere5/jual-display:latest
+    container_name: jual-display
+    restart: always
+    ports:
+      - "3003:3003"
     depends_on:
       - backend
     networks:

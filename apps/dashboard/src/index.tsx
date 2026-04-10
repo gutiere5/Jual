@@ -41,7 +41,7 @@ const router = createBrowserRouter([
       },
       {
         path: 'canvas',
-        element: <ExternalAppLink url={import.meta.env.VITE_CANVAS_EDITOR_URL as string}  />,
+        element: <ExternalAppLink url={import.meta.env.VITE_CANVAS_EDITOR_URL as string} />,
       },
       {
         path: 'display',
