@@ -1,5 +1,3 @@
-import logo from './images/mi-favorita.png';
+import logo from "./images/mi-favorita.png";
 
-export {
-  logo,
-};
+export { logo };

@@ -16,15 +16,13 @@ import {
 } from "../secrets";
 
 type UploadBody = {
-fileName: string;
-type: string;
+  fileName: string;
+  type: string;
 };
 
 type DeleteBody = {
-key: string;
+  key: string;
 };
-
-
 
 const r2 = new S3Client({
   region: "auto",

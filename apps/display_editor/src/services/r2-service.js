@@ -88,8 +88,8 @@ export const r2Service = {
 
       return keys;
     } catch (error) {
+      alert('Error listing objects', error);
       return [];
-      // throw new Error('Error listing objects:', error);
     }
   },
 };

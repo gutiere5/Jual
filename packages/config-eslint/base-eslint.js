@@ -3,7 +3,7 @@ import eslintConfigPrettier from "eslint-config-prettier";
 import turboPlugin from "eslint-plugin-turbo";
 import tseslint from "typescript-eslint";
 import pluginQuery from "@tanstack/eslint-plugin-query";
- 
+
 export const baseEslintConfig = [
   eslintConfigPrettier,
   eslintJS.configs.recommended,

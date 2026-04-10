@@ -41,11 +41,11 @@ const router = createBrowserRouter([
       },
       {
         path: 'canvas',
-        element: <ExternalAppLink url={import.meta.env.VITE_CANVAS_EDITOR_URL} />,
+        element: <ExternalAppLink url={import.meta.env.VITE_CANVAS_EDITOR_URL as string}  />,
       },
       {
         path: 'display',
-        element: <ExternalAppLink url={import.meta.env.VITE_CANVAS_DISPLAY_URL} />,
+        element: <ExternalAppLink url={import.meta.env.VITE_CANVAS_DISPLAY_URL as string} />,
       },
     ],
   },

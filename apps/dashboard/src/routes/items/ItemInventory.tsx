@@ -1,6 +1,6 @@
 import { Form, redirect, useLoaderData, type LoaderFunctionArgs } from 'react-router';
 import { itemService } from '../../services/itemServices';
-import { ChartNoAxesColumnIcon, Grid3x3, List, Search } from 'lucide-react';
+import { Grid3x3, List, Search } from 'lucide-react';
 import { useMemo, useState } from 'react';
 import './ItemInventory.css';
 import type { Item } from '@repo/types/item.schema';
@@ -11,8 +11,7 @@ export const inventoryItemsLoader = async () => {
     return items;
   } catch (error: unknown) {
     const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-    // throw new Error('Failed to load items ' + errorMessage);
-    console.error('Failed to load items:', errorMessage);
+    alert(`Failed to load items: ${errorMessage}`);
     return []; // Return an empty array to prevent the app from crashing
   }
 };

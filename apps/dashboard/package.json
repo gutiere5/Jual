@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@repo/types": "*",
+    "@repo/assets": "*",
     "axios": "1.13.2",
     "lucide-react": "^0.575.0",
     "react": "^19.2.0",
@@ -21,7 +22,6 @@
   },
   "devDependencies": {
     "@repo/eslint-config": "*",
-    "@repo/assets": "*",
     "@types/node": "^24.10.1",
     "@types/react": "^19.2.5",
     "@types/react-dom": "^19.2.3",

@@ -6,8 +6,12 @@
   text-align: center;
 }
 
-.store-logo {
+.logo-link {
   height: 50px;
+}
+
+.store-logo {
+  height: 100%;
   display: flex;
   justify-content: start;
   padding: 0px 15px;
