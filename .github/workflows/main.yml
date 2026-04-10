@@ -14,9 +14,9 @@ concurrency:
 
 env:
   REGISTRY: ghcr.io
-  # DATABASE_URL: "postgresql://dummy:dummy@localhost:5432/dummy"
+  DATABASE_URL: "postgresql://dummy:dummy@localhost:5432/dummy"
   # PORT: 3000
-  # JWT_SECRET: "your_jwt_secret"
+  JWT_SECRET: "your_jwt_secret"
   # CORS_ORIGIN: "https://jualinbox.com"
   # JWT_EXPIRES_IN: "1h"
   # NODE_ENV: "development"
@@ -136,9 +136,9 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          # build-args: |
-          #   DATABASE_URL=${{ env.DATABASE_URL }}
-          #   JWT_SECRET=${{ env.JWT_SECRET }}
+          build-args: |
+            DATABASE_URL=${{ env.DATABASE_URL }}
+            JWT_SECRET=${{ env.JWT_SECRET }}
           #   VITE_BACKEND_API_URL=/api
           #   VITE_BACKEND_API_TIMEOUT=5000
 
