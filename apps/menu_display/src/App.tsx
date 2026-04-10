@@ -1,12 +1,13 @@
-import { Link, Outlet } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
+import { logo } from '@repo/assets';
 import './App.css';
 
 function App() {
   return (
     <div className="app-container">
-      <Link to="/" className="store-logo">
-        <img src="assets/Mi-Favorita.png" alt="Store Logo" />
-      </Link>
+      <a href={(import.meta.env.VITE_DASHBOARD_URL as string) ?? '/'} className="logo-link">
+        <img src={logo} alt="Store Logo" className="store-logo" />
+      </a>
       <Outlet />
     </div>
   );

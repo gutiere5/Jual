@@ -11,7 +11,8 @@ export const inventoryItemsLoader = async () => {
     return items;
   } catch (error: unknown) {
     const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-    throw new Error('Failed to load items ' + errorMessage);
+    alert(`Failed to load items: ${errorMessage}`);
+    return []; // Return an empty array to prevent the app from crashing
   }
 };
 

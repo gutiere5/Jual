@@ -13,12 +13,15 @@
   "dependencies": {
     "@repo/types": "*",
     "@repo/ui": "^0.0.1",
+    "@repo/assets": "*",
     "axios": "1.13.2",
     "konva": "^10.2.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
+    "react-router-dom": "^7.13.0",
     "react-konva": "^19.2.3",
     "screenfull": "^6.0.2",
+    "use-image": "^1.1.4",
     "zod": "^4.3.6"
   },
   "devDependencies": {

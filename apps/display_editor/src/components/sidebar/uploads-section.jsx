@@ -40,20 +40,24 @@ const UploadSection = () => {
       </div>
 
       <h3 className="section-title">Uploads</h3>
-      {data.map((image, index) => (
-        <DraggableItem key={index} data={{ type: 'image', image_src: image }}>
-          <div className="image-container">
-            <button
-              className="delete-button"
-              onClick={() => handleDeleteImage(image)}
-              disabled={deleteMutation.isPending}
-            >
-              Delete
-            </button>
-          </div>
-          <img src={image} alt={`Uploaded ${index}`} className="uploaded-image" />
-        </DraggableItem>
-      ))}
+      {data?.length === 0 ? (
+        <p>No uploads found.</p>
+      ) : (
+        data?.map((image, index) => (
+          <DraggableItem key={index} data={{ type: 'image', image_src: image }}>
+            <div className="image-container">
+              <button
+                className="delete-button"
+                onClick={() => handleDeleteImage(image)}
+                disabled={deleteMutation.isPending}
+              >
+                Delete
+              </button>
+            </div>
+            <img src={image} alt={`Uploaded ${index}`} className="uploaded-image" />
+          </DraggableItem>
+        ))
+      )}
     </div>
   );
 };

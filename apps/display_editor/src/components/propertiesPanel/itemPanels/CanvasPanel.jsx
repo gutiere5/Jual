@@ -1,20 +1,19 @@
 import { PropertySection } from '../shared/PropertySection';
 import { useCanvasEditor } from '../../../context/CanvasEditorContext';
-import { r2Service } from '../../../services/r2-service';
+import { useMutation } from '@tanstack/react-query';
+import { uploadFileQueryOptions } from '../../../api/query-client';
 
 const CanvasPanel = () => {
   const { canvasSettings, updateCanvasSettings } = useCanvasEditor();
+  const uploadMutation = useMutation(uploadFileQueryOptions());
 
   const handleFileUpload = async (event) => {
     const file = event.target.files[0];
     if (!file) return;
-    try {
-      const fileName = `images/background`;
-      await r2Service.uploadFile({ fileName, fileContent: file });
-      updateCanvasSettings({ backgroundImage: `https://jualinbox.com/images/background` });
-    } catch (error) {
-      throw new Error('Error uploading background image', error);
-    }
+
+    const fileName = `images/background`;
+    await uploadMutation.mutateAsync({ fileName, fileContent: file });
+    updateCanvasSettings({ backgroundImage: `https://jualinbox.com/images/background` });
   };
 
   return (

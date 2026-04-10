@@ -2,6 +2,7 @@ import { useRef } from 'react';
 import { useCanvasEditor } from '../../context/CanvasEditorContext';
 import './Header.css';
 import { canvasDataService } from '../../services/canvasDataService';
+import { logo } from '@repo/assets';
 
 export default function Header({ itemState, onLoadProject }) {
   const fileInputRef = useRef(null);
@@ -49,7 +50,9 @@ export default function Header({ itemState, onLoadProject }) {
 
   return (
     <div className="header-container">
-      <h3>Display Header</h3>
+      <a href={import.meta.env.VITE_DASHBOARD_URL}>
+        <img src={logo} alt="Store Logo" className="logo" />
+      </a>
       <button className="header-button" onClick={handleSaveProject}>
         Save Project
       </button>

@@ -1,3 +1,4 @@
+#For Reference Only
 services:
   postgres_db:
     image: postgres:17-alpine
@@ -6,7 +7,7 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '1.0'
+          cpus: "1.0"
           memory: 1G
     environment:
       POSTGRES_USER: ${DB_USER:-admin}
@@ -18,7 +19,8 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-admin} -d ${DB_NAME:-jual_db}"]
+      test:
+        ["CMD-SHELL", "pg_isready -U ${DB_USER:-admin} -d ${DB_NAME:-jual_db}"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -39,21 +41,42 @@ services:
     ports:
       - "3000:3000"
     depends_on:
-     postgres_db:
+      postgres_db:
         condition: service_healthy
     networks:
       - default
-      - proxy_shared 
+      - proxy_shared
 
-  dashboard:
+  jual-dashboard:
     image: ghcr.io/gutiere5/jual-dashboard:latest
     container_name: jual-dashboard
     restart: always
-    environment:
-      VITE_BACKEND_API_URL: ${BACKEND_API_URL:-/api}
-      VITE_BACKEND_API_TIMEOUT: 5000
     ports:
       - "3001:3001"
+    depends_on:
+      - backend
+    networks:
+      - default
+      - proxy_shared
+
+  jual-editor:
+    image: ghcr.io/gutiere5/jual-editor:latest
+    container_name: jual-editor
+    restart: always
+    ports:
+      - "3002:3002"
+    depends_on:
+      - backend
+    networks:
+      - default
+      - proxy_shared
+
+  jual-display:
+    image: ghcr.io/gutiere5/jual-display:latest
+    container_name: jual-display
+    restart: always
+    ports:
+      - "3003:3003"
     depends_on:
       - backend
     networks:
