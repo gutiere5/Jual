@@ -1,0 +1,30 @@
+# deps
+node_modules
+**/node_modules
+
+# logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# build outputs
+dist
+build
+coverage
+.cache
+.vite
+.turbo
+*.tsbuildinfo
+
+# env/local
+.env
+.env.*
+.DS_Store
+
+# editor/git
+.git
+.gitignore
+.vscode
+.idea

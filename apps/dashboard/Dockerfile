@@ -1,37 +1,34 @@
 FROM node:24-alpine AS base
 
-# 1. Prune
-FROM base AS builder
-RUN apk add --no-cache libc6-compat
 WORKDIR /app
+
+# Prepare
+FROM base AS prepare
+RUN apk add --no-cache libc6-compat
 RUN npm install turbo --global
 COPY . .
-RUN turbo prune --scope=dashboard --docker
+RUN turbo prune dashboard --docker
 
-# 2. Install
-FROM base AS installer
-RUN apk add --no-cache libc6-compat
-WORKDIR /app
-COPY --from=builder /app/out/json/ .
-COPY --from=builder /app/out/package-lock.json ./package-lock.json
-RUN npm ci
+# Builder
+FROM base AS builder
+# First install the dependencies (as they change less often)
+COPY --from=prepare /app/out/json/ .
+RUN npm install
+# Build the project
+COPY --from=prepare /app/out/full/ .
 
-# 3. Build
-COPY --from=builder /app/out/full/ .
-COPY turbo.json turbo.json
-
-ARG VITE_BACKEND_API_URL=/api
-ARG VITE_BACKEND_API_TIMEOUT=5000
-ENV VITE_BACKEND_API_URL=$VITE_BACKEND_API_URL
-ENV VITE_BACKEND_API_TIMEOUT=$VITE_BACKEND_API_TIMEOUT
+# BUILD TIME ARGS
+ENV VITE_BACKEND_API_URL=/api
+ENV VITE_BACKEND_API_TIMEOUT=5000
+ENV VITE_CANVAS_EDITOR_URL=/canvas-editor
+ENV VITE_CANVAS_DISPLAY_URL=/canvas-display
 
 RUN npx turbo run build --filter=dashboard...
 
-# 4. Serve with a lightweight Node static server on port 3001
-FROM node:24-alpine AS runner
-WORKDIR /app
-COPY --from=installer /app/apps/dashboard/dist ./dist
-# Install a small static server and run on port 3001
-RUN npm install -g serve@14.2.0
-EXPOSE 3001
-CMD ["serve", "-s", "dist", "-l", "3001"]
+# --
+FROM nginx:stable-alpine AS production
+COPY --from=builder /app/apps/dashboard/dist /usr/share/nginx/html
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
+
+# docker build -f apps/dashboard/Dockerfile -t jual-dashboard .
