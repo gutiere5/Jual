@@ -52,7 +52,7 @@ services:
     container_name: jual-dashboard
     restart: always
     ports:
-      - "3001:3001"
+      - "3001:80"
     depends_on:
       - backend
     networks:
@@ -64,7 +64,7 @@ services:
     container_name: jual-editor
     restart: always
     ports:
-      - "3002:3002"
+      - "3002:80"
     depends_on:
       - backend
     networks:
@@ -76,7 +76,7 @@ services:
     container_name: jual-display
     restart: always
     ports:
-      - "3003:3003"
+      - "3003:80"
     depends_on:
       - backend
     networks:

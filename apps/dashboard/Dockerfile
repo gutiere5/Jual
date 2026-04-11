@@ -20,8 +20,8 @@ COPY --from=prepare /app/out/full/ .
 # BUILD TIME ARGS
 ENV VITE_BACKEND_API_URL=/api
 ENV VITE_BACKEND_API_TIMEOUT=5000
-ENV VITE_CANVAS_EDITOR_URL=/canvas-editor
-ENV VITE_CANVAS_DISPLAY_URL=/canvas-display
+ENV VITE_CANVAS_EDITOR_URL=https://editor.jualinbox.com
+ENV VITE_CANVAS_DISPLAY_URL=https://display.jualinbox.com
 
 RUN npx turbo run build --filter=dashboard...
 
