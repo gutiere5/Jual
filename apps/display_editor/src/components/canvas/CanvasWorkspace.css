@@ -3,7 +3,6 @@
   display: flex;
   flex: 1;
   overflow: auto;
-  justify-content: center;
   align-items: center;
 }
 
@@ -14,16 +13,6 @@
   display: flex;
   gap: 10px;
   z-index: 10;
-}
-
-.grid-button {
-  padding: 8px 16px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-weight: bold;
 }
 
 .workspace-content {

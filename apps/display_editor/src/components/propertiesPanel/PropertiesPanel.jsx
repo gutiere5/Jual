@@ -30,13 +30,9 @@ export default function PropertiesPanel({ selectedItem, onUpdate, onDelete }) {
 
         {/* Arrange */}
         <h3 className="section-header">Arrange</h3>
-        <div className="button-grid">
-          <button className="action-button" onClick={bringSelectedToFront}>
-            Bring to Front
-          </button>
-          <button className="action-button" onClick={bringSelectedToBack}>
-            Send to Back
-          </button>
+        <div className="button-container">
+          <button onClick={bringSelectedToFront}>Bring Front</button>
+          <button onClick={bringSelectedToBack}>Send Back</button>
         </div>
 
         {/* Render Item Selection */}

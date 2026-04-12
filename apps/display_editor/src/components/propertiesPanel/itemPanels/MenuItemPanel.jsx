@@ -2,14 +2,18 @@ import { useState } from 'react';
 import { PropertySection } from '../shared/PropertySection';
 import TypographyPanel from './TypographyPanel';
 import '../PropertiesPanel.css';
-// import { ASSETS } from "../../../constants/assets";
-import { useMenuItems } from '../../../context/MenuItemContext';
+import { useSuspenseQuery } from '@tanstack/react-query';
+import { listMenuItemsQueryOptions } from '../../../api/query-client';
 
 const MenuItemPanel = ({ selectedItem, onUpdate }) => {
-  const { menuItems } = useMenuItems();
+  const { data } = useSuspenseQuery(listMenuItemsQueryOptions());
   const [searchValue, setSearchValue] = useState('');
   const [filteredItems, setFilteredItems] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
+
+  const menuItems = data || [];
+
+  console.log('Menu items in MenuItemPanel:', menuItems);
 
   const handleSearch = (e) => {
     const value = e.target.value;

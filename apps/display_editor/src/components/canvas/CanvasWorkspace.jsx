@@ -83,10 +83,8 @@ const CanvasWorkspace = () => {
         <button onClick={resetZoom}>{Math.round(zoom * 100)}%</button>
         <button onClick={() => applyZoom(zoom + 0.1)}>+</button>
 
-        <button className="grid-button" onClick={() => toggleGrid()}>
-          Grid {canvasSettings.showGrid ? 'On' : 'Off'}
-        </button>
-        <button className="snap-button" onClick={() => toggleSnapToGrid()}>
+        <button onClick={() => toggleGrid()}>Grid {canvasSettings.showGrid ? 'On' : 'Off'}</button>
+        <button onClick={() => toggleSnapToGrid()}>
           Snap {canvasSettings.snapToGrid ? 'On' : 'Off'}
         </button>
       </div>

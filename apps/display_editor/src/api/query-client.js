@@ -1,11 +1,12 @@
 import { mutationOptions, QueryClient, queryOptions } from '@tanstack/react-query';
 import { r2Service } from '../services/r2-service';
+import { menuItemService } from '../services/menuItemService';
 
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      staleTime: 5 * 60 * 1000,
-      cacheTime: 10 * 60 * 1000,
+      staleTime: 10 * 60 * 1000,
+      cacheTime: 30 * 60 * 1000,
       retry: 3,
     },
   },
@@ -16,6 +17,11 @@ const imageKeys = {
   list: () => [...imageKeys.all, 'list'],
   upload: () => [...imageKeys.all, 'upload'],
   delete: () => [...imageKeys.all, 'delete'],
+};
+
+const menuItemKeys = {
+  all: ['menuItems'],
+  list: () => [...menuItemKeys.all, 'list'],
 };
 
 export function listImageQueryOptions() {
@@ -46,6 +52,13 @@ export function deleteFileMutationOptions() {
         queryKey: imageKeys.all,
       });
     },
+  });
+}
+
+export function listMenuItemsQueryOptions() {
+  return queryOptions({
+    queryKey: menuItemKeys.list(),
+    queryFn: menuItemService.getAll,
   });
 }
 

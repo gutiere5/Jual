@@ -1,24 +1,33 @@
+import { useSuspenseQuery } from '@tanstack/react-query';
+import { listMenuItemsQueryOptions } from '../../api/query-client';
 import { DraggableItem } from './DraggableItem';
 import { ASSETS } from '../../constants/assets';
 
 const AssetSection = () => {
+  const { data } = useSuspenseQuery(listMenuItemsQueryOptions());
+
+  console.log('Menu items in AssetSection:', data);
   return (
     <>
       <div className="sidebar-section">
         <h3 className="section-title">Menu Item</h3>
 
         <div>
-          <DraggableItem key="menu-item-draggable" data={ASSETS.food[0]}>
-            {ASSETS.food[0].image_src && (
+          <DraggableItem
+            key="menu-item-draggable"
+            data={{
+              type: 'menu',
+              name: data[0]?.name,
+              price: data[0]?.price,
+              image_url: data[0]?.image_url,
+            }}
+          >
+            {data[0]?.image_url && (
               <div className="menu-item-container">
-                <img
-                  className="menu-item-img"
-                  src={ASSETS.food[0].image_src}
-                  alt={ASSETS.food[0].name}
-                />
+                <img className="menu-item-img" src={data[0].image_url} alt={data[0].name} />
                 <div className="menu-item-details">
-                  <div className="menu-item-name">{ASSETS.food[0].name}</div>
-                  <div className="menu-item-price">{ASSETS.food[0].price}</div>
+                  <div className="menu-item-name">{data[0].name}</div>
+                  <div className="menu-item-price">{data[0].price}</div>
                 </div>
               </div>
             )}

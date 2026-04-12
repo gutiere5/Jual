@@ -7,7 +7,7 @@ const MenuItem = ({ item, onChange }) => {
     item,
     onChange,
   });
-  const [image] = useImage(item.image_src);
+  const [image] = useImage(item.image_url);
   console.log('Rendering MenuItem with item:', item);
 
   return (
