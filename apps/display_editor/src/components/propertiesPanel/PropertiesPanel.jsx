@@ -2,9 +2,11 @@ import './PropertiesPanel.css';
 import { useState } from 'react';
 import { PanelLeftOpen, X } from 'lucide-react';
 import { ITEM_PANELS } from './itemPanels/index';
+import { useCanvasEditor } from '../../context/CanvasEditorContext';
 
 export default function PropertiesPanel({ selectedItem, onUpdate, onDelete }) {
   const [isOpen, setIsOpen] = useState(true);
+  const { bringSelectedToFront, bringSelectedToBack } = useCanvasEditor();
 
   const renderItemPanel = () => {
     let SpecificItemPanel = ITEM_PANELS[selectedItem?.type];
@@ -29,8 +31,12 @@ export default function PropertiesPanel({ selectedItem, onUpdate, onDelete }) {
         {/* Arrange */}
         <h3 className="section-header">Arrange</h3>
         <div className="button-grid">
-          <button className="action-button">Bring to Front</button>
-          <button className="action-button">Send to Back</button>
+          <button className="action-button" onClick={bringSelectedToFront}>
+            Bring to Front
+          </button>
+          <button className="action-button" onClick={bringSelectedToBack}>
+            Send to Back
+          </button>
         </div>
 
         {/* Render Item Selection */}

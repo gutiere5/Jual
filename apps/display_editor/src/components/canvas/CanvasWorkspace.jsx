@@ -69,6 +69,13 @@ const CanvasWorkspace = () => {
     }
   }, [selectedItemIds, canvasItems]);
 
+  console.log(
+    'Rendering CanvasWorkspace with items:',
+    canvasItems,
+    'and selectedItemIds:',
+    selectedItemIds,
+  );
+
   return (
     <div className="workspace">
       <div className="workspace-top">

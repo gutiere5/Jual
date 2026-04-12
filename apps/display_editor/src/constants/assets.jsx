@@ -10,7 +10,7 @@ export const ASSETS = {
       type: 'menu',
       name: 'Carne Asada Burrito',
       price: '$11.50',
-      image_src: 'https://images.unsplash.com/photo-1626700051175-6818013e1d4f?w=150&q=80',
+      image_src: 'https://picsum.photos/200/300',
     },
     {
       type: 'menu',

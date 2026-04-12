@@ -4,25 +4,34 @@ import { r2Service } from '../services/r2-service';
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      staleTime: Infinity,
+      staleTime: 5 * 60 * 1000,
+      cacheTime: 10 * 60 * 1000,
+      retry: 3,
     },
   },
 });
 
+const imageKeys = {
+  all: ['images'],
+  list: () => [...imageKeys.all, 'list'],
+  upload: () => [...imageKeys.all, 'upload'],
+  delete: () => [...imageKeys.all, 'delete'],
+};
+
 export function listImageQueryOptions() {
   return queryOptions({
-    queryKey: ['listImages'],
+    queryKey: imageKeys.list(),
     queryFn: r2Service.listObjects,
   });
 }
 
 export function uploadFileQueryOptions() {
   return mutationOptions({
-    mutationKey: ['uploadFile'],
+    mutationKey: imageKeys.upload(),
     mutationFn: ({ fileName, fileContent }) => r2Service.uploadObject({ fileName, fileContent }),
     onSuccess: async () => {
       await queryClient.invalidateQueries({
-        queryKey: listImageQueryOptions().queryKey,
+        queryKey: imageKeys.all,
       });
     },
   });
@@ -30,11 +39,11 @@ export function uploadFileQueryOptions() {
 
 export function deleteFileMutationOptions() {
   return mutationOptions({
-    mutationKey: ['deleteImage'],
+    mutationKey: imageKeys.delete(),
     mutationFn: ({ imageUrl }) => r2Service.deleteObject({ imageUrl }),
     onSuccess: async () => {
       await queryClient.invalidateQueries({
-        queryKey: listImageQueryOptions().queryKey,
+        queryKey: imageKeys.all,
       });
     },
   });

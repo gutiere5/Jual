@@ -1,7 +1,6 @@
 import { Group, Text, Image } from 'react-konva';
 import { useItemHandlers } from '../../../hooks/useItemHandlers';
 import useImage from 'use-image';
-// import { MENU_ITEM_DEFAULTS } from "../item_defaults/MenuItemDefaults";
 
 const MenuItem = ({ item, onChange }) => {
   const { getItemHandlers } = useItemHandlers({
@@ -9,6 +8,7 @@ const MenuItem = ({ item, onChange }) => {
     onChange,
   });
   const [image] = useImage(item.image_src);
+  console.log('Rendering MenuItem with item:', item);
 
   return (
     <Group id={item.instanceId} x={item.x} y={item.y} {...item} {...getItemHandlers()}>

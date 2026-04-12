@@ -24,6 +24,8 @@ const MenuItemPanel = ({ selectedItem, onUpdate }) => {
       setFilteredItems([]);
     }
   };
+
+  console.log('menu items :', menuItems);
   return (
     <>
       <PropertySection title="Item Settings">
@@ -31,7 +33,7 @@ const MenuItemPanel = ({ selectedItem, onUpdate }) => {
           <label>Select Item</label>
           <input
             type="text"
-            placeholder={selectedItem?.foodItem?.name || ''}
+            placeholder={selectedItem?.name || ''}
             className="search-input"
             value={searchValue}
             onChange={(e) => {
@@ -48,7 +50,13 @@ const MenuItemPanel = ({ selectedItem, onUpdate }) => {
                   onClick={() => {
                     setSearchValue(item.name);
                     setShowSuggestions(false);
-                    onUpdate({ ...selectedItem, foodItem: item });
+                    onUpdate({
+                      ...selectedItem,
+                      name: item.name,
+                      image_src: item.image_url,
+                      price: item.price,
+                      description: item.description,
+                    });
                   }}
                 >
                   {item.name}
