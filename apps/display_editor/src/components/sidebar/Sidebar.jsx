@@ -19,7 +19,7 @@ export default function Sidebar() {
           <button onClick={() => setActiveSection('assets')}>Assets</button>
           <button onClick={() => setActiveSection('uploads')}>Uploads</button>
           <button className="toggle-close" onClick={toggleSidebar} aria-label="Close Sidebar">
-            x
+            X
           </button>
         </div>
 

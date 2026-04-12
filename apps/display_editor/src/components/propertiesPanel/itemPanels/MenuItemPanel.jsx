@@ -4,6 +4,7 @@ import TypographyPanel from './TypographyPanel';
 import '../PropertiesPanel.css';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { listMenuItemsQueryOptions } from '../../../api/query-client';
+import ImageItemPanel from './image-item-panel';
 
 const MenuItemPanel = ({ selectedItem, onUpdate }) => {
   const { data } = useSuspenseQuery(listMenuItemsQueryOptions());
@@ -12,8 +13,6 @@ const MenuItemPanel = ({ selectedItem, onUpdate }) => {
   const [showSuggestions, setShowSuggestions] = useState(false);
 
   const menuItems = data || [];
-
-  console.log('Menu items in MenuItemPanel:', menuItems);
 
   const handleSearch = (e) => {
     const value = e.target.value;
@@ -29,7 +28,6 @@ const MenuItemPanel = ({ selectedItem, onUpdate }) => {
     }
   };
 
-  console.log('menu items :', menuItems);
   return (
     <>
       <PropertySection title="Item Settings">
@@ -112,6 +110,13 @@ const MenuItemPanel = ({ selectedItem, onUpdate }) => {
           </label>
         </div>
       </PropertySection>
+
+      {selectedItem?.showImage && (
+        <ImageItemPanel
+          selectedItem={selectedItem?.imageStyle}
+          onUpdate={(newStyle) => onUpdate({ ...selectedItem, imageStyle: newStyle })}
+        />
+      )}
 
       {selectedItem?.showTitle && (
         <TypographyPanel

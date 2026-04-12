@@ -6,11 +6,10 @@ import { ASSETS } from '../../constants/assets';
 const AssetSection = () => {
   const { data } = useSuspenseQuery(listMenuItemsQueryOptions());
 
-  console.log('Menu items in AssetSection:', data);
   return (
     <>
       <div className="sidebar-section">
-        <h3 className="section-title">Menu Item</h3>
+        <h2>Menu Item</h2>
 
         <div>
           <DraggableItem
@@ -36,23 +35,23 @@ const AssetSection = () => {
       </div>
 
       <div className="sidebar-section">
-        <h3 className="section-title">Typography</h3>
+        <h2>Typography</h2>
         <div className="typography-items">
           {ASSETS.typography.map((asset, index) => (
             <DraggableItem key={index} data={asset}>
-              <div className="typography-item">{asset.text}</div>
+              <h3 className="typography-item">{asset.text}</h3>
             </DraggableItem>
           ))}
         </div>
       </div>
 
       <div className="sidebar-section">
-        <h3 className="section-title">Shapes</h3>
+        <h2>Shapes</h2>
         <div className="shapes-items">
           {ASSETS.shapes.map((asset, index) => (
             <DraggableItem key={index} data={asset}>
               <div className="shape-item">
-                <span className="shape-name">{asset.label}</span>
+                <h3>{asset.label}</h3>
               </div>
             </DraggableItem>
           ))}

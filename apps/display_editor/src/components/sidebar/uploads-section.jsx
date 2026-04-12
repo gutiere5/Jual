@@ -27,14 +27,8 @@ const UploadSection = () => {
   return (
     <div className="sidebar-section">
       <div className="upload-area">
-        <input
-          type="file"
-          id="file-upload"
-          accept="image/*"
-          className="file-input"
-          onChange={handleFileUpload}
-        />
-        <label htmlFor="file-upload" className="upload-button ">
+        <label className="upload-button ">
+          <input type="file" accept="image/*" onChange={handleFileUpload} hidden />
           <span>{uploadMutation.isPending ? 'Uploading...' : 'Upload Image'}</span>
         </label>
       </div>

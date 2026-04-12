@@ -1,15 +1,17 @@
 .workspace {
   padding: 0px;
   display: flex;
+  flex-direction: column;
   flex: 1;
   overflow: auto;
   align-items: center;
+  justify-content: center;
 }
 
 .workspace-top {
-  position: absolute;
-  top: 20px;
-  right: 20px;
+  position: fixed;
+  top: 15px;
+  right: 15px;
   display: flex;
   gap: 10px;
   z-index: 10;
@@ -18,5 +20,7 @@
 .workspace-content {
   width: var(--canvas-width, 1280px);
   height: var(--canvas-height, 720px);
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+  box-shadow:
+    0 4px 6px rgba(0, 0, 0, 0.1),
+    0 1px 3px rgba(0, 0, 0, 0.06);
 }

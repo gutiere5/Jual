@@ -1,32 +1,32 @@
+import { IMAGE_ITEM_DEFAULTS } from './image-item-defaults';
+import { TYPOGRAPHY_ITEM_DEFAULTS } from './TypographyDefaults';
+
 export const MENU_ITEM_DEFAULTS = {
   type: 'menu',
-  width: 300,
-  height: 100,
-  fill: '#ffffff',
-  stroke: '#000000',
-  strokeWidth: 1,
-  opacity: 1,
-  shadowBlur: 0,
   showTitle: true,
   showImage: true,
   showDescription: true,
   showPrice: true,
   titleStyle: {
+    ...TYPOGRAPHY_ITEM_DEFAULTS,
     fontSize: 18,
-    fill: '#000000',
-    fontFamily: 'Calibri',
     fontStyle: 'bold',
+    x: 120,
+    y: 10,
   },
   descriptionStyle: {
+    ...TYPOGRAPHY_ITEM_DEFAULTS,
     fontSize: 14,
-    fill: '#000000',
-    fontFamily: 'Calibri',
-    fontStyle: 'normal',
+    x: 120,
+    y: 40,
   },
   priceStyle: {
-    fontSize: 16,
-    fill: '#000000',
-    fontFamily: 'Calibri',
+    ...TYPOGRAPHY_ITEM_DEFAULTS,
     fontStyle: 'bold',
+    x: 120,
+    y: 70,
+  },
+  imageStyle: {
+    ...IMAGE_ITEM_DEFAULTS,
   },
 };

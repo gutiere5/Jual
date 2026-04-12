@@ -1,12 +1,13 @@
 import './PropertiesPanel.css';
 import { useState } from 'react';
-import { PanelLeftOpen, X } from 'lucide-react';
+import { PanelLeftOpen } from 'lucide-react';
 import { ITEM_PANELS } from './itemPanels/index';
 import { useCanvasEditor } from '../../context/CanvasEditorContext';
+import ArrangeDeleteSection from './shared/arrange-delete-section';
 
-export default function PropertiesPanel({ selectedItem, onUpdate, onDelete }) {
+export default function PropertiesPanel() {
+  const { updateItem, selectedItem } = useCanvasEditor();
   const [isOpen, setIsOpen] = useState(true);
-  const { bringSelectedToFront, bringSelectedToBack } = useCanvasEditor();
 
   const renderItemPanel = () => {
     let SpecificItemPanel = ITEM_PANELS[selectedItem?.type];
@@ -14,7 +15,7 @@ export default function PropertiesPanel({ selectedItem, onUpdate, onDelete }) {
     if (!SpecificItemPanel) {
       SpecificItemPanel = ITEM_PANELS['canvas'];
     }
-    return <SpecificItemPanel selectedItem={selectedItem} onUpdate={onUpdate} />;
+    return <SpecificItemPanel selectedItem={selectedItem} onUpdate={updateItem} />;
   };
 
   const togglePropertiesPanel = () => {
@@ -25,29 +26,19 @@ export default function PropertiesPanel({ selectedItem, onUpdate, onDelete }) {
     <>
       <div className={`properties-container ${isOpen ? 'open' : 'closed'}`}>
         <button className="close-button" onClick={togglePropertiesPanel}>
-          <X size={16} />
+          X
         </button>
-
-        {/* Arrange */}
-        <h3 className="section-header">Arrange</h3>
-        <div className="button-container">
-          <button onClick={bringSelectedToFront}>Bring Front</button>
-          <button onClick={bringSelectedToBack}>Send Back</button>
-        </div>
-
-        {/* Render Item Selection */}
-        {renderItemPanel()}
-
-        {/* Delete Button */}
-        <button onClick={() => onDelete()} className="delete-button">
-          Delete Item
-        </button>
+        {selectedItem && selectedItem.type !== 'canvas' ? (
+          <ArrangeDeleteSection>{renderItemPanel()}</ArrangeDeleteSection>
+        ) : (
+          renderItemPanel()
+        )}
       </div>
 
       {!isOpen && (
         <div className="closed-properties-container">
-          <button className="open-button">
-            <PanelLeftOpen onClick={togglePropertiesPanel} />
+          <button className="open-button" onClick={togglePropertiesPanel}>
+            <PanelLeftOpen />
           </button>
         </div>
       )}

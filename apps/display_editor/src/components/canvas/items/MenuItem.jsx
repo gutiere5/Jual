@@ -8,30 +8,15 @@ const MenuItem = ({ item, onChange }) => {
     onChange,
   });
   const [image] = useImage(item.image_url);
-  console.log('Rendering MenuItem with item:', item);
 
   return (
     <Group id={item.instanceId} x={item.x} y={item.y} {...item} {...getItemHandlers()}>
-      {/* Background Card */}
-      {/* <Rect
-        width={item.width || 400}
-        height={item.height || 150}
-        fill="transparent"
-      /> */}
-
-      {item.showImage && image && <Image image={image} x={0} y={0} cornerRadius={[8, 8, 8, 8]} />}
-      {item.showTitle && (
-        <Text text={item.name || 'MenuItem'} x={180} y={10} {...item.titleStyle} />
-      )}
+      {item.showImage && image && <Image image={image} x={0} y={0} {...item.imageStyle} />}
+      {item.showTitle && <Text text={item.name || 'MenuItem'} {...item.titleStyle} />}
       {item.showDescription && (
-        <Text
-          text={item.description || 'No description'}
-          x={180}
-          y={40}
-          {...item.descriptionStyle}
-        />
+        <Text text={item.description || 'No description'} {...item.descriptionStyle} />
       )}
-      {item.showPrice && <Text text={item.price || 0} x={180} y={70} {...item.priceStyle} />}
+      {item.showPrice && <Text text={item.price || 0} {...item.priceStyle} />}
     </Group>
   );
 };
