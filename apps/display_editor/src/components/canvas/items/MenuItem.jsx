@@ -16,7 +16,7 @@ const MenuItem = ({ item, onChange }) => {
       {item.showDescription && (
         <Text text={item.description || 'No description'} {...item.descriptionStyle} />
       )}
-      {item.showPrice && <Text text={item.price || 0} {...item.priceStyle} />}
+      {item.showPrice && <Text text={`$${item.price}`} {...item.priceStyle} />}
     </Group>
   );
 };

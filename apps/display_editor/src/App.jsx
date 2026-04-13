@@ -7,7 +7,7 @@ import { useKeyboardShortcut } from './hooks/useKeyboardShortcut';
 import { useCanvasEditor } from './context/CanvasEditorContext';
 
 function App() {
-  const { canvasItems, loadProject, pasteItem, copySelectedItem } = useCanvasEditor();
+  const { canvasItems, loadProject, pasteItem, copySelectedItem, deleteItem } = useCanvasEditor();
 
   const handleProjectLoad = (loadedData) => {
     loadProject(loadedData);

@@ -141,41 +141,6 @@ const MenuItemPanel = ({ selectedItem, onUpdate }) => {
           onUpdate={(newStyle) => onUpdate({ ...selectedItem, priceStyle: newStyle })}
         />
       )}
-
-      <PropertySection title="Card Style">
-        <div className="card-style-container">
-          <div>
-            <label>Background Color</label>
-            <input
-              type="color"
-              value={selectedItem?.fill || '#ffffff'}
-              onChange={(e) =>
-                onUpdate({
-                  ...selectedItem,
-                  fill: e.target.value,
-                })
-              }
-            />
-          </div>
-          <div>
-            <label>Opacity</label>
-            <input
-              className="opacity-input"
-              type="number"
-              min="0"
-              max="100"
-              step="10"
-              value={selectedItem?.opacity * 100 || 100}
-              onChange={(e) =>
-                onUpdate({
-                  ...selectedItem,
-                  opacity: parseFloat(e.target.value) / 100,
-                })
-              }
-            />
-          </div>
-        </div>
-      </PropertySection>
     </>
   );
 };

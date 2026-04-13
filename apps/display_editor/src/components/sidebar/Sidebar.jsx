@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { X, PanelLeftOpen } from 'lucide-react';
+import { PanelLeftOpen } from 'lucide-react';
 import './Sidebar.css';
 import UploadSection from './uploads-section';
 import AssetSection from './assets-section';

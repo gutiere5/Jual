@@ -1,4 +1,3 @@
-import ArrangeDeleteSection from '../shared/arrange-delete-section';
 import { PropertySection } from '../shared/PropertySection';
 
 const RectItemPanel = ({ selectedItem, onUpdate }) => {

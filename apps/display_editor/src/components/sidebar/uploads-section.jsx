@@ -1,4 +1,3 @@
-import './uploads-section.css';
 import { DraggableItem } from './DraggableItem';
 import { useMutation, useSuspenseQuery } from '@tanstack/react-query';
 import {
@@ -25,7 +24,7 @@ const UploadSection = () => {
   };
 
   return (
-    <div className="sidebar-section">
+    <div>
       <div className="upload-area">
         <label className="upload-button ">
           <input type="file" accept="image/*" onChange={handleFileUpload} hidden />
@@ -33,25 +32,26 @@ const UploadSection = () => {
         </label>
       </div>
 
-      <h3 className="section-title">Uploads</h3>
-      {data?.length === 0 ? (
-        <p>No uploads found.</p>
-      ) : (
-        data?.map((image, index) => (
-          <DraggableItem key={index} data={{ type: 'image', image_src: image }}>
-            <div className="image-container">
-              <button
-                className="delete-button"
-                onClick={() => handleDeleteImage(image)}
-                disabled={deleteMutation.isPending}
-              >
-                Delete
-              </button>
-            </div>
-            <img src={image} alt={`Uploaded ${index}`} className="uploaded-image" />
-          </DraggableItem>
-        ))
-      )}
+      <h2 className="section-title">Uploads</h2>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+        {data?.length === 0 ? (
+          <p>No uploads found.</p>
+        ) : (
+          data?.map((image, index) => (
+            <DraggableItem key={index} data={{ type: 'image', image_src: image }}>
+              <div className="image-container">
+                <img src={image} alt={`Uploaded ${index}`} className="uploaded-image" />
+                <button
+                  onClick={() => handleDeleteImage(image)}
+                  disabled={deleteMutation.isPending}
+                >
+                  Delete
+                </button>
+              </div>
+            </DraggableItem>
+          ))
+        )}
+      </div>
     </div>
   );
 };
