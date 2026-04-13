@@ -8,7 +8,11 @@ export default defineConfig(({ mode }) => {
   return {
     plugins: [react()],
     server: {
-      port: parseInt(env.PORT) || 5174,
+      host: '0.0.0.0',
+      port: parseInt(env.PORT) || 5175,
+      watch: {
+        usePolling: true,
+      },
     },
   };
 });
