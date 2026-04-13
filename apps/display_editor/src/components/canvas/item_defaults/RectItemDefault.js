@@ -7,4 +7,5 @@ export const RECT_ITEM_DEFAULTS = {
   cornerRadius: 0,
   dash: [10, 5],
   dashEnabled: false,
+  opacity: 1,
 };
