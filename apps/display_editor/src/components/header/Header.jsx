@@ -53,9 +53,6 @@ export default function Header({ itemState, onLoadProject }) {
       <a href={import.meta.env.VITE_DASHBOARD_URL}>
         <img src={logo} alt="Store Logo" className="logo" />
       </a>
-      <button className="header-button" onClick={handleSaveProject}>
-        Save Project
-      </button>
 
       <input
         type="file"
@@ -64,9 +61,10 @@ export default function Header({ itemState, onLoadProject }) {
         onChange={handleLoadProject}
         style={{ display: 'none' }}
       />
-      <button className="header-button" onClick={() => fileInputRef.current?.click()}>
-        Load Project
-      </button>
+      <div className="button-container">
+        <button onClick={() => fileInputRef.current?.click()}>Load Project</button>
+        <button onClick={handleSaveProject}>Save Project</button>
+      </div>
     </div>
   );
 }

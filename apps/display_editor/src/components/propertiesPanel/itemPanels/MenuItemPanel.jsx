@@ -2,14 +2,17 @@ import { useState } from 'react';
 import { PropertySection } from '../shared/PropertySection';
 import TypographyPanel from './TypographyPanel';
 import '../PropertiesPanel.css';
-// import { ASSETS } from "../../../constants/assets";
-import { useMenuItems } from '../../../context/MenuItemContext';
+import { useSuspenseQuery } from '@tanstack/react-query';
+import { listMenuItemsQueryOptions } from '../../../api/query-client';
+import ImageItemPanel from './image-item-panel';
 
 const MenuItemPanel = ({ selectedItem, onUpdate }) => {
-  const { menuItems } = useMenuItems();
+  const { data } = useSuspenseQuery(listMenuItemsQueryOptions());
   const [searchValue, setSearchValue] = useState('');
   const [filteredItems, setFilteredItems] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
+
+  const menuItems = data || [];
 
   const handleSearch = (e) => {
     const value = e.target.value;
@@ -24,6 +27,7 @@ const MenuItemPanel = ({ selectedItem, onUpdate }) => {
       setFilteredItems([]);
     }
   };
+
   return (
     <>
       <PropertySection title="Item Settings">
@@ -31,7 +35,7 @@ const MenuItemPanel = ({ selectedItem, onUpdate }) => {
           <label>Select Item</label>
           <input
             type="text"
-            placeholder={selectedItem?.foodItem?.name || ''}
+            placeholder={selectedItem?.name || ''}
             className="search-input"
             value={searchValue}
             onChange={(e) => {
@@ -48,7 +52,13 @@ const MenuItemPanel = ({ selectedItem, onUpdate }) => {
                   onClick={() => {
                     setSearchValue(item.name);
                     setShowSuggestions(false);
-                    onUpdate({ ...selectedItem, foodItem: item });
+                    onUpdate({
+                      ...selectedItem,
+                      name: item.name,
+                      image_src: item.image_url,
+                      price: item.price,
+                      description: item.description,
+                    });
                   }}
                 >
                   {item.name}
@@ -101,6 +111,13 @@ const MenuItemPanel = ({ selectedItem, onUpdate }) => {
         </div>
       </PropertySection>
 
+      {selectedItem?.showImage && (
+        <ImageItemPanel
+          selectedItem={selectedItem?.imageStyle}
+          onUpdate={(newStyle) => onUpdate({ ...selectedItem, imageStyle: newStyle })}
+        />
+      )}
+
       {selectedItem?.showTitle && (
         <TypographyPanel
           title="Title Styles"
@@ -124,41 +141,6 @@ const MenuItemPanel = ({ selectedItem, onUpdate }) => {
           onUpdate={(newStyle) => onUpdate({ ...selectedItem, priceStyle: newStyle })}
         />
       )}
-
-      <PropertySection title="Card Style">
-        <div className="card-style-container">
-          <div>
-            <label>Background Color</label>
-            <input
-              type="color"
-              value={selectedItem?.fill || '#ffffff'}
-              onChange={(e) =>
-                onUpdate({
-                  ...selectedItem,
-                  fill: e.target.value,
-                })
-              }
-            />
-          </div>
-          <div>
-            <label>Opacity</label>
-            <input
-              className="opacity-input"
-              type="number"
-              min="0"
-              max="100"
-              step="10"
-              value={selectedItem?.opacity * 100 || 100}
-              onChange={(e) =>
-                onUpdate({
-                  ...selectedItem,
-                  opacity: parseFloat(e.target.value) / 100,
-                })
-              }
-            />
-          </div>
-        </div>
-      </PropertySection>
     </>
   );
 };

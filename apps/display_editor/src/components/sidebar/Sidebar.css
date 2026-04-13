@@ -1,72 +1,57 @@
 .sidebar {
-  position: relative;
-  width: 320px;
+  min-width: 250px;
   display: flex;
+  flex: 0 0 250px;
   flex-direction: column;
-  border-right: 1px solid #e5e7eb;
   overflow: hidden;
+  transition:
+    width 0.2s ease,
+    min-width 0.2s ease,
+    flex-basis 0.2s ease;
 }
 
 .sidebar.closed {
-  transform: translateX(-100%);
   width: 0;
-}
-
-.toggle-close {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 32px;
-  height: 32px;
-  padding: 0;
-  border: 1px solid;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  flex-shrink: 0;
+  min-width: 0;
+  flex-basis: 0;
+  transform: none;
 }
 
 .toggle-open {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 36px;
+  height: 40px;
+  width: 40px;
   padding: 0;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  z-index: 100;
 }
 
 .closed-sidebar-container {
-  position: relative;
+  position: absolute;
+  left: 10px;
+  top: 15px;
   display: flex;
-  width: 60px;
-  padding: 20px 10px 0 10px;
+  width: auto;
+  z-index: 10;
 }
 
 @media (max-width: 796px) {
   .sidebar {
     width: 100%;
+    min-width: 0;
     max-width: 100%;
     height: auto;
     border-right: none;
     border-bottom: 1px solid #e5e7eb;
   }
 
-  .closed {
-    transform: translateX(-100%);
+  .sidebar.closed {
     width: 0;
+    min-width: 0;
+    flex-basis: 0;
   }
 }
 
 .sidebar-header {
   padding: 15px 10px;
-  font-size: 18px;
-  font-size: small;
-  font-weight: bold;
-  text-align: center;
+  text-align: left;
   border-bottom: 1px solid #e5e7eb;
   margin: 0;
   display: flex;
@@ -84,15 +69,17 @@
   padding: 10px;
 }
 
+.sidebar-nav {
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-evenly;
+}
+
 .sidebar-section {
   margin-bottom: 10px;
 }
 
-.section-title {
-  text-transform: capitalize;
-  font-size: 14px;
-  font-weight: 800;
-}
+/* Upload Section Styles */
 
 .upload-area {
   display: flex;
@@ -105,6 +92,18 @@
   height: 0;
   width: 0;
   pointer-events: none;
+}
+
+.image-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 60px;
+}
+
+.uploaded-image {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
 }
 
 .upload-button {
@@ -163,8 +162,6 @@
   align-items: center;
   justify-content: center;
   text-align: center;
-  font-size: 14px;
-  font-weight: 500;
 }
 
 /* Shapes */
@@ -184,10 +181,6 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
-}
-.shape-name {
-  font-size: 14px;
-  font-weight: 500;
 }
 
 .draggable-item {

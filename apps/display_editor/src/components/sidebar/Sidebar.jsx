@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { X, PanelLeftOpen } from 'lucide-react';
+import { PanelLeftOpen } from 'lucide-react';
 import './Sidebar.css';
 import UploadSection from './uploads-section';
 import AssetSection from './assets-section';
@@ -15,17 +15,12 @@ export default function Sidebar() {
   return (
     <>
       <div className={`sidebar ${isOpen ? 'open' : 'closed'}`}>
-        {/* Header */}
-        <div className="sidebar-header">
-          <h3>Drag assets to the canvas</h3>
-          <button className="toggle-close" onClick={toggleSidebar} aria-label="Close Sidebar">
-            <X />
-          </button>
-        </div>
-
-        <div>
+        <div className="sidebar-nav">
           <button onClick={() => setActiveSection('assets')}>Assets</button>
           <button onClick={() => setActiveSection('uploads')}>Uploads</button>
+          <button className="toggle-close" onClick={toggleSidebar} aria-label="Close Sidebar">
+            X
+          </button>
         </div>
 
         <div className="sidebar-content">

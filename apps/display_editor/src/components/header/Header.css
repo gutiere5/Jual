@@ -1,8 +1,14 @@
 .header-container {
   border-bottom: 1px solid;
   height: 75px;
-display: flex;}
+  display: flex;
+}
 
 .logo {
   height: 100%;
+}
+
+.button-container {
+  padding: 15px;
+  gap: 10px;
 }

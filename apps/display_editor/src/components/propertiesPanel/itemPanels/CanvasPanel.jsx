@@ -17,10 +17,10 @@ const CanvasPanel = () => {
   };
 
   return (
-    <>
+    <div>
       <PropertySection title="Canvas Properties">
-        <div>
-          <label>Width:</label>
+        <div className="setting">
+          <h3>Width:</h3>
           <input
             type="number"
             value={canvasSettings.width}
@@ -28,8 +28,8 @@ const CanvasPanel = () => {
           />
         </div>
 
-        <div>
-          <label>Height:</label>
+        <div className="setting">
+          <h3>Height:</h3>
           <input
             type="number"
             value={canvasSettings.height}
@@ -37,8 +37,8 @@ const CanvasPanel = () => {
           />
         </div>
 
-        <div>
-          <label>Background Color:</label>
+        <div className="setting">
+          <h3>Background Color:</h3>
           <input
             type="color"
             value={canvasSettings.backgroundColor}
@@ -46,12 +46,14 @@ const CanvasPanel = () => {
           />
         </div>
 
-        <div>
-          <label>Background Image Upload</label>
-          <input type="file" accept="image/*" onChange={handleFileUpload} />
+        <div className="setting">
+          <label className="upload-button">
+            <input type="file" accept="image/*" onChange={handleFileUpload} hidden />
+            <span>{uploadMutation.isPending ? 'Uploading...' : 'Upload Background Image'}</span>
+          </label>
         </div>
       </PropertySection>
-    </>
+    </div>
   );
 };
 

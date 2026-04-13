@@ -92,6 +92,22 @@ export const CanvasEditorProvider = ({ children }) => {
     }
   };
 
+  const bringSelectedToFront = () => {
+    setCanvasItems((prev) => {
+      const selected = prev.filter((item) => selectedItemIds.includes(item.instanceId));
+      const notSelected = prev.filter((item) => !selectedItemIds.includes(item.instanceId));
+      return [...notSelected, ...selected];
+    });
+  };
+
+  const bringSelectedToBack = () => {
+    setCanvasItems((prev) => {
+      const selected = prev.filter((item) => selectedItemIds.includes(item.instanceId));
+      const notSelected = prev.filter((item) => !selectedItemIds.includes(item.instanceId));
+      return [...selected, ...notSelected];
+    });
+  };
+
   return (
     <CanvasEditorContext.Provider
       value={{
@@ -110,6 +126,8 @@ export const CanvasEditorProvider = ({ children }) => {
         loadProject,
         pasteItem,
         copySelectedItem,
+        bringSelectedToFront,
+        bringSelectedToBack,
       }}
     >
       {children}

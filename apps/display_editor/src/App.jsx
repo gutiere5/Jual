@@ -7,15 +7,7 @@ import { useKeyboardShortcut } from './hooks/useKeyboardShortcut';
 import { useCanvasEditor } from './context/CanvasEditorContext';
 
 function App() {
-  const {
-    canvasItems,
-    selectedItem,
-    updateItem,
-    deleteItem,
-    loadProject,
-    pasteItem,
-    copySelectedItem,
-  } = useCanvasEditor();
+  const { canvasItems, loadProject, pasteItem, copySelectedItem, deleteItem } = useCanvasEditor();
 
   const handleProjectLoad = (loadedData) => {
     loadProject(loadedData);
@@ -29,17 +21,11 @@ function App() {
 
   return (
     <div className="app-container">
-      {/* Header */}
-      <div className="header">
-        <Header itemState={{ items: canvasItems }} onLoadProject={handleProjectLoad} />
-      </div>
+      <Header itemState={{ items: canvasItems }} onLoadProject={handleProjectLoad} />
       <div className="app-main">
-        {/* Sidebar */}
         <Sidebar />
-        {/* Workspace */}
         <CanvasWorkspace />
-        {/* Properties Panel */}
-        <PropertiesPanel selectedItem={selectedItem} onUpdate={updateItem} onDelete={deleteItem} />
+        <PropertiesPanel />
       </div>
     </div>
   );
