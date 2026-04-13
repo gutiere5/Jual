@@ -22,6 +22,8 @@ export default function PropertiesPanel() {
     setIsOpen(!isOpen);
   };
 
+  console.log('Rendering PropertiesPanel with selectedItem:', selectedItem);
+
   return (
     <>
       <div className={`properties-container ${isOpen ? 'open' : 'closed'}`}>
