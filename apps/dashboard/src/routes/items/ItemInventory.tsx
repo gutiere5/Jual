@@ -1,20 +1,11 @@
-import { Form, redirect, useLoaderData, type LoaderFunctionArgs } from 'react-router';
-import { itemService } from '../../services/itemServices';
+import { redirect, type LoaderFunctionArgs } from 'react-router';
 import { Grid3x3, List, Search } from 'lucide-react';
 import { useMemo, useState } from 'react';
 import './ItemInventory.css';
-import type { Item } from '@repo/types/item.schema';
-
-export const inventoryItemsLoader = async () => {
-  try {
-    const items = await itemService.getAll();
-    return items;
-  } catch (error: unknown) {
-    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-    alert(`Failed to load items: ${errorMessage}`);
-    return []; // Return an empty array to prevent the app from crashing
-  }
-};
+// import type { Item } from '@repo/types/item.schema';
+import { useQuery } from '@tanstack/react-query';
+import { listItemsQueryOptions } from '../../api/query-client';
+import GridView from './grid-view';
 
 export const inventoryItemsAction = async ({ request }: LoaderFunctionArgs) => {
   const formData = await request.formData();
@@ -24,9 +15,9 @@ export const inventoryItemsAction = async ({ request }: LoaderFunctionArgs) => {
 };
 
 const ItemInventoryContainer = () => {
+  const { data: items, isPending } = useQuery(listItemsQueryOptions());
   const [searchQuery, setSearchQuery] = useState('');
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
-  const items: Item[] = useLoaderData();
 
   const filteredItems = useMemo(() => {
     if (!items) return [];
@@ -38,20 +29,18 @@ const ItemInventoryContainer = () => {
     return items.filter((item) => item.name.toLowerCase().includes(query));
   }, [items, searchQuery]);
 
-  const getStockStatus = (quantity: number) => {
-    if (quantity === 0) return { label: 'Out of Stock', variant: 'destructive' };
-    if (quantity < 20) return { label: 'Low Stock', variant: 'outline' };
-    return { label: 'In Stock', variant: 'secondary' };
-  };
+  // const getStockStatus = (quantity: number) => {
+  //   if (quantity === 0) return { label: 'Out of Stock', variant: 'destructive' };
+  //   if (quantity < 20) return { label: 'Low Stock', variant: 'outline' };
+  //   return { label: 'In Stock', variant: 'secondary' };
+  // };
+
   return (
     <main>
-      {/* Header Section */}
       <div className="inventory-header">
         <div className="inventory-details">
-          <div className="inventory-header-title ">
-            <h1>Inventory Management</h1>
-          </div>
-          <p className="inventory-description">Manage Stock and Item Details</p>
+          <h1 className="inventory-header-title ">Inventory Management</h1>
+          <p>Manage Stock and Item Details</p>
         </div>
         <div className="inventory-view-toggles">
           <button
@@ -85,83 +74,9 @@ const ItemInventoryContainer = () => {
       <div className="inventory-content">
         {/* Item Grid/List */}
         {viewMode === 'grid' ? (
-          <div className="inventory-grid">
-            {filteredItems.map((item) => {
-              const stockStatus = getStockStatus(item.quantity_remaining);
-              return (
-                <Form method="post" key={item.id}>
-                  <input type="hidden" name="itemId" value={item.id} />
-                  <button type="submit" className="inventory-item-card ">
-                    <div className="inventory-item-content">
-                      <div className="inventory-item-grid-layout">
-                        <div className="inventory-item-image-wrapper">
-                          <div className="inventory-item-image">
-                            <img
-                              src={`https://picsum.photos/seed/${item.name}/160`}
-                              alt={item.name}
-                            />
-                          </div>
-                        </div>
-                        <div className="inventory-item-details">
-                          <h3>{item.name}</h3>
-                          <div className="inventory-item-badges">
-                            <span className="badge outline">{item.category}</span>
-                            <span className={`badge ${stockStatus.variant}`}>
-                              {stockStatus.label}
-                            </span>
-                          </div>
-                          <div className="inventory-item-quantity">
-                            <span>Qty:</span>
-                            <span>{item.quantity_remaining}</span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </button>
-                </Form>
-              );
-            }) || <p>No Items Found</p>}
-          </div>
+          <GridView filteredItems={filteredItems} isPending={isPending} />
         ) : (
-          <div className="inventory-list">
-            {filteredItems.map((item) => {
-              const stockStatus = getStockStatus(item.quantity_remaining);
-              return (
-                <div key={item.id} className="inventory-item-card list-view">
-                  <div className="inventory-item-content">
-                    <div className="inventory-item-list-layout">
-                      <div className="inventory-item-image-wrapper">
-                        <div className="inventory-item-image small">
-                          <img
-                            src={`https://picsum.photos/seed/${item.name}/128`}
-                            alt={item.name}
-                          />
-                        </div>
-                      </div>
-
-                      <div className="inventory-item-list-grid">
-                        <div className="inventory-item-name-col">
-                          <h3>{item.name}</h3>
-                          <span className="badge outline">{item.category}</span>
-                        </div>
-
-                        <div className="inventory-item-quantity">
-                          <span>Quantity:</span>
-                          <span>{item.quantity_remaining}</span>
-                        </div>
-
-                        <div className="inventory-item-status-col">
-                          <span className={`badge ${stockStatus.variant}`}>
-                            {stockStatus.label}
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
+          <p>List View Coming Soon</p>
         )}
 
         {/* Empty State */}
@@ -177,3 +92,5 @@ const ItemInventoryContainer = () => {
 };
 
 export default ItemInventoryContainer;
+
+// 180 Lines
