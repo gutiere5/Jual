@@ -22,7 +22,7 @@ function SidePanel() {
       id: 'Canvas Editor',
       label: 'Canvas Editor',
       icon: Home,
-      color: '#f9c784',
+      color: '#78d9ec',
       path: '/canvas',
     },
     {
@@ -36,7 +36,7 @@ function SidePanel() {
       id: 'Settings',
       label: 'Settings',
       icon: Lock,
-      color: '#78d9ec',
+      color: '#ff9f80',
       path: '/settings',
     },
   ];

@@ -1,21 +1,13 @@
-import { redirect, type LoaderFunctionArgs } from 'react-router';
 import { Grid3x3, List, Search } from 'lucide-react';
 import { useMemo, useState } from 'react';
 import './ItemInventory.css';
-// import type { Item } from '@repo/types/item.schema';
 import { useQuery } from '@tanstack/react-query';
 import { listItemsQueryOptions } from '../../api/query-client';
 import GridView from './grid-view';
-
-export const inventoryItemsAction = async ({ request }: LoaderFunctionArgs) => {
-  const formData = await request.formData();
-  const itemId = formData.get('itemId') as string;
-
-  return redirect(`/items/${itemId}`);
-};
+import ListView from './list-view';
 
 const ItemInventoryContainer = () => {
-  const { data: items, isPending } = useQuery(listItemsQueryOptions());
+  const { data: items, isPending, isError, error } = useQuery(listItemsQueryOptions());
   const [searchQuery, setSearchQuery] = useState('');
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
 
@@ -71,22 +63,20 @@ const ItemInventoryContainer = () => {
         />
       </div>
 
-      <div className="inventory-content">
-        {/* Item Grid/List */}
-        {viewMode === 'grid' ? (
-          <GridView filteredItems={filteredItems} isPending={isPending} />
-        ) : (
-          <p>List View Coming Soon</p>
-        )}
-
-        {/* Empty State */}
-        {filteredItems.length === 0 && (
-          <div className="inventory-empty-state">
-            <h3>No items found</h3>
-            <p>Try adjusting your search to find what you&apos;re looking for</p>
-          </div>
-        )}
-      </div>
+      {isPending ? (
+        <p>Loading items...</p>
+      ) : isError ? (
+        <p>There is an apparent error {error.message}</p>
+      ) : (
+        <div className="inventory-content">
+          {/* Item Grid/List */}
+          {viewMode === 'grid' ? (
+            <GridView filteredItems={filteredItems} />
+          ) : (
+            <ListView filteredItems={filteredItems} />
+          )}
+        </div>
+      )}
     </main>
   );
 };

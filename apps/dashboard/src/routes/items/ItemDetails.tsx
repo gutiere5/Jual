@@ -1,7 +1,7 @@
 import { itemService } from '../../services/itemServices';
 import './ItemDetails.css';
 import { useEffect, useRef, useState } from 'react';
-import { z } from 'zod';
+import { number, z } from 'zod';
 import { useFetcher, useLoaderData, useNavigate, type LoaderFunctionArgs } from 'react-router';
 import {
   AlertTriangle,
@@ -19,6 +19,8 @@ import {
   XCircle,
 } from 'lucide-react';
 import { Item, Category, UnitOfMeasure } from '@repo/types/item.schema';
+import { useQuery } from '@tanstack/react-query';
+import { itemQueryOptions } from '../../api/query-client';
 
 export const itemLoader = async ({ params }: LoaderFunctionArgs) => {
   const { itemId } = params as { itemId: string };
@@ -54,7 +56,8 @@ export const itemEditAction = async ({ request, params }: LoaderFunctionArgs) =>
   }
 };
 
-function ItemDetails() {
+function ItemDetails({ id }: { id: number }) {
+  const { data } = useQuery(itemQueryOptions(id));
   const item: Item = useLoaderData();
   const [isEditing, setIsEditing] = useState(false);
   const navigate = useNavigate();
@@ -432,3 +435,5 @@ function ItemDetails() {
 }
 
 export default ItemDetails;
+
+// 435 lines

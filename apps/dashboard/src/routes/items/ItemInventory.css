@@ -123,81 +123,10 @@ main {
   gap: 0.75rem;
 }
 
-/* Item Card */
-.inventory-item-card {
-  display: block;
-  text-decoration: none;
-  color: inherit;
-  background-color: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  overflow: hidden;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-  position: relative;
-}
-
-.inventory-item-card::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: 14px;
-  padding: 1px;
-  background: linear-gradient(135deg, transparent 0%, rgba(3, 2, 19, 0.1) 100%);
-  -webkit-mask:
-    linear-gradient(#fff 0 0) content-box,
-    linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  pointer-events: none;
-}
-
-.inventory-item-card:hover {
-  box-shadow:
-    0 12px 24px rgba(0, 0, 0, 0.12),
-    0 4px 8px rgba(0, 0, 0, 0.08);
-  transform: translateY(-4px) scale(1.01);
-  border-color: rgba(3, 2, 19, 0.2);
-}
-
-.inventory-item-card:hover::after {
-  opacity: 1;
-}
-
-.inventory-item-card:active {
-  transform: translateY(-2px) scale(1.005);
-}
-
-.inventory-item-card.list-view:hover {
-  transform: translateY(-2px);
-  box-shadow:
-    0 6px 12px rgba(0, 0, 0, 0.08),
-    0 2px 4px rgba(0, 0, 0, 0.06);
-}
-
-.inventory-item-card.list-view:active {
-  transform: translateY(-1px);
-}
-
-.inventory-item-content {
-  padding: 1.25rem;
-}
-
-.inventory-item-grid-layout {
-  display: flex;
-  gap: 1rem;
-}
-
 .inventory-item-list-layout {
   display: flex;
   align-items: center;
   gap: 1rem;
-}
-
-.inventory-item-image-wrapper {
   flex-shrink: 0;
 }
 
@@ -230,13 +159,6 @@ main {
   min-width: 0;
 }
 
-.inventory-item-details h3 {
-  margin-bottom: 0.5rem;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
 .inventory-item-badges {
   display: flex;
   flex-wrap: wrap;
@@ -248,15 +170,6 @@ main {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-}
-
-.inventory-item-quantity span:first-child {
-  font-size: 0.875rem;
-  color: var(--muted-foreground);
-}
-
-.inventory-item-quantity span:last-child {
-  font-weight: 500;
 }
 
 /* List View Specific Layout */

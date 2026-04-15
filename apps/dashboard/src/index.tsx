@@ -2,15 +2,14 @@ import { StrictMode, useEffect } from 'react';
 import { createRoot } from 'react-dom/client';
 import { createBrowserRouter } from 'react-router-dom';
 import { RouterProvider } from 'react-router/dom';
-import ItemInventoryContainer, {
-  inventoryItemsAction,
-  inventoryItemsLoader,
-} from './routes/items/ItemInventory';
-import ErrorPage from './routes/ErrorPage';
+import ItemInventoryContainer from './routes/items/ItemInventory';
+import ErrorPage from './routes/errorPage/ErrorPage';
 import App from './App';
 import ItemDetails, { itemLoader, itemEditAction } from './routes/items/ItemDetails';
 import Personnel from './routes/personnel/Personnel';
 import Settings from './routes/settingsPage/Settings';
+import { QueryClientProvider } from '@tanstack/react-query';
+import queryClient from './api/query-client';
 
 const ExternalAppLink = ({ url }: { url: string }) => {
   useEffect(() => {
@@ -28,8 +27,6 @@ const router = createBrowserRouter([
       {
         index: true,
         Component: ItemInventoryContainer,
-        loader: inventoryItemsLoader,
-        action: inventoryItemsAction,
       },
       { path: 'personnel', Component: Personnel },
       { path: 'settings', Component: Settings },
@@ -53,6 +50,8 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <QueryClientProvider client={queryClient}>
+      <RouterProvider router={router} />
+    </QueryClientProvider>
   </StrictMode>,
 );

@@ -1,5 +1,5 @@
 import Header from './routes/header/Header';
-import SidePanel from './routes/SidePanel';
+import SidePanel from './routes/sidePanel/SidePanel';
 import { Outlet } from 'react-router-dom';
 import './App.css';
 
