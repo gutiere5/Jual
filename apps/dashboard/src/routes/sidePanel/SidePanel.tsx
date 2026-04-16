@@ -43,7 +43,6 @@ function SidePanel() {
 
   return (
     <div className="side-panel">
-      <div className="side-panel-content">
         {menuItems.map((item) => {
           const IconComponent = item.icon;
           return (
@@ -55,12 +54,11 @@ function SidePanel() {
               <div className="side-panel-menu-icon-wrapper" style={{ backgroundColor: item.color }}>
                 <IconComponent className="side-panel-menu-icon" />
               </div>
-              <span className="side-panel-menu-label">{item.label}</span>
+              <h3 >{item.label}</h3>
             </NavLink>
           );
         })}
       </div>
-    </div>
   );
 }
 
