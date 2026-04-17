@@ -1,15 +1,9 @@
-/* Item Details Container */
 .item-details-container {
-  min-height: 100vh;
-  background-color: #ffffff;
-  padding: 32px;
+  width: 100%;
+  height: 100%;
+  padding: 20px;
+  overflow: scroll;
 }
-
-.item-details-wrapper {
-  max-width: 1400px;
-  margin: 0 auto;
-}
-
 /* Alert Section */
 .alert {
   padding: 10px 16px;
@@ -34,13 +28,10 @@
 }
 
 /* Header Section */
-.item-details-header-new {
+.item-details-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 24px;
-  flex-wrap: wrap;
-  gap: 16px;
 }
 
 .header-left {
@@ -49,85 +40,31 @@
   gap: 16px;
 }
 
-.header-title-section {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.title-with-badge {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  flex-wrap: wrap;
-}
-
-.title-with-badge h1 {
-  margin: 0;
-}
-
 .header-subtitle {
   color: #717182;
   margin: 0;
 }
 
-.header-actions {
-  display: flex;
-  gap: 8px;
-}
-
 /* Buttons */
-.back-button-new {
-  width: 40px;
-  height: 40px;
-  border-radius: 8px;
-  border: 1px solid #e9ebef;
-  background-color: #ffffff;
-  color: var(--foreground);
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.2s;
-}
-
-.back-button-new:hover {
-  background-color: #f9fafb;
-  border-color: #d1d5db;
-}
-
 .action-button {
   display: flex;
   align-items: center;
   gap: 8px;
   padding: 8px 16px;
   border-radius: 8px;
-  border: 1px solid #e9ebef;
-  background-color: #ffffff;
-  color: var(--foreground);
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.action-button:hover {
-  background-color: #f9fafb;
-  border-color: #d1d5db;
 }
 
 /* Card Styles */
 .card {
-  background-color: #ffffff;
-  border: 1px solid #e9ebef;
   border-radius: 12px;
   margin-bottom: 24px;
   overflow: hidden;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .card-header {
-  padding: 24px;
+  padding: 5px;
   border-bottom: 1px solid #f3f3f5;
-  background-color: #fafafa;
 }
 
 .card-title {
@@ -135,42 +72,17 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  color: #030213;
-}
-
-.card-description {
-  color: #717182;
-  margin: 4px 0 0 0;
 }
 
 .card-content {
-  padding: 24px;
-  background-color: #ffffff;
+  padding: 5px;
 }
 
 /* Info Grid */
-.info-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 24px;
-}
-
 .info-item {
   display: flex;
   flex-direction: column;
   gap: 4px;
-}
-
-.info-label {
-  font-size: 14px;
-  color: #717182;
-  margin: 0;
-}
-
-.info-value {
-  font-weight: 500;
-  margin: 0;
-  color: #030213;
 }
 
 /* Stock Summary */
@@ -199,37 +111,6 @@
 
 /* Badges */
 .badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 4px 12px;
-  border-radius: 6px;
-  font-size: 12px;
-  font-weight: 500;
-  white-space: nowrap;
-}
-
-.badge-secondary {
-  background-color: #f3f3f5;
-  color: #030213;
-  border: 1px solid #e9ebef;
-}
-
-.badge-warning {
-  background-color: var(--destructive);
-  color: white;
-  gap: 4px;
-}
-
-.badge-warning-small {
-  background-color: var(--destructive);
-  color: white;
-  padding: 2px 8px;
-  border-radius: 4px;
-  font-size: 11px;
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
 }
 
 /* Icons */
@@ -432,18 +313,8 @@
   font-size: 28px;
   font-weight: 600;
   padding: 8px 12px;
-  border: 2px solid #e9ebef;
   border-radius: 8px;
-  background-color: #ffffff;
-  color: #030213;
-  width: 100%;
-  max-width: 500px;
   transition: border-color 0.2s;
-}
-
-.edit-title-input:focus {
-  outline: none;
-  border-color: #030213;
 }
 
 .edit-input {
@@ -525,11 +396,6 @@
     align-items: flex-start;
   }
 
-  .header-actions {
-    width: 100%;
-    justify-content: flex-end;
-  }
-
   .info-grid {
     grid-template-columns: 1fr;
   }
@@ -538,3 +404,5 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* 541 */

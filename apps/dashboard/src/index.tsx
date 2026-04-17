@@ -5,7 +5,7 @@ import { RouterProvider } from 'react-router/dom';
 import ItemInventoryContainer from './routes/items/ItemInventory';
 import ErrorPage from './routes/errorPage/ErrorPage';
 import App from './App';
-import ItemDetails, { itemLoader, itemEditAction } from './routes/items/ItemDetails';
+import ItemDetails from './routes/items/ItemDetails';
 import Personnel from './routes/personnel/Personnel';
 import Settings from './routes/settingsPage/Settings';
 import { QueryClientProvider } from '@tanstack/react-query';
@@ -33,8 +33,6 @@ const router = createBrowserRouter([
       {
         path: 'items/:itemId',
         Component: ItemDetails,
-        loader: itemLoader,
-        action: itemEditAction,
       },
       {
         path: 'canvas',
