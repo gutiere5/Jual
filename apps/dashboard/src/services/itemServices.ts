@@ -44,7 +44,7 @@ export const itemService = {
     }
   },
 
-  updateItem: async (updatedItem: Partial<Item> & { id: number }): Promise<Item> => {
+  updateItem: async (updatedItem: Item) => {
     await AxiosClient.put<unknown>(`item/${updatedItem.id}`, updatedItem);
     return itemService.getById(updatedItem.id);
   },

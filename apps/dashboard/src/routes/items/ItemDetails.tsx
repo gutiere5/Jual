@@ -1,10 +1,11 @@
 import './ItemDetails.css';
-import { useEffect, useRef, useState } from 'react';
-import { useFetcher, useNavigate, useParams } from 'react-router';
+import { useState } from 'react';
+import { NavLink, useParams } from 'react-router';
 import {
   AlertTriangle,
   ArrowLeft,
   Calendar,
+  CheckCircle,
   Clock,
   Download,
   Edit,
@@ -15,9 +16,9 @@ import {
   X,
   XCircle,
 } from 'lucide-react';
-import { Category, UnitOfMeasure } from '@repo/types/item.schema';
-import { useSuspenseQuery } from '@tanstack/react-query';
-import { itemQueryOptions } from '../../api/query-client';
+import { Category, Item, UnitOfMeasure } from '@repo/types/item.schema';
+import { useMutation, useSuspenseQuery } from '@tanstack/react-query';
+import { itemQueryOptions, updateItemMutationOptions } from '../../api/query-client';
 
 // export const itemEditAction = async ({ request, params }: LoaderFunctionArgs) => {
 //   const formData = await request.formData();
@@ -50,24 +51,8 @@ import { itemQueryOptions } from '../../api/query-client';
 function ItemDetails() {
   const itemId = useParams().itemId;
   const { data: item } = useSuspenseQuery(itemQueryOptions(Number(itemId)));
-
+  const updateMutation = useMutation(updateItemMutationOptions());
   const [isEditing, setIsEditing] = useState(false);
-  const navigate = useNavigate();
-  const fetcher = useFetcher<typeof itemEditAction>();
-  const isSubmitting = fetcher.state === 'submitting';
-  const actionData = fetcher.data;
-  const lastProcessedData = useRef<unknown>(null);
-
-  useEffect(() => {
-    if (
-      fetcher.state === 'idle' &&
-      actionData?.success &&
-      actionData !== lastProcessedData.current
-    ) {
-      setTimeout(() => setIsEditing(false), 0);
-      lastProcessedData.current = actionData;
-    }
-  }, [fetcher.state, actionData]);
 
   const isLowStock = item.quantity_remaining < (item.low_stock_threshold ?? 0);
 
@@ -85,29 +70,36 @@ function ItemDetails() {
     return new Date(expirationDate) <= thirtyDaysFromNow;
   };
 
+  const handleUpdateItem = async (updatedItem: Item) => {
+    await updateMutation.mutateAsync(updatedItem);
+  };
+
   return (
     <div className="item-details-container">
       {/* Alert Message */}
-      {/* {actionData?.error && isEditing && (
+      {updateMutation.isError && isEditing && (
         <div className="alert alert-error">
           <AlertTriangle className="icon-small" />
-          {actionData.error}
+          {updateMutation.error.message}
         </div>
       )}
 
-      {actionData?.success && !isEditing && (
+      {updateMutation.isSuccess && !isEditing && (
         <div className="alert alert-success">
           <CheckCircle className="icon-small" />
-          {actionData.message}
+          {updateMutation.status === 'success' && 'Item updated successfully!'}
         </div>
-      )} */}
+      )}
 
       {/* Header */}
       <div className="item-details-header">
         <div className="header-left">
-          <button onClick={() => void navigate('/')}>
-            <ArrowLeft />
-          </button>
+          <NavLink to="/">
+            <button>
+              <ArrowLeft />
+            </button>
+          </NavLink>
+
           <div>
             <div>
               {isEditing ? (
@@ -136,15 +128,12 @@ function ItemDetails() {
             <>
               <button
                 key="save-btn"
-                type="submit"
-                form="edit-item-form"
-                name="intent"
-                value="update_details"
                 className="action-button save-button"
-                disabled={isSubmitting}
+                disabled={updateMutation.isPending}
+                onClick={() => handleUpdateItem(item)}
               >
                 <Save className="icon-small" />
-                {isSubmitting ? 'Saving...' : 'Save'}
+                {updateMutation.isPending ? 'Saving...' : 'Save'}
               </button>
 
               <button
@@ -181,11 +170,11 @@ function ItemDetails() {
         </div>
         <div className="card-content">
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <div className="info-item">
+            <div>
               <h2>Item ID</h2>
               <h3>#{item.id}</h3>
             </div>
-            <div className="info-item">
+            <div>
               <h2>Category</h2>
               {isEditing ? (
                 <select
@@ -204,7 +193,7 @@ function ItemDetails() {
                 <span className="badge badge-secondary">{item.category}</span>
               )}
             </div>
-            <div className="info-item">
+            <div>
               <h2>Unit of Measure</h2>
               {isEditing ? (
                 <select
@@ -223,7 +212,7 @@ function ItemDetails() {
                 <p className="info-value">{item.uom}</p>
               )}
             </div>
-            <div className="info-item">
+            <div>
               <h2>Low Stock Threshold</h2>
               {isEditing ? (
                 <div className="input-with-unit">
@@ -241,22 +230,21 @@ function ItemDetails() {
             </div>
           </div>
 
-          <div>
-            <img src={item.image_url} alt={item.name} style={{ height: '50px', width: '50px' }} />
-          </div>
-
-          <div className="stock-summary">
-            <div className="summary-grid">
-              <div className="info-item">
-                <h2>Current Stock Level</h2>
-                <p className={`stock-level ${isLowStock ? 'stock-low' : ''}`}>
-                  {item.quantity_remaining} {item.uom}
-                </p>
-              </div>
-              <div className="info-item">
-                <h2>Active Batches</h2>
-                <p className="stock-level">{item.stock_batch?.length || 0}</p>
-              </div>
+          <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '20px' }}>
+            <div>
+              <h2>Item Image</h2>
+              <img src={item.image_url} alt={item.name} style={{ height: '50px', width: '50px' }} />
+            </div>
+            <div>
+              <h2>Current Stock Level</h2>
+              <p>
+                {' '}
+                {item.quantity_remaining} {item.uom}{' '}
+              </p>
+            </div>
+            <div>
+              <h2>Active Batches</h2>
+              <p>{item.stock_batch?.length || 0}</p>
             </div>
           </div>
         </div>
