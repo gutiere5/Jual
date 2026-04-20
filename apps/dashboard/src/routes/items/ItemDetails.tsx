@@ -20,33 +20,14 @@ import { Category, Item, UnitOfMeasure } from '@repo/types/item.schema';
 import { useMutation, useSuspenseQuery } from '@tanstack/react-query';
 import { itemQueryOptions, updateItemMutationOptions } from '../../api/query-client';
 
-// export const itemEditAction = async ({ request, params }: LoaderFunctionArgs) => {
-//   const formData = await request.formData();
-//   const submission = Object.fromEntries(formData);
-//   const itemId = parseInt(params.itemId as string, 10);
+const updateSchema: z.ZodType<Partial<Item>> = z.object({
+  name: z.string().min(1, 'Name is required'),
+  category: z.enum(Category),
+  uom: z.enum(UnitOfMeasure).optional(),
+  low_stock_threshold: z.coerce.number().optional(),
+});
 
-//   if (isNaN(itemId)) return { success: false, error: 'Invalid Item Id' };
-
-//   const updateSchema = z.object({
-//     name: z.string().min(1, 'Name is required'),
-//     category: z.enum(Category),
-//     uom: z.enum(UnitOfMeasure).optional(),
-//     low_stock_threshold: z.coerce.number().optional(),
-//   });
-//   const result = updateSchema.safeParse(submission);
-//   if (!result.success) {
-//     return { success: false, error: z.prettifyError(result.error) };
-//   }
-
-//   try {
-//     await itemService.updateItem({ id: itemId, ...result.data });
-//     return { success: true, message: 'Item Updated Successfully' };
-//   } catch (error: unknown) {
-//     const errorMessage =
-//       error instanceof Error ? error.message : 'Failed to update item. Please try again.';
-//     return { success: false, error: errorMessage };
-//   }
-// };
+type UpdateResult = { success: true; message: string } | { success: false; error: string };
 
 function ItemDetails() {
   const itemId = useParams().itemId;
@@ -70,8 +51,22 @@ function ItemDetails() {
     return new Date(expirationDate) <= thirtyDaysFromNow;
   };
 
-  const handleUpdateItem = async (updatedItem: Item) => {
-    await updateMutation.mutateAsync(updatedItem);
+  const handleUpdateItem = async (updatedItem: Item): Promise<UpdateResult> => {
+    const result = updateSchema.safeParse(updatedItem);
+
+    if (!result.success) {
+      return { success: false, error: z.prettifyError(result.error) };
+    }
+
+    try {
+      await updateMutation.mutateAsync(result.data);
+      setIsEditing(false); // only close on success
+      return { success: true, message: 'Item Updated Successfully' };
+    } catch (error: unknown) {
+      const errorMessage =
+        error instanceof Error ? error.message : 'Failed to update item. Please try again.';
+      return { success: false, error: errorMessage };
+    }
   };
 
   return (
@@ -130,7 +125,9 @@ function ItemDetails() {
                 key="save-btn"
                 className="action-button save-button"
                 disabled={updateMutation.isPending}
-                onClick={() => handleUpdateItem(item)}
+                onClick={() => {
+                  void handleUpdateItem(item);
+                }}
               >
                 <Save className="icon-small" />
                 {updateMutation.isPending ? 'Saving...' : 'Save'}

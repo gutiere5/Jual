@@ -1,36 +1,29 @@
 import { Item } from '@repo/types/item.schema';
+import { NavLink } from 'react-router-dom';
 
 const ListView = ({ filteredItems }: { filteredItems: Item[] }) => {
   return (
-    <div className="inventory-list">
+    <div className="list-view-container">
       {filteredItems.map((item) => (
-        <div key={item.id} className="inventory-item-card list-view">
-          <div className="inventory-item-content">
-            <div className="inventory-item-list-layout">
-              <div className="inventory-item-image-wrapper">
-                <div className="inventory-item-image small">
-                  <img src={`https://picsum.photos/seed/${item.name}/128`} alt={item.name} />
-                </div>
-              </div>
+        <NavLink to={`/items/${item.id}`} key={item.id}>
+          <button key={item.id} className="list-card">
+            <img src={item.image_url} alt={item.name} className="list-image" />
 
-              <div className="inventory-item-list-grid">
-                <div className="inventory-item-name-col">
-                  <h3>{item.name}</h3>
-                  <span className="badge outline">{item.category}</span>
-                </div>
-
-                <div className="inventory-item-quantity">
-                  <span>Quantity:</span>
-                  <span>{item.quantity_remaining}</span>
-                </div>
-
-                <div className="inventory-item-status-col">
-                  {/* <span className={`badge ${stockStatus.variant}`}>{stockStatus.label}</span> */}
-                </div>
-              </div>
+            <div>
+              <h2>{item.name}</h2>
+              <h3>{item.category}</h3>
             </div>
-          </div>
-        </div>
+
+            <div>
+              <h2>Quantity:</h2>
+              <h3>{item.quantity_remaining}</h3>
+            </div>
+
+            <div className="inventory-item-status-col">
+              {/* <span className={`badge ${stockStatus.variant}`}>{stockStatus.label}</span> */}
+            </div>
+          </button>
+        </NavLink>
       ))}
     </div>
   );

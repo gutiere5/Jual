@@ -1,4 +1,4 @@
-import { StrictMode, useEffect } from 'react';
+import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { createBrowserRouter } from 'react-router-dom';
 import { RouterProvider } from 'react-router/dom';
@@ -10,14 +10,7 @@ import Personnel from './routes/personnel/Personnel';
 import Settings from './routes/settingsPage/Settings';
 import { QueryClientProvider } from '@tanstack/react-query';
 import queryClient from './api/query-client';
-
-const ExternalAppLink = ({ url }: { url: string }) => {
-  useEffect(() => {
-    window.location.replace(url);
-  }, [url]);
-
-  return null;
-};
+import { ExternalAppLink } from './routes/extarnal-link';
 
 const router = createBrowserRouter([
   {

@@ -45,7 +45,7 @@ export const itemService = {
   },
 
   updateItem: async (updatedItem: Item) => {
-    await AxiosClient.put<unknown>(`item/${updatedItem.id}`, updatedItem);
+    await AxiosClient.put<Item>(`item/${updatedItem.id}`, updatedItem);
     return itemService.getById(updatedItem.id);
   },
 

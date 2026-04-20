@@ -43,22 +43,22 @@ function SidePanel() {
 
   return (
     <div className="side-panel">
-        {menuItems.map((item) => {
-          const IconComponent = item.icon;
-          return (
-            <NavLink
-              key={item.id}
-              to={item.path}
-              className={({ isActive }) => `side-panel-menu-item ${isActive ? 'active' : ''}`}
-            >
-              <div className="side-panel-menu-icon-wrapper" style={{ backgroundColor: item.color }}>
-                <IconComponent className="side-panel-menu-icon" />
-              </div>
-              <h3 >{item.label}</h3>
-            </NavLink>
-          );
-        })}
-      </div>
+      {menuItems.map((item) => {
+        const IconComponent = item.icon;
+        return (
+          <NavLink
+            key={item.id}
+            to={item.path}
+            className={({ isActive }) => `side-panel-button ${isActive ? 'active' : ''}`}
+          >
+            <div className="side-panel-icon-wrapper" style={{ backgroundColor: item.color }}>
+              <IconComponent className="side-panel-menu-icon" />
+            </div>
+            <h3>{item.label}</h3>
+          </NavLink>
+        );
+      })}
+    </div>
   );
 }
 

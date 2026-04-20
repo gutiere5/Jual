@@ -14,21 +14,19 @@
   scrollbar-width: none;
 }
 
-.side-panel-menu-item {
+.side-panel-button {
   display: flex;
   align-items: center;
   padding: 0.75rem 1rem;
-  margin: 0 0.75rem 0 0;
   border-radius: 0 16px 16px 0;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  position: relative;
+  color: inherit;
 }
 
-.side-panel-menu-item.active {
+.side-panel-button.active {
   background-color: rgba(0, 0, 0, 0.15);
 }
 
-.side-panel-menu-icon-wrapper {
+.side-panel-icon-wrapper {
   width: 44px;
   height: 44px;
   border-radius: 50%;
@@ -36,11 +34,6 @@
   align-items: center;
   justify-content: center;
   margin-right: 5px;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow:
-    0 2px 4px rgba(0, 0, 0, 0.08),
-    0 1px 2px rgba(0, 0, 0, 0.06);
-  position: relative;
   flex-shrink: 0;
 }
 
@@ -48,7 +41,6 @@
   width: 22px;
   height: 22px;
   color: rgba(0, 0, 0, 0.75);
-  position: relative;
   z-index: 1;
 }
 
