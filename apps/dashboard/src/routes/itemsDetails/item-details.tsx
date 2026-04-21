@@ -1,5 +1,5 @@
-import './ItemDetails.css';
-import { useState } from 'react';
+import './item-details.css';
+import React, { useState } from 'react';
 import { NavLink, useParams } from 'react-router';
 import {
   AlertTriangle,
@@ -16,22 +16,14 @@ import {
   X,
   XCircle,
 } from 'lucide-react';
-import { Category, Item, UnitOfMeasure } from '@repo/types/item.schema';
+import { Category, UnitOfMeasure, Item } from '@repo/types/item.schema';
 import { useMutation, useSuspenseQuery } from '@tanstack/react-query';
 import { itemQueryOptions, updateItemMutationOptions } from '../../api/query-client';
-
-const updateSchema: z.ZodType<Partial<Item>> = z.object({
-  name: z.string().min(1, 'Name is required'),
-  category: z.enum(Category),
-  uom: z.enum(UnitOfMeasure).optional(),
-  low_stock_threshold: z.coerce.number().optional(),
-});
-
-type UpdateResult = { success: true; message: string } | { success: false; error: string };
 
 function ItemDetails() {
   const itemId = useParams().itemId;
   const { data: item } = useSuspenseQuery(itemQueryOptions(Number(itemId)));
+  const [currentItem, setCurrentItem] = useState(item);
   const updateMutation = useMutation(updateItemMutationOptions());
   const [isEditing, setIsEditing] = useState(false);
 
@@ -51,21 +43,24 @@ function ItemDetails() {
     return new Date(expirationDate) <= thirtyDaysFromNow;
   };
 
-  const handleUpdateItem = async (updatedItem: Item): Promise<UpdateResult> => {
-    const result = updateSchema.safeParse(updatedItem);
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
 
-    if (!result.success) {
-      return { success: false, error: z.prettifyError(result.error) };
+    if (file) {
+      const imageUrl = URL.createObjectURL(file);
+      setCurrentItem({ ...currentItem, image_url: imageUrl });
     }
+  };
 
+  const handleUpdateItem = () => {
     try {
-      await updateMutation.mutateAsync(result.data);
+      updateMutation.mutate(currentItem);
       setIsEditing(false); // only close on success
       return { success: true, message: 'Item Updated Successfully' };
     } catch (error: unknown) {
       const errorMessage =
         error instanceof Error ? error.message : 'Failed to update item. Please try again.';
-      return { success: false, error: errorMessage };
+      throw new Error(errorMessage);
     }
   };
 
@@ -102,8 +97,9 @@ function ItemDetails() {
                   type="text"
                   name="name"
                   className="edit-title-input"
-                  defaultValue={item.name}
+                  defaultValue={currentItem.name}
                   required
+                  onChange={(e) => setCurrentItem({ ...currentItem, name: e.target.value })}
                 />
               ) : (
                 <h1 style={{ margin: 0 }}>{item.name}</h1>
@@ -126,7 +122,7 @@ function ItemDetails() {
                 className="action-button save-button"
                 disabled={updateMutation.isPending}
                 onClick={() => {
-                  void handleUpdateItem(item);
+                  handleUpdateItem();
                 }}
               >
                 <Save className="icon-small" />
@@ -160,92 +156,6 @@ function ItemDetails() {
       </div>
 
       {/* Main Item Information Card */}
-      <div className="card">
-        <div className="card-header">
-          <h2 className="card-title">Item Information</h2>
-          <h3>Basic details and specifications</h3>
-        </div>
-        <div className="card-content">
-          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <div>
-              <h2>Item ID</h2>
-              <h3>#{item.id}</h3>
-            </div>
-            <div>
-              <h2>Category</h2>
-              {isEditing ? (
-                <select
-                  form="edit-item-form"
-                  className="edit-select"
-                  name="category"
-                  defaultValue={item.category}
-                >
-                  {Category.map((category) => (
-                    <option key={category} value={category}>
-                      {category}
-                    </option>
-                  ))}
-                </select>
-              ) : (
-                <span className="badge badge-secondary">{item.category}</span>
-              )}
-            </div>
-            <div>
-              <h2>Unit of Measure</h2>
-              {isEditing ? (
-                <select
-                  name="uom"
-                  className="edit-input"
-                  form="edit-item-form"
-                  defaultValue={item.uom}
-                >
-                  {UnitOfMeasure.map((uom) => (
-                    <option key={uom} value={uom}>
-                      {uom}
-                    </option>
-                  ))}
-                </select>
-              ) : (
-                <p className="info-value">{item.uom}</p>
-              )}
-            </div>
-            <div>
-              <h2>Low Stock Threshold</h2>
-              {isEditing ? (
-                <div className="input-with-unit">
-                  <input
-                    form="edit-item-form"
-                    name="low_stock_threshold"
-                    type="number"
-                    className="edit-input"
-                    defaultValue={item.low_stock_threshold}
-                  />
-                </div>
-              ) : (
-                <p className="info-value">{item.low_stock_threshold}</p>
-              )}
-            </div>
-          </div>
-
-          <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '20px' }}>
-            <div>
-              <h2>Item Image</h2>
-              <img src={item.image_url} alt={item.name} style={{ height: '50px', width: '50px' }} />
-            </div>
-            <div>
-              <h2>Current Stock Level</h2>
-              <p>
-                {' '}
-                {item.quantity_remaining} {item.uom}{' '}
-              </p>
-            </div>
-            <div>
-              <h2>Active Batches</h2>
-              <p>{item.stock_batch?.length || 0}</p>
-            </div>
-          </div>
-        </div>
-      </div>
 
       <div className="cards-grid">
         {/* Stock Batches Card */}
@@ -308,9 +218,9 @@ function ItemDetails() {
             <p className="card-description">Inventory movement history</p>
           </div>
           <div className="card-content">
-            {item.transaction && item.transaction.length > 0 ? (
+            {currentItem.transaction && currentItem.transaction.length > 0 ? (
               <div className="transactions-list">
-                {item.transaction.map((t, index) => {
+                {currentItem.transaction.map((t, index) => {
                   const isInbound =
                     t.type.toLowerCase().includes('in') || t.type.toLowerCase().includes('receive');
                   return (
@@ -338,7 +248,7 @@ function ItemDetails() {
                           className={`transaction-amount ${isInbound ? 'amount-inbound' : 'amount-outbound'}`}
                         >
                           {isInbound ? '+' : '-'}
-                          {Math.abs(t.quantity)} {item.uom}
+                          {Math.abs(t.quantity)} {currentItem.uom}
                         </p>
                       </div>
                     </div>
@@ -365,9 +275,9 @@ function ItemDetails() {
           <p className="card-description">Track damaged, expired, or discarded inventory</p>
         </div>
         <div className="card-content">
-          {item.waste && item.waste.length > 0 ? (
+          {currentItem.waste && currentItem.waste.length > 0 ? (
             <div className="transactions-list">
-              {item.waste.map((waste, index) => (
+              {currentItem.waste.map((waste, index) => (
                 <div key={index} className="transaction-item">
                   <div className="transaction-left">
                     <div className="transaction-icon icon-outbound">
@@ -383,7 +293,7 @@ function ItemDetails() {
                   </div>
                   <div className="transaction-right">
                     <p className="transaction-amount amount-outbound">
-                      -{waste.quantity} {item.uom}
+                      -{waste.quantity} {currentItem.uom}
                     </p>
                   </div>
                 </div>

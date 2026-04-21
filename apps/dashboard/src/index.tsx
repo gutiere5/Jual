@@ -5,12 +5,12 @@ import { RouterProvider } from 'react-router/dom';
 import ItemInventoryContainer from './routes/items/ItemInventory';
 import ErrorPage from './routes/errorPage/ErrorPage';
 import App from './App';
-import ItemDetails from './routes/items/ItemDetails';
+import ItemDetails from './routes/itemsDetails/item-details';
 import Personnel from './routes/personnel/Personnel';
 import Settings from './routes/settingsPage/Settings';
 import { QueryClientProvider } from '@tanstack/react-query';
 import queryClient from './api/query-client';
-import { ExternalAppLink } from './routes/extarnal-link';
+import { ExternalAppLink } from './routes/external-link';
 
 const router = createBrowserRouter([
   {
