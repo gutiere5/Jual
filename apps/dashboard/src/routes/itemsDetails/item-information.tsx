@@ -1,7 +1,21 @@
-import { Item } from '@repo/types/item.schema';
+import { Category, Item, UnitOfMeasure } from '@repo/types/item.schema';
+import React from 'react';
 
+type Props = {
+  isEditing: boolean;
+  currentItem: Item;
+  setCurrentItem: React.Dispatch<React.SetStateAction<Item>>;
+};
 
-const ItemInformation = (isEditing, currentItem, setCurrentItem {isEditing: boolean, currentItem: Item, setCurrentItem: React.Dispatch<React.SetStateAction<Item>}>) => {
+const ItemInformation = ({ isEditing, currentItem, setCurrentItem }: Props) => {
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+
+    if (file) {
+      const imageUrl = URL.createObjectURL(file);
+      setCurrentItem({ ...currentItem, image_url: imageUrl });
+    }
+  };
   return (
     <div className="card">
       <div className="card-header">

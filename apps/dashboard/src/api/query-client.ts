@@ -1,6 +1,7 @@
 import { mutationOptions, QueryClient, queryOptions } from '@tanstack/react-query';
 import { itemService } from '../services/itemServices';
 import { Item } from '@repo/types/item.schema';
+import { R2Service } from '../services/r2-service';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -17,6 +18,13 @@ const itemKeys = {
   list: () => [...itemKeys.all, 'list'] as const,
   details: (id: number) => [...itemKeys.all, 'details', id] as const,
   update: () => [...itemKeys.all, 'update'] as const,
+};
+
+const imageKeys = {
+  all: ['images'],
+  list: () => [...imageKeys.all, 'list'],
+  upload: () => [...imageKeys.all, 'upload'],
+  delete: () => [...imageKeys.all, 'delete'],
 };
 
 export function listItemsQueryOptions() {
@@ -39,6 +47,18 @@ export function updateItemMutationOptions() {
     mutationFn: (updatedItem: Item) => itemService.updateItem(updatedItem),
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: itemKeys.all });
+    },
+  });
+}
+
+export function uploadFileQueryOptions() {
+  return mutationOptions({
+    mutationKey: imageKeys.upload(),
+    mutationFn: ({ fileName, fileContent }) => R2Service.uploadObjectcs({ fileName, fileContent }),
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({
+        queryKey: imageKeys.all,
+      });
     },
   });
 }
