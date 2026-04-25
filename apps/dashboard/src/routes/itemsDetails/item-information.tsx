@@ -1,5 +1,7 @@
 import { Category, Item, UnitOfMeasure } from '@repo/types/item.schema';
+import { useMutation } from '@tanstack/react-query';
 import React from 'react';
+import { uploadFileQueryOptions } from '../../api/query-client';
 
 type Props = {
   isEditing: boolean;
@@ -8,14 +10,24 @@ type Props = {
 };
 
 const ItemInformation = ({ isEditing, currentItem, setCurrentItem }: Props) => {
+  const { mutate, data, onSuccess } = useMutation(uploadFileQueryOptions());
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
 
+    const fileName = `item-images/${currentItem.name}`;
+
     if (file) {
-      const imageUrl = URL.createObjectURL(file);
-      setCurrentItem({ ...currentItem, image_url: imageUrl });
+      mutate({ fileName: fileName, fileContent: file });
+
+      alert(data);
+
+      // setCurrentItem({ ...currentItem, image_url: imageUrl });
     }
   };
+
+  if (onSuccess) {
+    alert('Image uploaded successfully!');
+  }
   return (
     <div className="card">
       <div className="card-header">
@@ -95,17 +107,15 @@ const ItemInformation = ({ isEditing, currentItem, setCurrentItem }: Props) => {
 
         <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '20px' }}>
           <div>
+            <h2>Item Image</h2>
             {isEditing ? (
               <input type="file" name="image_url" onChange={handleImageChange} />
             ) : (
-              <>
-                <h2>Item Image</h2>
-                <img
-                  src={currentItem.image_url}
-                  alt={currentItem.name}
-                  style={{ height: '50px', width: '50px' }}
-                />
-              </>
+              <img
+                src={currentItem.image_url}
+                alt={currentItem.name}
+                style={{ height: '50px', width: '50px' }}
+              />
             )}
           </div>
           <div>

@@ -54,7 +54,8 @@ export function updateItemMutationOptions() {
 export function uploadFileQueryOptions() {
   return mutationOptions({
     mutationKey: imageKeys.upload(),
-    mutationFn: ({ fileName, fileContent }) => R2Service.uploadObjectcs({ fileName, fileContent }),
+    mutationFn: (image: { fileName: string; fileContent: File }) =>
+      R2Service.uploadObject(image.fileName, image.fileContent),
     onSuccess: async () => {
       await queryClient.invalidateQueries({
         queryKey: imageKeys.all,

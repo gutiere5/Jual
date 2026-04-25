@@ -9,7 +9,7 @@ import axiosClient from '../api/axios-client';
 export const R2Service = {
   uploadObject: async (fileName: string, fileContent: File) => {
     const type = fileContent.type;
-    const { data } = await axiosClient.post<{ url: string }>('/r2/upload', { fileName, type });
+    const { data } = await axiosClient.post<{ url: string }>('r2', { fileName, type });
     const { url } = data;
 
     const response = await fetch(url, {
