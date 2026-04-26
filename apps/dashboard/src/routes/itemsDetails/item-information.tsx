@@ -10,24 +10,18 @@ type Props = {
 };
 
 const ItemInformation = ({ isEditing, currentItem, setCurrentItem }: Props) => {
-  const { mutate, data, onSuccess } = useMutation(uploadFileQueryOptions());
+  const { mutate } = useMutation(uploadFileQueryOptions());
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
+    if (!file) return;
 
-    const fileName = `item-images/${currentItem.name}`;
+    const fileName = `items/${currentItem.name}`;
+    mutate({ fileName: fileName, fileContent: file });
 
-    if (file) {
-      mutate({ fileName: fileName, fileContent: file });
-
-      alert(data);
-
-      // setCurrentItem({ ...currentItem, image_url: imageUrl });
-    }
+    const setEnvVar = `https://assets.jualinbox.com/${fileName}`;
+    setCurrentItem({ ...currentItem, image_url: setEnvVar });
   };
 
-  if (onSuccess) {
-    alert('Image uploaded successfully!');
-  }
   return (
     <div className="card">
       <div className="card-header">

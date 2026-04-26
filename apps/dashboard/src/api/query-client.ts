@@ -6,7 +6,7 @@ import { R2Service } from '../services/r2-service';
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      staleTime: 10 * 60 * 1000,
+      staleTime: 30 * 60 * 1000,
       gcTime: 60 * 60 * 1000,
       retry: 3,
     },
@@ -16,7 +16,7 @@ const queryClient = new QueryClient({
 const itemKeys = {
   all: ['items'] as const,
   list: () => [...itemKeys.all, 'list'] as const,
-  details: (id: number) => [...itemKeys.all, 'details', id] as const,
+  item: (id: number) => [...itemKeys.list(), id] as const,
   update: () => [...itemKeys.all, 'update'] as const,
 };
 
@@ -36,8 +36,12 @@ export function listItemsQueryOptions() {
 
 export function itemQueryOptions(id: number) {
   return queryOptions({
-    queryKey: itemKeys.details(id),
+    queryKey: itemKeys.item(id),
     queryFn: () => itemService.getById(id),
+    initialData: () => {
+      const items = queryClient.getQueryData<Item[]>(itemKeys.list());
+      return items?.find((item: Item) => item.id === id);
+    },
   });
 }
 

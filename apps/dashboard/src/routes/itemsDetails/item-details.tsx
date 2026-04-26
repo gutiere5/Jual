@@ -22,7 +22,7 @@ function ItemDetails() {
   const handleUpdateItem = () => {
     try {
       updateMutation.mutate(currentItem);
-      setIsEditing(false); // only close on success
+      setIsEditing(false);
       return { success: true, message: 'Item Updated Successfully' };
     } catch (error: unknown) {
       const errorMessage =
