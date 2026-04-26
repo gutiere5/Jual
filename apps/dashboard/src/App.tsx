@@ -1,12 +1,13 @@
-import Header from './routes/Header';
-import SidePanel from './routes/SidePanel';
+import Header from './routes/header/Header';
+import SidePanel from './routes/sidePanel/SidePanel';
 import { Outlet } from 'react-router-dom';
+import './App.css';
 
 function App() {
   return (
-    <div className="app-layout">
+    <div className="app-container">
       <Header />
-      <div className="app-content">
+      <div className="app-main">
         <SidePanel />
         <Outlet />
       </div>

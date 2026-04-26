@@ -5,9 +5,9 @@ function Header() {
   return (
     <header>
       <img src={logo} alt="Store Logo" className="logo" />
-      <div className="user-avatar">
+      <button className="user-avatar">
         <p>EG</p>
-      </div>
+      </button>
     </header>
   );
 }

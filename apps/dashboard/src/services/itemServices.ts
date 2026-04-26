@@ -1,17 +1,17 @@
 import { Item } from '@repo/types/item.schema';
-import apiClient from '../api/client';
+import AxiosClient from '../api/axios-client';
 import { z } from 'zod';
 
 export const itemService = {
   createById: async () => {
-    const response = await apiClient.post<Item>('item');
+    const response = await AxiosClient.post<Item>('item');
 
     return response.data;
   },
 
   getAll: async () => {
     try {
-      const response = await apiClient.get<{ items: unknown[] }>('item');
+      const response = await AxiosClient.get<{ items: unknown[] }>('item');
       const parsed = z.array(Item).safeParse(response.data.items);
 
       if (!parsed.success) {
@@ -29,7 +29,7 @@ export const itemService = {
 
   getById: async (id: number) => {
     try {
-      const response = await apiClient.get<{ item: unknown }>(`item/${id}`);
+      const response = await AxiosClient.get<{ item: unknown }>(`item/${id}`);
       const parsed = Item.safeParse(response.data.item);
       if (!parsed.success) {
         throw new Error(
@@ -44,13 +44,13 @@ export const itemService = {
     }
   },
 
-  updateItem: async (updatedItem: Partial<Item> & { id: number }): Promise<Item> => {
-    await apiClient.put<unknown>(`item/${updatedItem.id}`, updatedItem);
+  updateItem: async (updatedItem: Item) => {
+    await AxiosClient.put<Item>(`item/${updatedItem.id}`, updatedItem);
     return itemService.getById(updatedItem.id);
   },
 
   deleteItem: async (id: number) => {
-    const response = await apiClient.delete<Item>(`items/${id}`);
+    const response = await AxiosClient.delete<Item>(`items/${id}`);
     return response.data;
   },
 };

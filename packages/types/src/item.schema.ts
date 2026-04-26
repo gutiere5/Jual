@@ -58,7 +58,7 @@ export const Waste = z.object({
 
 export const Item = z
   .object({
-    id: z.coerce.number().optional(),
+    id: z.coerce.number(),
     clover_id: z.string().nullable().optional(),
     sku: z.string().min(1, "SKU is required"),
     name: z.string().min(1, "Name is required"),

@@ -22,7 +22,7 @@ function SidePanel() {
       id: 'Canvas Editor',
       label: 'Canvas Editor',
       icon: Home,
-      color: '#f9c784',
+      color: '#78d9ec',
       path: '/canvas',
     },
     {
@@ -36,30 +36,28 @@ function SidePanel() {
       id: 'Settings',
       label: 'Settings',
       icon: Lock,
-      color: '#78d9ec',
+      color: '#ff9f80',
       path: '/settings',
     },
   ];
 
   return (
     <div className="side-panel">
-      <div className="side-panel-content">
-        {menuItems.map((item) => {
-          const IconComponent = item.icon;
-          return (
-            <NavLink
-              key={item.id}
-              to={item.path}
-              className={({ isActive }) => `side-panel-menu-item ${isActive ? 'active' : ''}`}
-            >
-              <div className="side-panel-menu-icon-wrapper" style={{ backgroundColor: item.color }}>
-                <IconComponent className="side-panel-menu-icon" />
-              </div>
-              <span className="side-panel-menu-label">{item.label}</span>
-            </NavLink>
-          );
-        })}
-      </div>
+      {menuItems.map((item) => {
+        const IconComponent = item.icon;
+        return (
+          <NavLink
+            key={item.id}
+            to={item.path}
+            className={({ isActive }) => `side-panel-button ${isActive ? 'active' : ''}`}
+          >
+            <div className="side-panel-icon-wrapper" style={{ backgroundColor: item.color }}>
+              <IconComponent className="side-panel-menu-icon" />
+            </div>
+            <h3>{item.label}</h3>
+          </NavLink>
+        );
+      })}
     </div>
   );
 }

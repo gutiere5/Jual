@@ -18,36 +18,24 @@ main {
   display: flex;
   align-items: center;
 }
- 
+
 .inventory-header h1 {
   margin: 0;
 }
 
-.inventory-description {
-  color: var(--muted-foreground);
-  margin:0;
-}
-
 .inventory-search-container {
-  position: relative;
   display: flex;
   height: 35px;
   align-items: center;
   padding-left: 1%;
-  border: 2px solid var(--border);
+  border: 2px solid #ccc;
   border-radius: 12px;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   gap: 15px;
-
 }
 
 .inventory-search-icon {
   width: 25px;
   height: 25px;
-  color: var(--muted-foreground);
-  pointer-events: none;
-  transition: color 0.2s ease;
 }
 
 .inventory-search-input {
@@ -56,7 +44,6 @@ main {
   border: none;
   outline: none;
   background: transparent;
-
 }
 
 .inventory-view-toggles {
@@ -64,7 +51,6 @@ main {
   display: flex;
   align-items: center;
   gap: 0.25rem;
-  background-color: var(--muted);
   padding: 0.25rem;
   border-radius: 10px;
   box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
@@ -86,7 +72,7 @@ main {
 }
 
 .view-toggle-btn.active {
-  background-color: var(--card);
+  background-color: gray;
   color: var(--primary);
   box-shadow:
     0 1px 3px rgba(0, 0, 0, 0.12),
@@ -109,147 +95,51 @@ main {
 
 .inventory-content {
   flex: 1;
-
+  overflow-y: auto;
+  overflow-x: hidden;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 /* Grid View */
-.inventory-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 1rem;
+.grid-button {
+  margin: 10px;
 }
 
-@media (min-width: 768px) {
-  .inventory-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (min-width: 1024px) {
-  .inventory-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
+.grid-item-image {
+  width: 100px;
+  height: 100px;
+  border-radius: 12px;
+  overflow: hidden;
 }
 
 /* List View */
-.inventory-list {
+.list-view-container {
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
 }
 
-/* Item Card */
-.inventory-item-card {
-  display: block;
-  text-decoration: none;
-  color: inherit;
-  background-color: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  overflow: hidden;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-  position: relative;
-}
-
-.inventory-item-card::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: 14px;
-  padding: 1px;
-  background: linear-gradient(135deg, transparent 0%, rgba(3, 2, 19, 0.1) 100%);
-  -webkit-mask:
-    linear-gradient(#fff 0 0) content-box,
-    linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  pointer-events: none;
-}
-
-.inventory-item-card:hover {
-  box-shadow:
-    0 12px 24px rgba(0, 0, 0, 0.12),
-    0 4px 8px rgba(0, 0, 0, 0.08);
-  transform: translateY(-4px) scale(1.01);
-  border-color: rgba(3, 2, 19, 0.2);
-}
-
-.inventory-item-card:hover::after {
-  opacity: 1;
-}
-
-.inventory-item-card:active {
-  transform: translateY(-2px) scale(1.005);
-}
-
-.inventory-item-card.list-view:hover {
-  transform: translateY(-2px);
-  box-shadow:
-    0 6px 12px rgba(0, 0, 0, 0.08),
-    0 2px 4px rgba(0, 0, 0, 0.06);
-}
-
-.inventory-item-card.list-view:active {
-  transform: translateY(-1px);
-}
-
-.inventory-item-content {
-  padding: 1.25rem;
-}
-
-.inventory-item-grid-layout {
-  display: flex;
-  gap: 1rem;
-}
-
-.inventory-item-list-layout {
+.list-card {
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  width: 100%;
   gap: 1rem;
 }
 
-.inventory-item-image-wrapper {
-  flex-shrink: 0;
-}
-
-.inventory-item-image {
-  width: 5rem;
-  height: 5rem;
+.list-image {
+  width: 100px;
+  height: 100px;
   border-radius: 12px;
-  background: linear-gradient(135deg, var(--muted) 0%, rgba(236, 236, 240, 0.4) 100%);
   overflow: hidden;
-  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05);
-  transition: transform 0.3s ease;
 }
 
-.inventory-item-card:hover .inventory-item-image {
-  transform: scale(1.05);
-}
-
-.inventory-item-image.small {
-  width: 4rem;
-  height: 4rem;
-}
-
-.inventory-item-image img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
 .inventory-item-details {
-  flex: 1;
-  min-width: 0;
-}
-
-.inventory-item-details h3 {
-  margin-bottom: 0.5rem;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  text-align: left;
 }
 
 .inventory-item-badges {
@@ -257,21 +147,6 @@ main {
   flex-wrap: wrap;
   gap: 0.5rem;
   margin-bottom: 0.75rem;
-}
-
-.inventory-item-quantity {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.inventory-item-quantity span:first-child {
-  font-size: 0.875rem;
-  color: var(--muted-foreground);
-}
-
-.inventory-item-quantity span:last-child {
-  font-weight: 500;
 }
 
 /* List View Specific Layout */
@@ -282,37 +157,6 @@ main {
   grid-template-columns: 1fr;
   gap: 1rem;
   align-items: center;
-}
-
-@media (min-width: 640px) {
-  .inventory-item-list-grid {
-    grid-template-columns: repeat(4, 1fr);
-  }
-}
-
-.inventory-item-name-col {
-  grid-column: span 1;
-}
-
-@media (min-width: 640px) {
-  .inventory-item-name-col {
-    grid-column: span 2;
-  }
-}
-
-.inventory-item-name-col h3 {
-  margin-bottom: 0.25rem;
-}
-
-.inventory-item-status-col {
-  display: flex;
-  justify-content: flex-start;
-}
-
-@media (min-width: 640px) {
-  .inventory-item-status-col {
-    justify-content: flex-end;
-  }
 }
 
 /* Empty State */
@@ -341,40 +185,4 @@ main {
 
 .inventory-empty-state p {
   color: var(--muted-foreground);
-}
-
-/* Badge Styles */
-.badge {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 6px;
-  border: 1px solid;
-  padding: 0.25rem 0.625rem;
-  font-size: 0.75rem;
-  font-weight: 600;
-  white-space: nowrap;
-  width: fit-content;
-  letter-spacing: 0.01em;
-  transition: all 0.2s ease;
-}
-
-.badge.outline {
-  border-color: var(--border);
-  color: var(--foreground);
-  background-color: var(--background);
-}
-
-.badge.secondary {
-  border-color: transparent;
-  background-color: var(--secondary);
-  color: var(--secondary-foreground);
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-}
-
-.badge.destructive {
-  border-color: transparent;
-  background-color: var(--destructive);
-  color: white;
-  box-shadow: 0 2px 4px rgba(212, 24, 61, 0.2);
 }

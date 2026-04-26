@@ -84,18 +84,19 @@ export const createItem = asyncHandler(async (req: Request, res: Response) => {
 export const updateItem = asyncHandler(async (req: Request, res: Response) => {
   const { id } = req.params;
   const itemId = Number(id);
-  logger.info("Updating item");
+  logger.info(`Updating item with ID: ${itemId}`);
 
   if (isNaN(itemId)) {
     res.status(400);
     throw new Error("Invalid Item ID");
   }
 
-  const { name, uom, low_stock_threshold, category } = req.body as Item;
+  const { name, uom, low_stock_threshold, category, image_url } =
+    req.body as Item;
 
   const item = await prismaClient.item.update({
     where: { id: itemId },
-    data: { name, uom, low_stock_threshold, category },
+    data: { name, uom, low_stock_threshold, category, image_url },
   });
 
   logger.info(`Successfully updated Item ${item.name}`);
