@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import asyncHandler from "express-async-handler";
 import { prismaClient } from "..";
 import { logger } from "../middleware/logger";
-import { Item } from "@repo/types/item.schema";
+import type { Item } from "@repo/types/item.schema";
 
 export const getItems = asyncHandler(async (req: Request, res: Response) => {
   logger.info("Fetching all items");

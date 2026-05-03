@@ -6,6 +6,9 @@
   "features": {
     "ghcr.io/devcontainers/features/common-utils:2": {
       "configureZshAsDefaultShell": true
+    },
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {
+      "moby": false
     }
   },
   "forwardPorts": [5173, 5174, 5175, 3000],
@@ -24,7 +27,8 @@
         "mhutchie.git-graph",
         "streetsidesoftware.code-spell-checker",
         "wmaurer.change-case",
-        "esbenp.prettier-vscode"
+        "esbenp.prettier-vscode",
+        "ms-azuretools.vscode-containers"
       ]
     }
   }
