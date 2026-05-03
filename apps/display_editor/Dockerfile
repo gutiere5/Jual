@@ -11,7 +11,6 @@ RUN turbo prune display-editor --docker
 
 # Builder
 FROM base AS builder
-# First install the dependencies (as they change less often)
 COPY --from=prepare /app/out/json/ .
 RUN npm install
 COPY --from=prepare /app/out/full/ .

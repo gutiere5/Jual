@@ -1,11 +1,18 @@
 import express, { Express } from "express";
 import cors from "cors";
-import { DATABASE_URL, PORT, CORS_ORIGIN } from "./secrets";
+import {
+  DATABASE_URL,
+  PORT,
+  CORS_ORIGIN,
+  validateRequiredSecrets,
+} from "./secrets";
 import { errorHandler } from "./middleware/errorHandler";
 import rootRouter from "./routes";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { PrismaClient } from "../generated/prisma/client";
 import { logger, requestLogger } from "./middleware/logger";
+
+validateRequiredSecrets();
 
 const app: Express = express();
 
