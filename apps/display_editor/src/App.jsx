@@ -4,7 +4,7 @@ import Sidebar from './components/sidebar/Sidebar';
 import CanvasWorkspace from './components/canvas/CanvasWorkspace';
 import PropertiesPanel from './components/propertiesPanel/PropertiesPanel';
 import { useKeyboardShortcut } from './hooks/useKeyboardShortcut';
-import { useCanvasEditor } from './context/CanvasEditorContext';
+import { useCanvasEditor } from './context/useCanvasEditor';
 
 function App() {
   const { canvasItems, loadProject, pasteItem, copySelectedItem, deleteItem } = useCanvasEditor();

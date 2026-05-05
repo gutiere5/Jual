@@ -1,4 +1,4 @@
-import { useCanvasEditor } from '../../../context/CanvasEditorContext';
+import { useCanvasEditor } from '../../../context/useCanvasEditor';
 
 const ArrangeDeleteSection = ({ children }) => {
   const { bringSelectedToFront, bringSelectedToBack, deleteItem } = useCanvasEditor();

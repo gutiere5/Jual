@@ -1,4 +1,4 @@
-import { useCanvasEditor } from '../context/CanvasEditorContext';
+import { useCanvasEditor } from '../context/useCanvasEditor';
 
 export const useItemHandlers = ({ item, onChange }) => {
   const { canvasSettings } = useCanvasEditor();

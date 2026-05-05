@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import { useCanvasEditor } from '../../context/CanvasEditorContext';
+import { useCanvasEditor } from '../../context/useCanvasEditor';
 import './Header.css';
 import { canvasDataService } from '../../services/canvasDataService';
 import { logo } from '@repo/assets';

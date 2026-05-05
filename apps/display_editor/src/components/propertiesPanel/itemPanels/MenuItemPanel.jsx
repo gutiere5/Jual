@@ -7,20 +7,18 @@ import { listMenuItemsQueryOptions } from '../../../api/query-client';
 import ImageItemPanel from './image-item-panel';
 
 const MenuItemPanel = ({ selectedItem, onUpdate }) => {
-  const { data } = useSuspenseQuery(listMenuItemsQueryOptions());
+  const { data: menuItems } = useSuspenseQuery(listMenuItemsQueryOptions());
   const [searchValue, setSearchValue] = useState('');
-  const [filteredItems, setFilteredItems] = useState([]);
+  const [filteredItems, setFilteredItems] = useState(menuItems);
   const [showSuggestions, setShowSuggestions] = useState(false);
-
-  const menuItems = data || [];
 
   const handleSearch = (e) => {
     const value = e.target.value;
     setSearchValue(value);
 
     if (value.length > 0) {
-      const filteredFoodItems = menuItems.filter((asset) =>
-        asset.name.toLowerCase().includes(value.toLowerCase()),
+      const filteredFoodItems = menuItems.filter((item) =>
+        item.name.toLowerCase().includes(value.toLowerCase()),
       );
       setFilteredItems(filteredFoodItems);
     } else {
@@ -38,31 +36,25 @@ const MenuItemPanel = ({ selectedItem, onUpdate }) => {
             placeholder={selectedItem?.name || ''}
             className="search-input"
             value={searchValue}
+            onClick={() => setShowSuggestions(true)}
             onChange={(e) => {
               handleSearch(e);
-              setShowSuggestions(true);
             }}
           />
-          {showSuggestions && filteredItems.length > 0 && (
+          {showSuggestions && (
             <div className="suggestion-container">
               {filteredItems.map((item) => (
-                <div
+                <button
                   key={item.name}
-                  className="suggested-item"
+                  className="suggested-button"
                   onClick={() => {
                     setSearchValue(item.name);
                     setShowSuggestions(false);
-                    onUpdate({
-                      ...selectedItem,
-                      name: item.name,
-                      image_src: item.image_url,
-                      price: item.price,
-                      description: item.description,
-                    });
+                    onUpdate({ ...selectedItem, ...item });
                   }}
                 >
                   {item.name}
-                </div>
+                </button>
               ))}
             </div>
           )}

@@ -66,22 +66,18 @@
 }
 
 .suggestion-container {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  right: 0;
+  display: flex;
+  flex-direction: column;
   border: 1px solid;
   border-radius: 0 0 6px 6px;
   max-height: 200px;
   overflow-y: auto;
   z-index: 10;
+  gap: 2px;
 }
 
-.suggested-item {
-  padding: 8px;
-  cursor: pointer;
-  border-bottom: 1px solid;
-  transition: background-color 0.2s;
+.suggested-button {
+  width: 100%;
 }
 
 .display-options-container {
