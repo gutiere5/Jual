@@ -7,7 +7,7 @@ import type { CanvasFileData } from "@repo/types/canvasItem.schema";
 type CanvasBody = Pick<CanvasFileData, "name" | "content">;
 
 export const getCanvas = asyncHandler(async (req: Request, res: Response) => {
-  logger.info("Fetching canvas data");
+  logger.info("Fetching all canvas data");
   const canvasData = await prismaClient.canvas.findMany();
   logger.info(`Successfully fetched canvas data: ${canvasData.length} entries`);
   res.status(200).json({ canvasData: canvasData });
@@ -31,8 +31,8 @@ export const getCanvasByID = asyncHandler(
 
 export const createCanvas = asyncHandler(
   async (req: Request, res: Response) => {
-    logger.info("Creating new canvas");
     const { name, content } = req.body as CanvasFileData;
+    logger.info("Creating new canvas with the name " + name);
 
     const existingCanvas = await prismaClient.canvas.findUnique({
       where: { name: name },

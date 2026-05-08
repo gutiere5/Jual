@@ -8,4 +8,9 @@ export const canvasDataService = {
     });
     return response.data[0];
   },
+
+  getAll: async () => {
+    const response = await axiosClient.get('canvas');
+    return response.data;
+  },
 };

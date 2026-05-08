@@ -17,7 +17,6 @@
     "@tanstack/react-query": "^5.90.3",
     "axios": "1.13.6",
     "html-dom-parser": "^7.0.0",
-    "i": "^0.3.7",
     "lucide-react": "^0.575.0",
     "npm": "^11.12.1",
     "react": "latest",

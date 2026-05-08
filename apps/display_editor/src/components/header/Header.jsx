@@ -1,15 +1,16 @@
-import { useRef } from 'react';
-import { useCanvasEditor } from '../../context/useCanvasEditor';
 import './Header.css';
-import { canvasDataService } from '../../services/canvasDataService';
+import { useState } from 'react';
 import { logo } from '@repo/assets';
+import { useCanvasEditor } from '../../context/useCanvasEditor';
+import { canvasDataService } from '../../services/canvasDataService';
+import LoadProjectModal from './LoadProjectModal';
 
-export default function Header({ itemState, onLoadProject }) {
-  const fileInputRef = useRef(null);
-  const { canvasSettings } = useCanvasEditor();
+export default function Header() {
+  const { canvasItems, canvasSettings } = useCanvasEditor();
+  const [showLoadModal, setShowLoadModal] = useState(false);
 
   const handleSaveProject = () => {
-    const data = { items: itemState.items, canvasSettings };
+    const data = { items: canvasItems, canvasSettings };
 
     const name = prompt('Enter project name:', 'menu-project');
     if (!name) return;
@@ -26,45 +27,16 @@ export default function Header({ itemState, onLoadProject }) {
     }
   };
 
-  const handleLoadProject = (e) => {
-    const file = e.target.files[0];
-
-    if (!file) return;
-
-    const reader = new FileReader();
-    reader.onload = (event) => {
-      try {
-        const loadedData = JSON.parse(event.target.result);
-        if (loadedData.items && loadedData.canvasSettings) {
-          onLoadProject(loadedData);
-        } else {
-          alert('Invalid project file format.');
-        }
-      } catch (error) {
-        alert('Error Reading File', error.message);
-      }
-    };
-    reader.readAsText(file);
-    e.target.value = '';
-  };
-
   return (
     <div className="header-container">
       <a href={import.meta.env.VITE_DASHBOARD_URL}>
         <img src={logo} alt="Store Logo" className="logo" />
       </a>
-
-      <input
-        type="file"
-        ref={fileInputRef}
-        accept="application/json"
-        onChange={handleLoadProject}
-        style={{ display: 'none' }}
-      />
       <div className="button-container">
-        <button onClick={() => fileInputRef.current?.click()}>Load Project</button>
+        <button onClick={() => setShowLoadModal(true)}>Load Project</button>
         <button onClick={handleSaveProject}>Save Project</button>
       </div>
+      {showLoadModal && <LoadProjectModal onClose={() => setShowLoadModal(false)} />}
     </div>
   );
 }

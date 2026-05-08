@@ -28,7 +28,8 @@
         "streetsidesoftware.code-spell-checker",
         "wmaurer.change-case",
         "esbenp.prettier-vscode",
-        "ms-azuretools.vscode-containers"
+        "ms-azuretools.vscode-containers",
+        "tonybaloney.vscode-pets"
       ]
     }
   }
