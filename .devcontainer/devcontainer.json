@@ -19,7 +19,10 @@
       "settings": {
         "editor.formatOnSave": true,
         "files.eol": "\n",
-        "eslint.workingDirectories": [{ "mode": "auto" }]
+        "eslint.workingDirectories": [{ "mode": "auto" }],
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "vscode-pets.theme": "autumn",
+        "vscode-pets.throwBallWithMouse": true
       },
       "extensions": [
         "formulahendry.auto-rename-tag",

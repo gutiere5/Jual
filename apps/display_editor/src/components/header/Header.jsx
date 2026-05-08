@@ -1,31 +1,12 @@
 import './Header.css';
 import { useState } from 'react';
 import { logo } from '@repo/assets';
-import { useCanvasEditor } from '../../context/useCanvasEditor';
-import { canvasDataService } from '../../services/canvasDataService';
 import LoadProjectModal from './LoadProjectModal';
+import SaveProjectModal from './SaveProjectModal';
 
 export default function Header() {
-  const { canvasItems, canvasSettings } = useCanvasEditor();
   const [showLoadModal, setShowLoadModal] = useState(false);
-
-  const handleSaveProject = () => {
-    const data = { items: canvasItems, canvasSettings };
-
-    const name = prompt('Enter project name:', 'menu-project');
-    if (!name) return;
-
-    const response = canvasDataService.createCanvasData({
-      name: name,
-      content: data,
-    });
-
-    if (response.success) {
-      alert('Project saved successfully!');
-    } else {
-      alert('Error saving project: ' + response.message);
-    }
-  };
+  const [showSaveModal, setShowSaveModal] = useState(false);
 
   return (
     <div className="header-container">
@@ -34,9 +15,10 @@ export default function Header() {
       </a>
       <div className="button-container">
         <button onClick={() => setShowLoadModal(true)}>Load Project</button>
-        <button onClick={handleSaveProject}>Save Project</button>
+        <button onClick={() => setShowSaveModal(true)}>Save Project</button>
       </div>
       {showLoadModal && <LoadProjectModal onClose={() => setShowLoadModal(false)} />}
+      {showSaveModal && <SaveProjectModal onClose={() => setShowSaveModal(false)} />}
     </div>
   );
 }

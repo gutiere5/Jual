@@ -81,9 +81,9 @@ export const updateCanvas = asyncHandler(
 
 export const deleteCanvas = asyncHandler(
   async (req: Request, res: Response) => {
-    logger.info("Deleting canvas");
     const { id } = req.params as { id: string };
     const canvasId = Number(id);
+    logger.info("Deleting canvas with ID: " + canvasId);
 
     if (isNaN(canvasId)) {
       logger.warn(`Invalid canvas ID provided: ${id}`);

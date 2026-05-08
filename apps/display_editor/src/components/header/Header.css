@@ -29,6 +29,7 @@
   top: 10%;
   height: 400px;
   width: 500px;
+  border-radius: 10px;
   background-color: rgb(127, 131, 130);
   overflow-y: scroll;
 }
@@ -37,5 +38,5 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
-  margin: 0px 20px;
+  margin: 10px 20px;
 }

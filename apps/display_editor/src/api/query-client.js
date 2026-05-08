@@ -28,6 +28,8 @@ const menuItemKeys = {
 const canvasDataKeys = {
   all: ['canvasData'],
   list: () => [...canvasDataKeys.all, 'list'],
+  delete: () => [...canvasDataKeys.all, 'delete'],
+  create: () => [...canvasDataKeys.all, 'create'],
 };
 
 export function listImageQueryOptions() {
@@ -72,6 +74,30 @@ export function listCanvasDataQueryOptions() {
   return queryOptions({
     queryKey: canvasDataKeys.list(),
     queryFn: canvasDataService.getAll,
+  });
+}
+
+export function deleteCanvasDataQueryOptions() {
+  return mutationOptions({
+    mutationKey: canvasDataKeys.delete(),
+    mutationFn: (id) => canvasDataService.deleteById(id),
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({
+        queryKey: canvasDataKeys.all,
+      });
+    },
+  });
+}
+
+export function createCanvasDataQueryOptions() {
+  return mutationOptions({
+    mutationKey: canvasDataKeys.create(),
+    mutationFn: ({ name, content }) => canvasDataService.createCanvas(name, content),
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({
+        queryKey: canvasDataKeys.all,
+      });
+    },
   });
 }
 
