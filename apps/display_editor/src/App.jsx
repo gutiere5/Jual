@@ -4,14 +4,10 @@ import Sidebar from './components/sidebar/Sidebar';
 import CanvasWorkspace from './components/canvas/CanvasWorkspace';
 import PropertiesPanel from './components/propertiesPanel/PropertiesPanel';
 import { useKeyboardShortcut } from './hooks/useKeyboardShortcut';
-import { useCanvasEditor } from './context/CanvasEditorContext';
+import { useCanvasEditor } from './context/useCanvasEditor';
 
 function App() {
-  const { canvasItems, loadProject, pasteItem, copySelectedItem, deleteItem } = useCanvasEditor();
-
-  const handleProjectLoad = (loadedData) => {
-    loadProject(loadedData);
-  };
+  const { pasteItem, copySelectedItem, deleteItem } = useCanvasEditor();
 
   useKeyboardShortcut([
     [['Delete', 'Backspace'], () => deleteItem()],
@@ -21,7 +17,7 @@ function App() {
 
   return (
     <div className="app-container">
-      <Header itemState={{ items: canvasItems }} onLoadProject={handleProjectLoad} />
+      <Header />
       <div className="app-main">
         <Sidebar />
         <CanvasWorkspace />

@@ -1,6 +1,7 @@
 import { mutationOptions, QueryClient, queryOptions } from '@tanstack/react-query';
 import { r2Service } from '../services/r2-service';
 import { menuItemService } from '../services/menuItemService';
+import { canvasDataService } from '../services/canvasDataService';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -22,6 +23,13 @@ const imageKeys = {
 const menuItemKeys = {
   all: ['menuItems'],
   list: () => [...menuItemKeys.all, 'list'],
+};
+
+const canvasDataKeys = {
+  all: ['canvasData'],
+  list: () => [...canvasDataKeys.all, 'list'],
+  delete: () => [...canvasDataKeys.all, 'delete'],
+  create: () => [...canvasDataKeys.all, 'create'],
 };
 
 export function listImageQueryOptions() {
@@ -59,6 +67,37 @@ export function listMenuItemsQueryOptions() {
   return queryOptions({
     queryKey: menuItemKeys.list(),
     queryFn: menuItemService.getAll,
+  });
+}
+
+export function listCanvasDataQueryOptions() {
+  return queryOptions({
+    queryKey: canvasDataKeys.list(),
+    queryFn: canvasDataService.getAll,
+  });
+}
+
+export function deleteCanvasDataQueryOptions() {
+  return mutationOptions({
+    mutationKey: canvasDataKeys.delete(),
+    mutationFn: (id) => canvasDataService.deleteById(id),
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({
+        queryKey: canvasDataKeys.all,
+      });
+    },
+  });
+}
+
+export function createCanvasDataQueryOptions() {
+  return mutationOptions({
+    mutationKey: canvasDataKeys.create(),
+    mutationFn: ({ name, content }) => canvasDataService.createCanvas(name, content),
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({
+        queryKey: canvasDataKeys.all,
+      });
+    },
   });
 }
 

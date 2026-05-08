@@ -1,5 +1,5 @@
 import { PropertySection } from '../shared/PropertySection';
-import { useCanvasEditor } from '../../../context/CanvasEditorContext';
+import { useCanvasEditor } from '../../../context/useCanvasEditor';
 import { useMutation } from '@tanstack/react-query';
 import { uploadFileQueryOptions } from '../../../api/query-client';
 

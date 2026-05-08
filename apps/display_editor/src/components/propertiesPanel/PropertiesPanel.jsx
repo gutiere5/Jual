@@ -2,7 +2,7 @@ import './PropertiesPanel.css';
 import { useState } from 'react';
 import { PanelLeftOpen } from 'lucide-react';
 import { ITEM_PANELS } from './itemPanels/index';
-import { useCanvasEditor } from '../../context/CanvasEditorContext';
+import { useCanvasEditor } from '../../context/useCanvasEditor';
 import ArrangeDeleteSection from './shared/arrange-delete-section';
 
 export default function PropertiesPanel() {
@@ -15,7 +15,7 @@ export default function PropertiesPanel() {
     if (!SpecificItemPanel) {
       SpecificItemPanel = ITEM_PANELS['canvas'];
     }
-    return <SpecificItemPanel selectedItem={selectedItem} onUpdate={updateItem} />;
+    return <SpecificItemPanel selectedItem={selectedItem} onUpdate={updateItem} s />;
   };
 
   const togglePropertiesPanel = () => {

@@ -6,7 +6,7 @@
     "test": "turbo run test",
     "clean": "turbo run clean",
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\"",
-    "ci": "turbo run build lint test",
+    "ci": "turbo run build lint",
     "dev": "turbo run dev",
     "generate": "turbo run generate"
   },

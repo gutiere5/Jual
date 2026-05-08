@@ -12,3 +12,31 @@
   padding: 15px;
   gap: 10px;
 }
+
+/* LOAD PROJECT MODAL STYLES */
+.background-blur {
+  position: absolute;
+  height: 100vh;
+  width: 100vw;
+  background: rgba(255, 255, 255, 0.3); /* Semi-transparent background */
+  backdrop-filter: blur(10px); /* The blur effect */
+  z-index: 10;
+}
+
+.load-modal-container {
+  position: relative;
+  left: 30%;
+  top: 10%;
+  height: 400px;
+  width: 500px;
+  border-radius: 10px;
+  background-color: rgb(127, 131, 130);
+  overflow-y: scroll;
+}
+
+.canvas-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 10px 20px;
+}

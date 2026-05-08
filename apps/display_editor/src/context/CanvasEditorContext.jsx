@@ -1,15 +1,9 @@
-import { createContext, useContext, useState } from 'react';
+import { createContext } from 'react';
 import { GRID_SIZE } from '../constants/config';
+import { useState } from 'react';
 
-const CanvasEditorContext = createContext();
-
-export const useCanvasEditor = () => {
-  const context = useContext(CanvasEditorContext);
-  if (!context) {
-    throw new Error('useCanvasEditor must be used within a CanvasEditorProvider');
-  }
-  return context;
-};
+// eslint-disable-next-line react-refresh/only-export-components
+export const CanvasEditorContext = createContext();
 
 export const CanvasEditorProvider = ({ children }) => {
   const [canvasItems, setCanvasItems] = useState([]);

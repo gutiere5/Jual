@@ -19,7 +19,10 @@
       "settings": {
         "editor.formatOnSave": true,
         "files.eol": "\n",
-        "eslint.workingDirectories": [{ "mode": "auto" }]
+        "eslint.workingDirectories": [{ "mode": "auto" }],
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "vscode-pets.theme": "autumn",
+        "vscode-pets.throwBallWithMouse": true
       },
       "extensions": [
         "formulahendry.auto-rename-tag",
@@ -28,7 +31,8 @@
         "streetsidesoftware.code-spell-checker",
         "wmaurer.change-case",
         "esbenp.prettier-vscode",
-        "ms-azuretools.vscode-containers"
+        "ms-azuretools.vscode-containers",
+        "tonybaloney.vscode-pets"
       ]
     }
   }

@@ -1,4 +1,4 @@
-import { useCanvasEditor } from '../../context/CanvasEditorContext';
+import { useCanvasEditor } from '../../context/useCanvasEditor';
 import { Layer, Stage, Transformer } from 'react-konva';
 import { useEffect, useRef } from 'react';
 import useDragAndDrop from '../../hooks/useDragAndDrop';
