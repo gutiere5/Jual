@@ -7,8 +7,16 @@ export const typescriptEslintConfig = defineConfig(
   {
     languageOptions: {
       parserOptions: {
-        projectService: true,
+        allowDefaultProject: ["eslint.config.mjs", "vite.config.ts"],
       },
+    },
+    rules: {
+      "@typescript-eslint/no-unused-vars": [
+        "error",
+        {
+          argsIgnorePattern: "^_",
+        },
+      ],
     },
   },
 );

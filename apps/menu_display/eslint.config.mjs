@@ -4,14 +4,16 @@ import { testEslintConfig } from '@repo/eslint-config/test';
 import { typescriptEslintConfig } from '@repo/eslint-config/typescript';
 
 export default [
+  ...baseEslintConfig,
   ...testEslintConfig,
   ...frontendEslintConfig,
   ...typescriptEslintConfig,
-  ...baseEslintConfig,
   {
     languageOptions: {
       parserOptions: {
-        tsconfigRootDir: import.meta.dirname,
+        projectService: {
+          allowDefaultProject: ['eslint.config.mjs', 'vite.config.ts'],
+        },
       },
     },
   },

@@ -7,9 +7,9 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint . || true",
+    "lint:fix": "eslint . --fix ",
     "preview": "vite preview",
-    "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format": "prettier --write ."
   },
   "dependencies": {
     "@repo/assets": "*",

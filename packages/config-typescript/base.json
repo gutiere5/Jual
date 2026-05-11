@@ -13,6 +13,8 @@
     "inlineSources": false,
     "noUnusedLocals": false,
     "noUnusedParameters": false,
-    "preserveWatchOutput": true
+    "preserveWatchOutput": true,
+    "allowJs": true,
+    "checkJs": true
   }
 }

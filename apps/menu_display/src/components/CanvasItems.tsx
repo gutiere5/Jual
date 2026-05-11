@@ -4,10 +4,6 @@ import { CanvasItemSchema } from '../types/CanvasItemTypes';
 const CanvasItem = ({ item }: { item: CanvasItemSchema }) => {
   const RenderNode = CanvasItemMap[item.type];
 
-  if (!RenderNode) {
-    return null;
-  }
-
   return <RenderNode item={item} />;
 };
 

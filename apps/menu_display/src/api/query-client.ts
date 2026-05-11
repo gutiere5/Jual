@@ -1,6 +1,5 @@
 import { QueryClient, queryOptions } from '@tanstack/react-query';
 import { canvasObjectService } from '../services/canvas-service';
-import { CanvasObject } from '@repo/types/canvasObject.schema';
 
 const queryClient = new QueryClient({
   defaultOptions: {
