@@ -10,14 +10,14 @@ export const getCanvas = asyncHandler(async (req: Request, res: Response) => {
   logger.info("Fetching all canvas data");
   const canvasData = await prismaClient.canvas.findMany();
   logger.info(`Successfully fetched canvas data: ${canvasData.length} entries`);
-  res.status(200).json({ canvasData: canvasData });
+  res.status(200).json(canvasData);
 });
 
 export const getCanvasByID = asyncHandler(
   async (req: Request, res: Response) => {
-    logger.info("Fetching Canvas data by ID");
     const { id } = req.params;
     const canvasId = Number(id);
+    logger.info("Fetching Canvas object: ", canvasId);
 
     const requestedCanvas = await prismaClient.canvas.findUnique({
       where: {
@@ -25,7 +25,7 @@ export const getCanvasByID = asyncHandler(
       },
     });
     logger.info(`Successfully fetched canvas data for ID: ${canvasId}`);
-    res.status(200).json({ canvas: requestedCanvas });
+    res.status(200).json(requestedCanvas);
   },
 );
 

@@ -1,5 +1,5 @@
-import { CanvasItemMap } from '../../types/CanvasItemMap';
-import { CanvasItemSchema } from '../../types/CanvasItemTypes';
+import { CanvasItemMap } from '../types/CanvasItemMap';
+import { CanvasItemSchema } from '../types/CanvasItemTypes';
 
 const CanvasItem = ({ item }: { item: CanvasItemSchema }) => {
   const RenderNode = CanvasItemMap[item.type];

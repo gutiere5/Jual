@@ -1,14 +1,12 @@
-import { Link, useLoaderData } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import './main-menu.css';
-import { CanvasFileData } from '@repo/types/canvasItem.schema';
+// import { CanvasFileData } from '@repo/types/canvasItem.schema';
+import { useQuery } from '@tanstack/react-query';
+import { listCanvasQueryOptions } from '../../api/query-client';
 
 function MainMenu() {
-  const canvasData: CanvasFileData[] = useLoaderData();
-  // const canvasData: any[] = [
-  //   { name: 'Canvas 1', id: 1, content: 'Content for Canvas 1', createdAt: '2026-03-20' },
-  //   { name: 'Canvas 2', id: 2, content: 'Content for Canvas 2', createdAt: '2026-03-22' },
-  //   { name: 'Canvas 3', id: 3, content: 'Content for Canvas 3', createdAt: '2026-03-24' },
-  // ];
+  // const canvasData: CanvasFileData[] = useLoaderData();
+  const { data: canvasData, isPending, isError, error } = useQuery(listCanvasQueryOptions());
 
   return (
     <div className="main-menu">
@@ -16,9 +14,12 @@ function MainMenu() {
         <h1>Main Menu</h1>
         <p>Choose a canvas to continue</p>
       </div>
+      {isError && <p>{error.message}</p>}
 
       <div className="canvas-grid">
-        {canvasData &&
+        {isPending ? (
+          <p>Loading...</p>
+        ) : (
           canvasData?.map((canvas) => (
             <Link to="/canvas" state={canvas.content} key={canvas.id}>
               <button className="canvas-button">
@@ -26,7 +27,8 @@ function MainMenu() {
                 <p>{canvas.createdAt}</p>
               </button>
             </Link>
-          ))}
+          ))
+        )}
       </div>
     </div>
   );
