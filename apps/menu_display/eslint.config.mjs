@@ -5,9 +5,9 @@ import { typescriptEslintConfig } from '@repo/eslint-config/typescript';
 
 export default [
   ...baseEslintConfig,
-  ...testEslintConfig,
   ...frontendEslintConfig,
   ...typescriptEslintConfig,
+  ...testEslintConfig,
   {
     languageOptions: {
       parserOptions: {
