@@ -16,7 +16,7 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
     children: [
       { index: true, Component: MainMenu },
-      { path: 'canvas', Component: canvasDisplay },
+      { path: 'canvas/:canvasId', Component: canvasDisplay },
     ],
   },
 ]);

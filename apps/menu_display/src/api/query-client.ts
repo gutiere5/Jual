@@ -1,5 +1,6 @@
 import { QueryClient, queryOptions } from '@tanstack/react-query';
 import { canvasObjectService } from '../services/canvas-service';
+import { CanvasObject } from '@repo/types/canvasObject.schema';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -14,7 +15,7 @@ const queryClient = new QueryClient({
 const canvasKeys = {
   all: ['canvas'] as const,
   list: () => [...canvasKeys.all, 'list'] as const,
-  canvas: (id: number) => [...canvasKeys.list(), id] as const,
+  canvas: (id: string) => [...canvasKeys.list(), id] as const,
 };
 
 export function listCanvasQueryOptions() {
@@ -24,15 +25,15 @@ export function listCanvasQueryOptions() {
   });
 }
 
-// export function canvasQueryOptions(id: number) {
-//   return queryOptions({
-//     queryKey: canvasKeys.canvas(id),
-//     queryFn: () => canvasObjectService.getById(id),
-//     initialData: () => {
-//       const canvases = queryClient.getQueryData<CanvasObject[]>(canvasKeys.list());
-//       return canvases?.find((canvas: CanvasObject) => canvas.id === id);
-//     },
-//   });
-// }
+export function canvasQueryOptions(id: string) {
+  return queryOptions({
+    queryKey: canvasKeys.canvas(id),
+    queryFn: () => canvasObjectService.getById(id),
+    initialData: () => {
+      const canvases = queryClient.getQueryData<CanvasObject[]>(canvasKeys.list());
+      return canvases?.find((canvas: CanvasObject) => canvas.id === Number(id));
+    },
+  });
+}
 
 export default queryClient;
